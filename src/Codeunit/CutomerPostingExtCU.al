@@ -18,6 +18,7 @@ codeunit 50163 PostCustomerExtension
         DtldCustLedgEntry."Application Source" := GenJournalLine."Application Source";
         DtldCustLedgEntry."Created On" := CurrentDateTime;
 
+
     end;
 
     [EventSubscriber(ObjectType::Codeunit, 12, 'OnBeforePostGenJnlLine', '', false, false)]
