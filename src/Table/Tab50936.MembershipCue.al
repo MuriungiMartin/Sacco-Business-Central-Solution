@@ -291,6 +291,11 @@ Table 50936 "Membership Cue"
             CalcFormula = count("Payments Header" where(Status = const(Approved)));
             FieldClass = FlowField;
         }
+        field(64; Logo; Blob)
+        {
+
+        }
+        
     }
 
     keys
@@ -301,8 +306,15 @@ Table 50936 "Membership Cue"
         }
     }
 
+
     fieldgroups
     {
     }
+    trigger OnInsert()
+    begin
+    end;
+
+    var
+        company: record "Company Information";
 }
 

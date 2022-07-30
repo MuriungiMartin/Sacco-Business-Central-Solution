@@ -7,10 +7,17 @@ page 55000 "Home Role Center" // default role center change to comapny name
     {
         area(rolecenter)
         {
-            part(Control76; "Headline RC Accountant")
-            {
-                ApplicationArea = Basic, Suite;
-            }
+
+            // part(Control75; "Headline RC Accountant")
+            // {
+            //     ApplicationArea = Basic, Suite;
+            // }
+
+            // part("Logo Cue"; "Sacco Logo")
+            // {
+            //     ApplicationArea = Basic, Suite;
+            //     Caption = '';
+            // }
             part(Control99; "Finance Performance")
             {
                 ApplicationArea = Basic, Suite;
@@ -28,10 +35,6 @@ page 55000 "Home Role Center" // default role center change to comapny name
             part("Emails"; "Email Activities")
             {
                 ApplicationArea = Basic, Suite;
-            }
-            part(ApprovalsActivities; "Approvals Activities")
-            {
-                ApplicationArea = Suite;
             }
             part(Control123; "Team Member Activities")
             {
@@ -304,6 +307,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
         }
         area(sections)
         {
+
             group(Action172)
             {
                 Caption = 'Finance';
@@ -741,8 +745,15 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 {
                     ApplicationArea = Basic, Suite;
                     Caption = 'Approved Loans Pending Disbursement.';
-                    RunObject = Page "Loans Approved List";
+                    RunObject = Page "Loans Application List(Approv)";
                     ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
+                }
+                action("Posted Loans")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Posted Loans';
+                    RunObject = Page "Loans Posted List";
+                    ToolTip = 'Open the list of the Loans Posted.';
                 }
 
             }

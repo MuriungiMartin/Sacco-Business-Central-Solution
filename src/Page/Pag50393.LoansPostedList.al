@@ -11,8 +11,8 @@ Page 50393 "Loans Posted List"
     ApplicationArea = All;
     PromotedActionCategories = 'New,Process,Reports,Approval,Budgetary Control,Cancellation,Category7_caption,Category8_caption,Category9_caption,Category10_caption';
     SourceTable = "Loans Register";
-    SourceTableView = where(Posted = const(true),
-                            "Loan Status" = filter(Disbursed));
+    SourceTableView = where(Posted = const(true));
+
 
     layout
     {
