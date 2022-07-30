@@ -2608,6 +2608,7 @@ Codeunit 50005 "Custom Workflow Responses"
         PRequest: Record "Purchase Header";
         LoanPayOff: Record "Loan PayOff";
         GuarantorRecovery: Record "Loan Recovery Header";
+        LoanDisbursememnt: Record "Loan Disburesment-Batching";
     begin
         case RecRef.Number of
             DATABASE::"Membership Applications":
@@ -2630,6 +2631,14 @@ Codeunit 50005 "Custom Workflow Responses"
                     MemberAgentNOKChange.Status := MemberAgentNOKChange.Status::Approved;
                     MemberAgentNOKChange.Modify(true);
                     Handled := true;
+                end;
+            Database::"Loan Disburesment-Batching":
+                begin
+                    RecRef.SetTable(LoanDisbursememnt);
+                    LoanDisbursememnt.Status := LoanDisbursememnt.Status::Approved;
+                    LoanDisbursememnt.Modify(true);
+                    Handled := true;
+
                 end;
 
             Database::"House Groups Registration":

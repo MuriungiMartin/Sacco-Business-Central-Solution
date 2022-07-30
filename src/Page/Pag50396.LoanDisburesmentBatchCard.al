@@ -351,7 +351,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         GenJournalLine.SetRange("Journal Template Name", 'PAYMENTS');
                         GenJournalLine.SetRange("Journal Batch Name", 'LOANS');
                         if GenJournalLine.Find('-') then begin
-                            // Codeunit.Run(Codeunit::"Gen. Jnl.-Post", GenJournalLine);
+                            Codeunit.Run(Codeunit::"Gen. Jnl.-Post", GenJournalLine);
                         end;
 
 

@@ -349,12 +349,12 @@ Page 51385 "Loan Application Card(BOSA)"
                 Visible = PayslipDetailsVisible;
                 group("Monthly Income Details")
                 {
-                    field("Salary Total Income"; "Salary Total Income")
+                    field("Basic Pay H"; "Basic Pay H")
                     {
                         ApplicationArea = Basic;
-                        Caption = 'Monthly Income';
+                        Caption = 'Basic Pay';
                     }
-                    field("House Allowance"; "House Allowance")
+                    field("House AllowanceH"; "House AllowanceH")
                     {
                         ApplicationArea = all;
                         Caption = 'House Allowance';
