@@ -124,7 +124,7 @@ Page 50639 "Loan Reschedule Card"
                         SharesContribution: Decimal;
                         InsuranceContribution: Decimal;
                         LoanDisbursed: Decimal;
-                        Cust: Record "Members Register";
+                        Cust: Record Customer;
                     begin
                         if Confirm('Are you sure you want to reshedule the loan') then begin
                             TestField(Status, Status::Approved);

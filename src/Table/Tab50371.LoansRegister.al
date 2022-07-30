@@ -1,6 +1,8 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50371 "Loans Register"
 {
+    DrillDownPageId = "Loans  List All";
+    LookupPageId = "Loans  List All";
 
     fields
     {
@@ -105,6 +107,7 @@ Table 50371 "Loans Register"
                             "OneOff Loan Repayment" := LoanType."OneOff  Loan Repayment";
                             "Recovery Mode" := LoanType."Recovery Mode";
                             "Loan Deposit Multiplier" := LoanType."Deposits Multiplier";
+                            //"Loan Deposit Multiplier":= LoanType."Shares Multiplier";
                             //Where repayment is by employer
 
                             if LoanType."Use Cycles" = false then begin
@@ -208,13 +211,13 @@ Table 50371 "Loans Register"
         }
         field(4; "Client Code"; Code[50])
         {
-            TableRelation = if (Source = const(BOSA)) "Members Register"."No."
+            TableRelation = if (Source = const(BOSA)) Customer."No."
             else
-            if (Source = const(FOSA)) "Members Register"."No."
+            if (Source = const(FOSA)) Customer."No."
             else
-            if (Source = const(MICRO)) "Members Register"."No." where("Group Account" = field("Group Account"))
+            if (Source = const(MICRO)) Customer."No." where("Group Account" = field("Group Account"))
             else
-            if (Source = filter(" ")) "Members Register"."No.";
+            if (Source = filter(" ")) Customer."No.";
 
             trigger OnValidate()
             begin
@@ -244,13 +247,13 @@ Table 50371 "Loans Register"
                 MemberLedgerEntry.SetFilter(MemberLedgerEntry."Transaction Type", '%1|%2', MemberLedgerEntry."transaction type"::Loan,
                 MemberLedgerEntry."transaction type"::"Loan Repayment");
                 if MemberLedgerEntry.FindSet then begin
-                    MemberLedgerEntry.CalcSums(MemberLedgerEntry.Amount);
-                    "Total Outstanding Loan BAL" := MemberLedgerEntry.Amount;
+                    MemberLedgerEntry.CalcSums(MemberLedgerEntry."Transaction Amount");
+                    "Total Outstanding Loan BAL" := MemberLedgerEntry."Transaction Amount";
                 end;
 
 
 
-                GenSetUp.Get(0);
+
 
                 "BOSA No" := "Client Code";
 
@@ -264,7 +267,7 @@ Table 50371 "Loans Register"
 
 
                 if CustomerRecord.Get("Client Code") then begin
-
+                    GenSetUp.Get();
                     "Insurance On Shares" := CustomerRecord."Insurance on Shares";
                     "Monthly Contribution" := GenSetUp."Min. Contribution";
                     "Global Dimension 2 Code" := CustomerRecord."Global Dimension 2 Code";
@@ -329,12 +332,7 @@ Table 50371 "Loans Register"
                         "Share Capital Due" := 0;
 
 
-                    GenSetUp.Get();
-                    //IF CustomerRecord.GET("Client Code") THEN BEGIN
-                    //  CustomerRecord.CALCFIELDS(CustomerRecord."Shares Retained");
-                    //IF ((CustomerRecord."Shares Retained"<GenSetUp."Retained Shares") AND ("Loan Product Type"<>'BLOAN')) THEN
-                    //ERROR('Shares Must be More or equal to %1',GenSetUp."Retained Shares");
-                    //END;
+
                     "Branch Code" := CustomerRecord."Global Dimension 2 Code";
                     if ("Loan Product Type" <> 'DFTL FOSA') and ("Loan Product Type" <> 'DFTL') then begin
                         //Check Shares Boosting
@@ -684,7 +682,7 @@ Table 50371 "Loans Register"
 
                 Validate("Approved Amount");
 
-                GenSetUp.Get(0);
+                GenSetUp.Get();
                 if Cust.Get("Client Code") then begin
                     if (Cust."Date of Birth" <> 0D) and ("Application Date" <> 0D) and (Installments > 0) then begin
                         if CalcDate(Format(Installments) + 'M', "Application Date") > CalcDate(GenSetUp."Retirement Age", Cust."Date of Birth") then
@@ -1058,12 +1056,17 @@ Table 50371 "Loans Register"
         }
         field(53102; "Outstanding Balance"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Currency Code" = field("Currency Filter"),
                                                                   "Posting Date" = field("Date filter")));
             Editable = false;
             FieldClass = FlowField;
+
+            trigger OnValidate()
+            begin
+                Message('Outbal %1', "Outstanding Balance");
+            end;
         }
         field(53103; "Loan to Share Ratio"; Decimal)
         {
@@ -1095,7 +1098,7 @@ Table 50371 "Loans Register"
         }
         field(53109; "Loan Amount"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Share Capital"),
                                                                   "Loan No" = field("Loan  No.")));
             Editable = false;
@@ -1103,14 +1106,14 @@ Table 50371 "Loans Register"
         }
         field(53110; "Current Shares"; Decimal)
         {
-            CalcFormula = - sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = - sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                    "Transaction Type" = filter("Deposit Contribution"),
                                                                    "Posting Date" = field("Date filter")));
             FieldClass = FlowField;
         }
         field(53111; "Loan Repayment"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Interest Paid"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -1166,7 +1169,7 @@ Table 50371 "Loans Register"
         }
         field(53182; "Last Pay Date"; Date)
         {
-            CalcFormula = max("Member Ledger Entry"."Posting Date" where("Loan No" = field("Loan  No."),
+            CalcFormula = max("Cust. Ledger Entry"."Posting Date" where("Loan No" = field("Loan  No."),
                                                                           "Transaction Type" = filter("Loan Repayment" | "Interest Paid" | "Loan Penalty Paid" | "Loan Insurance Paid")));
             Editable = false;
             FieldClass = FlowField;
@@ -1207,7 +1210,7 @@ Table 50371 "Loans Register"
         }
         field(53185; "Interest Paid"; Decimal)
         {
-            CalcFormula = - sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = - sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                    "Loan No" = field("Loan  No."),
                                                                    "Transaction Type" = filter("Interest Paid"),
                                                                    "Posting Date" = field("Date filter")));
@@ -1215,7 +1218,7 @@ Table 50371 "Loans Register"
         }
         field(53186; "Penalty Paid"; Decimal)
         {
-            CalcFormula = - sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = - sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                    "Transaction Type" = filter("Loan Penalty Paid"),
                                                                    "Loan No" = field("Loan  No."),
                                                                    "Posting Date" = field("Date filter")));
@@ -1223,7 +1226,7 @@ Table 50371 "Loans Register"
         }
         field(53187; "Application Fee Paid"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter(Dividend),
                                                                   "Posting Date" = field("Date filter")));
             Editable = false;
@@ -1231,7 +1234,7 @@ Table 50371 "Loans Register"
         }
         field(53188; "Appraisal Fee Paid"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter("FOSA Account"),
                                                                   "Posting Date" = field("Date filter")));
             Editable = false;
@@ -1275,7 +1278,7 @@ Table 50371 "Loans Register"
         }
         field(53194; "Interest Debit"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter("Deposit Contribution"),
                                                                   "Posting Date" = field("Date filter")));
             FieldClass = FlowField;
@@ -1298,143 +1301,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*
-                //Surestep
-                IF (Source = Source::BOSA) OR (Source = Source::MICRO)THEN
-                EXIT;
-                
-                GenSetUp.GET(0);
-                
-                LoansClearedSpecial.RESET;
-                LoansClearedSpecial.SETRANGE(LoansClearedSpecial."Loan No.","Loan  No.");
-                IF LoansClearedSpecial.FIND('-') THEN
-                LoansClearedSpecial.DELETEALL;
-                
-                
-                
-                IF Vendor.GET("Account No") THEN BEGIN
-                CustomerRecord.RESET;
-                CustomerRecord.SETRANGE(CustomerRecord."No.",Vendor."BOSA Account No");
-                IF CustomerRecord.FIND('-') THEN BEGIN
-                CustomerRecord.CALCFIELDS(CustomerRecord."Current Shares",CustomerRecord."Outstanding Balance",
-                CustomerRecord."Current Loan");
-                "Client Name":=CustomerRecord.Name;
-                "Shares Balance":=CustomerRecord."Current Shares";
-                Savings:=CustomerRecord."Current Shares";
-                "Existing Loan":=CustomerRecord."Outstanding Balance";
-                
-                //"Account No":=CustomerRecord."FOSA Account";
-                "Staff No":=CustomerRecord."Personal No";
-                Gender:=CustomerRecord.Gender;
-                "BOSA No":=Vendor."BOSA Account No";
-                "Client Code":=Vendor."BOSA Account No";
-                "Branch Code":=Vendor."Global Dimension 2 Code";
-                "ID NO":=Vendor."ID No.";
-                IF "Branch Code" = '' THEN
-                "Branch Code":=CustomerRecord."Global Dimension 2 Code";
-                
-                IF ("Loan Product Type" <> 'DFTL FOSA') AND ("Loan Product Type" <> 'DFTL') THEN BEGIN
-                //Check Shares Boosting
-                IF "Application Date" <> 0D THEN BEGIN
-                CustLedg.RESET;
-                CustLedg.SETRANGE(CustLedg."Customer No.",Vendor."BOSA Account No");
-                CustLedg.SETRANGE(CustLedg."Transaction Type",CustLedg."Transaction Type"::"Deposit Contribution");
-                CustLedg.SETRANGE(CustLedg.Reversed,FALSE);
-                IF CustLedg.FIND('-') THEN BEGIN
-                REPEAT
-                IF CustLedg."Posting Date" > CALCDATE(GenSetUp."Boosting Shares Maturity (M)","Application Date") THEN BEGIN
-                CustLedg.CALCFIELDS(CustLedg.Amount);
-                IF ABS(CustLedg.Amount)>
-                (((CustomerRecord."Monthly Contribution"*GenSetUp."Boosting Shares %")*0.01)) THEN BEGIN
-                "Shares Boosted":=TRUE;
-                END;
-                END;
-                UNTIL CustLedg.NEXT = 0;
-                END;
-                END;
-                END;
-                
-                
-                
-                
-                END ELSE
-                
-                IF CustR.GET("Account No") THEN BEGIN
-                "BOSA No":=Vendor."BOSA Account No";
-                "Client Code":=Vendor."No.";
-                "Client Name":=Vendor.Name;
-                //VALIDATE("Client Code");
-                
-                END ELSE BEGIN
-                "BOSA No":=Vendor."BOSA Account No";
-                "Client Code":=Vendor."No.";
-                "Client Name":=Vendor.Name;
-                //VALIDATE("Client Code");
-                
-                CustR.INIT;
-                CustR."No.":=Vendor."No.";
-                CustR.Name:=Vendor.Name;
-                CustR."Global Dimension 1 Code":=Vendor."Global Dimension 1 Code";
-                CustR."Global Dimension 2 Code":=Vendor."Global Dimension 2 Code";
-                CustR.Status:=Cust.Status::Active;
-                CustR."Customer Type":=CustR."Customer Type"::FOSA;
-                CustR."Customer Posting Group":='FOSA';
-                CustR."FOSA Account No.":="Account No";
-                IF CustR."Personal No" <> '' THEN
-                CustR."Personal No":=Vendor."Personal No.";
-                CustR."ID No.":=Vendor."ID No.";
-                CustR.Gender:=Vendor.Gender;
-                CustR.INSERT;
-                
-                CustR.RESET;
-                IF CustR.GET("Account No") THEN BEGIN
-                CustR.Name:=Vendor.Name;
-                CustR."Global Dimension 1 Code":=Vendor."Global Dimension 1 Code";
-                CustR."Global Dimension 2 Code":=Vendor."Global Dimension 2 Code";
-                CustR."Customer Posting Group":='FOSA';
-                CustR.VALIDATE(CustR.Name);
-                CustR.VALIDATE(CustR."Global Dimension 1 Code");
-                CustR.VALIDATE(CustR."Global Dimension 2 Code");
-                //CustR.VALIDATE(CustR."Customer Posting Group");
-                CustR.MODIFY;
-                
-                END;
-                
-                END;
-                
-                Cust2.RESET;
-                //Cust2.SETRANGE(Cust2."Customer Type",Cust2."Customer Type"::Member);
-                Cust2.SETRANGE(Cust2."FOSA Account No.",Vendor."No.");
-                IF Cust2.FIND('-') THEN BEGIN
-                "BOSA No":=Cust2."No.";
-                IF Cust2."Personal No"<> '' THEN
-                "Staff No":=Cust2."Personal No";
-                VALIDATE("BOSA No");
-                END;
-                
-                
-                
-                END;
-                
-                //Block if loan Previously recovered from gurantors
-                LoanApp.RESET;
-                LoanApp.SETRANGE(LoanApp."BOSA No","BOSA No");
-                LoanApp.SETRANGE("Recovered From Guarantor",TRUE);
-                IF LoanApp.FIND('-') THEN
-                ERROR('Member has a loan which has previously been recovered from gurantors. - %1',LoanApp."Loan  No.");
-                //Block if loan Previously recovered from gurantors
-                
-                Cust.RESET;
-                Cust.SETRANGE(Cust."ID No.","ID NO");
-                IF Cust.FIND('-') THEN BEGIN
-                Cust.CALCFIELDS(Cust."Outstanding Balance",Cust."Current Shares");//,Cust."Loans Guaranteed"
-                "BOSA Deposits":=Cust."Current Shares";
-                
-                //"Amont Guaranteed":=Cust."Current Shares";
-                 END;
-                //End Surestep
-                */
-
                 if Source = Source::FOSA then begin
                     if Vendor.Get("Account No") then begin
                         "Employer Code" := Vendor."Employer Code";
@@ -1577,47 +1443,13 @@ Table 50371 "Loans Register"
         }
         field(68001; "BOSA No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
         }
         field(68002; "Staff No"; Code[20])
         {
 
             trigger OnValidate()
             begin
-                /*IF xRec."Staff No" <> '' THEN BEGIN
-                IF xRec."Staff No" <> "Staff No" THEN BEGIN
-                IF CONFIRM('Are you sure you want to change the staff No.') = FALSE THEN
-                ERROR('Change cancelled.');
-                END;
-                END;
-                
-                
-                IF (Source=Source::BOSA) THEN BEGIN
-                CustomerRecord.RESET;
-                CustomerRecord.SETRANGE(CustomerRecord."Customer Type",CustomerRecord."Customer Type"::Member);
-                CustomerRecord.SETRANGE(CustomerRecord."Payroll/Staff No","Staff No");
-                IF CustomerRecord.FIND('-') THEN BEGIN
-                "Client Code":=CustomerRecord."No.";
-                VALIDATE("Client Code");
-                END
-                ELSE
-                ERROR('Record not found.');
-                
-                END
-                ELSE BEGIN
-                Vend.RESET;
-                Vend.SETFILTER(Vend."Account Type",'SAVINGS');
-                Vend.SETRANGE(Vend."Staff No","Staff No");
-                IF Vend.FIND('-') THEN BEGIN
-                "Account No":=Vend."No.";
-                VALIDATE("Account No");
-                END
-                ELSE
-                ERROR('Record not found.');
-                
-                END;
-                */
-
             end;
         }
         field(68003; "BOSA Loan Amount"; Decimal)
@@ -1639,7 +1471,7 @@ Table 50371 "Loans Register"
         }
         field(68007; "Current Repayment"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter("Interest Paid"),
                                                                   "Posting Date" = field("Period Date Filter")));
             Editable = false;
@@ -1647,7 +1479,7 @@ Table 50371 "Loans Register"
         }
         field(68008; "Outstanding Interest"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Transaction Type" = filter("Interest Due" | "Interest Paid"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Transaction Type" = filter("Interest Due" | "Interest Paid"),
                                                                   "Posting Date" = field("Date filter"),
                                                                   "Customer No." = field("Client Code"),
                                                                   "Loan No" = field("Loan  No.")));
@@ -1656,7 +1488,7 @@ Table 50371 "Loans Register"
         }
         field(68009; "Oustanding Interest to Date"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter("Insurance Contribution" | "Deposit Contribution"),
                                                                   "Document No." = field("Document No. Filter")));
             Editable = false;
@@ -1664,7 +1496,7 @@ Table 50371 "Loans Register"
         }
         field(68010; "Current Interest Paid"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = const("Insurance Contribution"),
                                                                   "Posting Date" = field("Period Date Filter")));
             Editable = false;
@@ -1772,9 +1604,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //"Net Income":=("Basic Pay H"+"House Allowance"+"Other Allowance"+"Cleared Effects")-"Total Deductions";
-                /*"Net Income":=("Basic Pay H"+"House Allowance"+"Other Allowance"+"Mileage Allowance"+"Transport Allowance"+"Other Benefits")
-                -"Total Deductions";*/
                 FnGetNetPayUtilizable(false);
 
             end;
@@ -1784,8 +1613,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*"Net Income":=("Basic Pay H"+"House Allowance"+"Other Allowance"+"Mileage Allowance"+"Transport Allowance"+"Other Benefits")
-                -"Total Deductions";*/
                 FnGetNetPayUtilizable(false);
 
             end;
@@ -1795,8 +1622,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*"Net Income":=("Basic Pay H"+"House Allowance"+"Other Allowance"+"Mileage Allowance"+"Transport Allowance"+"Other Benefits")
-                -"Total Deductions";*/
                 FnGetNetPayUtilizable(false);
 
             end;
@@ -1806,8 +1631,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*"Net Income":=("Basic Pay H"+"House Allowance"+"Other Allowance"+"Mileage Allowance"+"Transport Allowance"+"Other Benefits")
-                -"Total Deductions";*/
                 FnGetNetPayUtilizable(false);
 
             end;
@@ -1817,8 +1640,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //"Net Income":=("Basic Pay H"+"House Allowance"+"Other Allowance"+"Milage Allowance"+"Transport Allowance"+"Other Benefits")
-                //-"Total Deductions";
             end;
         }
         field(68029; Remarks; Text[60])
@@ -1950,7 +1771,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //IF CONFIRM('Are you sure you want to charge 7.5%') = TRUE THEN
             end;
         }
         field(68053; "No. Of Guarantors-FOSA"; Integer)
@@ -1991,14 +1811,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //Surestep
-                /*StatusPermissions.RESET;
-                StatusPermissions.SETRANGE(StatusPermissions."Account No",USERID);
-                StatusPermissions.SETRANGE(StatusPermissions.Name,StatusPermissions.Name::"7");
-                IF StatusPermissions.FIND('-') = FALSE THEN
-                ERROR('You do not have permissions to update External EFT.');
-                 */
-
             end;
         }
         field(68063; "Defaulter Overide Reasons"; Text[90])
@@ -2009,21 +1821,11 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //Surestep
-                /*TESTFIELD("Defaulter Overide Reasons");
-                
-                StatusPermissions.RESET;
-                StatusPermissions.SETRANGE(StatusPermissions."Account No",USERID);
-                StatusPermissions.SETRANGE(StatusPermissions.Name,StatusPermissions.Name::"8");
-                IF StatusPermissions.FIND('-') = FALSE THEN
-                ERROR('You do not have permissions to overide defaulters.');
-                 */
-
             end;
         }
         field(68065; "Last Interest Pay Date"; Date)
         {
-            CalcFormula = max("Member Ledger Entry"."Posting Date" where("Loan No" = field("Loan  No."),
+            CalcFormula = max("Cust. Ledger Entry"."Posting Date" where("Loan No" = field("Loan  No."),
                                                                           "Transaction Type" = filter("Insurance Contribution"),
                                                                           "Posting Date" = field("Date filter")));
             Editable = false;
@@ -2053,7 +1855,7 @@ Table 50371 "Loans Register"
         }
         field(68071; "Outstanding Balance to Date"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Share Capital" | "Interest Paid" | "FOSA Shares"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -2089,21 +1891,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //Surestep
-                /*IF Source=Source::FOSA THEN BEGIN
-                IF "Account No"='00-0000003000' THEN BEGIN
-                Vend.RESET;
-                Vend.SETCURRENTKEY(Vend."ID No.");
-                Vend.SETRANGE(Vend."ID No.","ID NO");
-                IF Vend.FIND('-') THEN BEGIN
-                REPEAT
-                MESSAGE('THE MEMBER HAS AN ACCOUNT'+' '+ Vend."No."+' ''+ HE/SHE CANNOT TRANSACT ON THIS ACCOUNT');
-                UNTIL Vend.NEXT=0;
-                END;
-                END;
-                END;
-                */
-
             end;
         }
         field(68094; RAmount; Decimal)
@@ -2114,7 +1901,7 @@ Table 50371 "Loans Register"
         }
         field(68096; "Last Loan Issue Date"; Date)
         {
-            CalcFormula = max("Member Ledger Entry"."Posting Date" where("Customer No." = field("Client Code"),
+            CalcFormula = max("Cust. Ledger Entry"."Posting Date" where("Customer No." = field("Client Code"),
                                                                           "Transaction Type" = filter("Share Capital"),
                                                                           "Posting Date" = field("Date filter")));
             FieldClass = FlowField;
@@ -2197,7 +1984,7 @@ Table 50371 "Loans Register"
         }
         field(69007; "Outstanding Loan"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -2206,21 +1993,21 @@ Table 50371 "Loans Register"
         }
         field(69008; "Loan Count"; Integer)
         {
-            CalcFormula = count("Member Ledger Entry" where("Customer No." = field("Client Code"),
+            CalcFormula = count("Cust. Ledger Entry" where("Customer No." = field("Client Code"),
                                                              "Transaction Type" = filter(Loan),
                                                              "Loan No" = field("Loan  No.")));
             FieldClass = FlowField;
         }
         field(69009; "Repay Count"; Integer)
         {
-            CalcFormula = count("Member Ledger Entry" where("Customer No." = field("Client Code"),
+            CalcFormula = count("Cust. Ledger Entry" where("Customer No." = field("Client Code"),
                                                              "Transaction Type" = filter("Interest Paid"),
                                                              "Loan No" = field("Loan  No.")));
             FieldClass = FlowField;
         }
         field(69010; "Outstanding Loan2"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Posting Date" = field("Date filter"),
                                                                   Amount = field("Approved Amount")));
             Editable = false;
@@ -2264,7 +2051,7 @@ Table 50371 "Loans Register"
         }
         field(69020; Prepayments; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter"),
                                                                   "Document No." = field("Document No. Filter")));
@@ -2374,7 +2161,7 @@ Table 50371 "Loans Register"
         }
         field(69044; "Total Loans Outstanding"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Posting Date" = field("Date filter")));
             FieldClass = FlowField;
@@ -2455,7 +2242,7 @@ Table 50371 "Loans Register"
         }
         field(69057; "loan  Interest"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan  No."),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter("Insurance Contribution" | "Deposit Contribution"),
                                                                   "Posting Date" = field("Date filter")));
             Editable = false;
@@ -2494,37 +2281,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                //Reschedule
-                //Surestep
-                /*IF Posted=TRUE THEN BEGIN
-                StatusPermissions.RESET;
-                StatusPermissions.SETRANGE(StatusPermissions."Account No",USERID);
-                StatusPermissions.SETRANGE(StatusPermissions.Name,StatusPermissions.Name::"27");
-                IF StatusPermissions.FIND('-') = FALSE THEN
-                ERROR('You do not have permissions to Reschedule Loans.');
-                 END;
-                
-                
-                
-                
-                
-                
-                
-                 "Checked By":=USERID;
-                {IF "New Repayment Period" > Installments THEN BEGIN
-                ERROR('you cannot reshedule loan  more than the original installments');
-                END;
-                Enddates:= CALCDATE(FORMAT("New Repayment Period")+'M',"Repayment Start Date");
-                //MESSAGE('Enddates is %1',Enddates);
-                IF "Expected Date of Completion"< CALCDATE(FORMAT("New Repayment Period")+'M',"Repayment Start Date") THEN
-                
-                ERROR('you cannot reshedule loan  more than the original installments');
-                     }
-                
-                Installments:="New Repayment Period";
-                ///IF CALCDATE(GenSetUp."Min. Loan Application Period",CustomerRecord."Registration Date") > TODAY THEN
-                */
-
             end;
         }
         field(69066; "Rejected By"; Code[15])
@@ -2532,14 +2288,14 @@ Table 50371 "Loans Register"
         }
         field(69067; "Loans Insurance"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Loan Insurance Charged" | "Loan Insurance Paid"),
                                                                   "Loan No" = field("Loan  No.")));
             FieldClass = FlowField;
         }
         field(69068; "Last Int Date"; Date)
         {
-            CalcFormula = max("Member Ledger Entry"."Posting Date" where("Customer No." = field("Client Code"),
+            CalcFormula = max("Cust. Ledger Entry"."Posting Date" where("Customer No." = field("Client Code"),
                                                                           "Loan No" = field("Loan  No."),
                                                                           "Transaction Type" = filter("Deposit Contribution")));
             FieldClass = FlowField;
@@ -2572,7 +2328,7 @@ Table 50371 "Loans Register"
         }
         field(69078; "Totals Loan Outstanding"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Share Capital" | "Interest Paid"),
                                                                   "Posting Date" = field("Date filter")));
             FieldClass = FlowField;
@@ -2687,8 +2443,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*IF "Basic Pay H">500000 THEN
-                ERROR('Basic pay is above maximum expected'); */
                 FnGetNetPayUtilizable(false);
 
             end;
@@ -2698,9 +2452,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*IF "Basic Pay H">500000 THEN
-                ERROR('Basic pay is above maximum expected');  */
-
             end;
         }
         field(69109; "Staff Assement"; Decimal)
@@ -2886,7 +2637,7 @@ Table 50371 "Loans Register"
         field(69137; "Witnessed By"; Code[20])
         {
             Enabled = false;
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -2924,7 +2675,7 @@ Table 50371 "Loans Register"
         }
         field(69146; "Loan Due"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter(Loan),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -2932,7 +2683,7 @@ Table 50371 "Loans Register"
         }
         field(69147; "Partial Disbursed(Amount Due)"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter(Loan),
                                                                   "Currency Code" = field("Currency Filter"),
@@ -3137,7 +2888,7 @@ Table 50371 "Loans Register"
         }
         field(69185; "Outstanding Balance-Capitalize"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Posting Date" = field("Date filter"),
                                                                   "Loan No" = field("Loan  No.")));
@@ -3145,7 +2896,7 @@ Table 50371 "Loans Register"
         }
         field(69186; "Last Interest Due Date"; Date)
         {
-            CalcFormula = max("Member Ledger Entry"."Posting Date" where("Customer No." = field("Client Code"),
+            CalcFormula = max("Cust. Ledger Entry"."Posting Date" where("Customer No." = field("Client Code"),
                                                                           "Posting Date" = field("Date filter"),
                                                                           "Loan No" = field("Loan  No.")));
             FieldClass = FlowField;
@@ -3184,7 +2935,7 @@ Table 50371 "Loans Register"
         }
         field(69197; "Member Group"; Code[15])
         {
-            TableRelation = "Members Register"."No." where("Group Account" = filter(true));
+            TableRelation = Customer."No." where("Group Account" = filter(true));
 
             trigger OnValidate()
             begin
@@ -3303,7 +3054,7 @@ Table 50371 "Loans Register"
         }
         field(69215; "Principal Paid"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Loan Repayment"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -3364,7 +3115,7 @@ Table 50371 "Loans Register"
         }
         field(69226; "Loan Insurance Paid"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Loan Insurance Paid"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -3544,13 +3295,6 @@ Table 50371 "Loans Register"
                     ObjLoansRec2.CalcFields(ObjLoansRec2."Outstanding Balance");
                     repeat
                         if ObjLoansRec2."Outstanding Balance" > 0 then begin
-                            /*ObjLoanOffsets.RESET;
-                            ObjLoanOffsets.SETRANGE(ObjLoanOffsets."Loan No.","Loan  No.");
-                            ObjLoanOffsets.SETRANGE(ObjLoanOffsets."Loan Top Up",ObjLoansRec2."Loan  No.");
-                            IF ObjLoanOffsets.FINDSET=FALSE THEN BEGIN
-                              VarTotalMonthlyRepayments:=VarTotalMonthlyRepayments+ObjLoansRec2.Repayment;
-                              MESSAGE(FORMAT(VarTotalMonthlyRepayments));
-                              END;*/
                             VarTotalMonthlyRepayments := VarTotalMonthlyRepayments + ObjLoansRec2.Repayment;
                         end;
                     until ObjLoansRec2.Next = 0;
@@ -3603,12 +3347,6 @@ Table 50371 "Loans Register"
                 if "Repayment Method" = "repayment method"::Amortised then begin
                     TotalMRepay := ROUND((InterestRate / 12 / 100) / (1 - Power((1 + (InterestRate / 12 / 100)), -"Loan Reschedule Instalments")) * LBalance, 1, '>');
                     LInterest := ROUND(LBalance / 100 / 12 * InterestRate, 0.05, '>');
-
-                    //IF "Repayment Method"="Repayment Method"::"Reducing Balance" THEN
-                    //  LInterest:=ROUND(("Approved Amount"*InterestRate/1200),0.05,'>');
-
-
-
                     LPrincipal := TotalMRepay - LInterest;
                     "Loan Principle Repayment" := LPrincipal;
                     "Loan Interest Repayment" := LInterest;
@@ -3648,11 +3386,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*IF "Disburesment Type"="Disburesment Type"::"Full/Single disbursement" THEN BEGIN
-                  "Requested Amount":="Approved Amount";
-                  "Approved Amount":="Amount to Disburse";
-                
-                END;*/
 
             end;
         }
@@ -3661,20 +3394,6 @@ Table 50371 "Loans Register"
 
             trigger OnValidate()
             begin
-                /*ObjTranchDetails.RESET;
-                ObjTranchDetails.SETRANGE(ObjTranchDetails."Loan No","Loan  No.");
-                IF ObjTranchDetails.FINDSET THEN BEGIN
-                  ObjTranchDetails.DELETEALL;
-                  END;
-                
-                  VarTranchNo:=VarTranchNo+1;
-                
-                  ObjTranchDetails.INIT;
-                  ObjTranchDetails."Loan No":="Loan  No.";
-                  ObjTranchDetails.Description:='Tranch Disburesment '+VarTranchNo;
-                  ObjTranchDetails."Client Code":="Client Code";
-                  ObjTranchDetails."Client Name":="Client Name";
-                  ObjTranchDetails.INSERT;*/
 
             end;
         }
@@ -3718,7 +3437,7 @@ Table 50371 "Loans Register"
         }
         field(51516223; "Principle Paid to Date"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter("Loan Repayment"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -3798,7 +3517,7 @@ Table 50371 "Loans Register"
         }
         field(51516243; "Actual Loan Balance"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment" | "Interest Due" | "Interest Paid" | "Loan Penalty Charged" | "Loan Penalty Paid" | "Loan Insurance Charged" | "Loan Insurance Paid"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Posting Date" = field("Date filter")));
@@ -3928,7 +3647,7 @@ Table 50371 "Loans Register"
         }
         field(51516273; "Last Repayment Date"; Date)
         {
-            CalcFormula = max("Member Ledger Entry"."Posting Date" where("Transaction Type" = filter("Loan Repayment"),
+            CalcFormula = max("Cust. Ledger Entry"."Posting Date" where("Transaction Type" = filter("Loan Repayment"),
                                                                           "Loan No" = field("Loan  No.")));
             FieldClass = FlowField;
         }
@@ -3960,7 +3679,7 @@ Table 50371 "Loans Register"
         }
         field(51516278; "Total Principle Paid"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                   "Loan No" = field("Loan  No."),
                                                                   "Transaction Type" = filter("Loan Repayment")));
             FieldClass = FlowField;
@@ -4185,7 +3904,7 @@ Table 50371 "Loans Register"
         SalesSetup: Record "Sacco No. Series";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         LoanType: Record "Loan Products Setup";
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record Customer;
         i: Integer;
         PeriodDueDate: Date;
         Gnljnline: Record "Gen. Journal Line";
@@ -4222,9 +3941,9 @@ Table 50371 "Loans Register"
         TCharges: Decimal;
         LAppCharges: Record "Loan Applicaton Charges";
         Vendor: Record Vendor;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         Vend: Record Vendor;
-        Cust2: Record "Members Register";
+        Cust2: Record Customer;
         TotalMRepay: Decimal;
         LPrincipal: Decimal;
         LInterest: Decimal;
@@ -4239,11 +3958,11 @@ Table 50371 "Loans Register"
         Batches: Record "Loan Disburesment-Batching";
         MovementTracker: Record "Movement Tracker";
         SpecialComm: Decimal;
-        CustR: Record "Members Register";
+        CustR: Record Customer;
         RAllocation: Record "Receipt Allocation";
         "Standing Orders": Record "Standing Orders";
         StatusPermissions: Record "Status Change Permision";
-        CustLedg: Record "Member Ledger Entry";
+        CustLedg: Record "Cust. Ledger Entry";
         LoansClearedSpecial: Record "Loan Special Clearance";
         BridgedLoans: Record "Loan Special Clearance";
         Loan: Record "Loans Register";
@@ -4271,14 +3990,14 @@ Table 50371 "Loans Register"
         loannums: Integer;
         Enddates: Date;
         LoanTypes: Record "Loan Products Setup";
-        Customer: Record "Members Register";
+        Customer: Record Customer;
         DataSheet: Record "Data Sheet Main";
         Loans: Record "Loans Register";
         Chargeable: Decimal;
         Saccodeduct: Decimal;
         SaccoDedInt: Decimal;
         LoanAppeal: Record "Loans Register";
-        HREmp: Record "Members Register";
+        HREmp: Record Customer;
         LoansRec: Record "Loans Register";
         TotalLoanOutstanding: Decimal;
         LineNoG: Integer;
@@ -4288,11 +4007,11 @@ Table 50371 "Loans Register"
         Dates: Codeunit "Dates Calculation";
         ObjCellGroup: Record "Member House Groups";
         ObjGuarantors: Record "Loans Guarantee Details";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         ObjProductCharge: Record "Loan Product Charges";
         LInsurance: Decimal;
         ObjDepositHistory: Record "Member Deposits Saving History";
-        ObjAccountLedger: Record "Member Ledger Entry";
+        ObjAccountLedger: Record "Cust. Ledger Entry";
         ObjStatementB: Record "Member Deposits Saving History";
         StatementStartDate: Date;
         StatementDateFilter: Date;
@@ -4362,7 +4081,7 @@ Table 50371 "Loans Register"
         ObjAccount: Record Vendor;
         ObjLoans: Record "Loans Register";
         SFactory: Codeunit "SURESTEP Factory";
-        MemberLedgerEntry: Record "Member Ledger Entry";
+        MemberLedgerEntry: Record "Cust. Ledger Entry";
         VarLoanDisburesementDay: Integer;
         BanksVer2: Record "Banks Ver2";
 

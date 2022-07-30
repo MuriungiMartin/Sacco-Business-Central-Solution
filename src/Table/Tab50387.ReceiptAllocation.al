@@ -1,8 +1,9 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50387 "Receipt Allocation"
 {
-    //nownPage51516383;
-    //nownPage51516383;
+
+DrillDownPageId="Receipt Allocation-BOSA";
+LookupPageId="Receipt Allocation-BOSA";
 
     fields
     {
@@ -13,7 +14,7 @@ Table 50387 "Receipt Allocation"
         field(2; "Member No"; Code[20])
         {
             NotBlank = true;
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
         }
         field(3; "Transaction Type"; Option)
         {
@@ -28,12 +29,12 @@ Table 50387 "Receipt Allocation"
                     "Global Dimension 1 Code" := 'FOSA';
 
                 if ("Transaction Type" <> "transaction type"::"FOSA Account") and ("Transaction Type" <> "transaction type"::" ") then begin
-                    "Account Type" := "account type"::Member
+                    "Account Type" := "account type"::Customer
                 end else
                     "Account Type" := "account type"::Vendor;
 
                 /*
-                IF "Account Type"="Account Type"::Member THEN
+                IF "Account Type"="Account Type"::Customer THEN
                   BEGIN
                       IF ObjMember.GET("Member No") THEN
                         BEGIN
@@ -134,7 +135,7 @@ Table 50387 "Receipt Allocation"
                             VarEndYear := CalcDate('CY', Today);
                             VarInsuranceMonths := ROUND((VarEndYear - Today) / 30, 1, '=');
                             VarTransactionType := Vartransactiontype::"Loan Insurance Charged";
-                            VarAccountType := Varaccounttype::Member;
+                            VarAccountType := Varaccounttype::Customer;
                             VarBalAccountType := Varbalaccounttype::"G/L Account";
                             if ObjLoanType.Get(ObjLoans."Loan Product Type") then begin
                                 VarBalAccountNo := ObjLoanType."Receivable Insurance Accounts";
@@ -154,7 +155,7 @@ Table 50387 "Receipt Allocation"
 
                             ObjReceiptAll.Init;
                             ObjReceiptAll."Document No" := "Document No";
-                            ObjReceiptAll."Account Type" := ObjReceiptAll."account type"::Member;
+                            ObjReceiptAll."Account Type" := ObjReceiptAll."account type"::Customer;
                             ObjReceiptAll."Account No" := ObjLoans."Client Code";
                             ObjReceiptAll."Transaction Type" := ObjReceiptAll."transaction type"::"Loan Insurance Paid";
                             ObjReceiptAll.Amount := VarInsuranceAmount;
@@ -255,7 +256,7 @@ Table 50387 "Receipt Allocation"
         }
         field(51516155; "Mpesa Account No"; Code[20])
         {
-            TableRelation = if ("Mpesa Account Type" = filter(Member)) "Members Register"."No."
+            TableRelation = if ("Mpesa Account Type" = filter(Member)) Customer."No."
             else
             if ("Mpesa Account Type" = filter(Vendor)) Vendor."No."
             else
@@ -339,10 +340,10 @@ Table 50387 "Receipt Allocation"
 
     var
         Loans: Record "Loans Register";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         PTEN: Text;
         DataSheet: Record "Data Sheet Main";
-        Customer: Record "Members Register";
+        Customer: Record Customer;
         LoansR: Record "Loans Register";
         GenSetup: Record "Sacco General Set-Up";
         ReceiptH: Record "Receipts & Payments";
@@ -361,7 +362,7 @@ Table 50387 "Receipt Allocation"
         ObjLoanType: Record "Loan Products Setup";
         ObjReceiptAll: Record "Receipt Allocation";
         ObjAccount: Record Vendor;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
 
     local procedure FnGetFosaAccount(AccountType: Code[100]): Code[100]
     var

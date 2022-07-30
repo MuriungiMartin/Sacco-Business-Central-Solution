@@ -329,7 +329,7 @@ Page 50521 "Loan Trunch Disburesment"
         EnableFields: Boolean;
         EnablePost: Boolean;
         ObjLoans: Record "Loans Register";
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         PCharges: Record "Loan Product Charges";
         GenSetUp: Record "Sacco General Set-Up";
         PChargeAmount: Decimal;

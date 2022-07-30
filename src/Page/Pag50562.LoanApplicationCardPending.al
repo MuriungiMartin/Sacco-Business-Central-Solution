@@ -1257,7 +1257,7 @@ Page 50562 "Loan Application Card(Pending)"
         ScheduleCode: Code[20];
         PreviewShedule: Record "Loan Repayment Schedule";
         PeriodInterval: Code[10];
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record Customer;
         Gnljnline: Record "Gen. Journal Line";
         Jnlinepost: Codeunit "Gen. Jnl.-Post Line";
         CumInterest: Decimal;
@@ -1267,10 +1267,10 @@ Page 50562 "Loan Application Card(Pending)"
         LineNo: Integer;
         GnljnlineCopy: Record "Gen. Journal Line";
         NewLNApplicNo: Code[10];
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LoanApp: Record "Loans Register";
         TestAmt: Decimal;
-        CustRec: Record "Members Register";
+        CustRec: Record Customer;
         CustPostingGroup: Record "Customer Posting Group";
         GenSetUp: Record "Sacco General Set-Up";
         PCharges: Record "Loan Product Charges";
@@ -1306,7 +1306,7 @@ Page 50562 "Loan Application Card(Pending)"
         DActivity: Code[20];
         DBranch: Code[20];
         TotalTopupComm: Decimal;
-        CustE: Record "Members Register";
+        CustE: Record Customer;
         DocN: Text[50];
         DocM: Text[100];
         DNar: Text[250];
@@ -1672,7 +1672,7 @@ Page 50562 "Loan Application Card(Pending)"
         FileName: Text[100];
         Attachment: Text[250];
         CompanyInfo: Record "Company Information";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         Email: Text[50];
         Recipient: List of [Text];
     begin
@@ -1700,7 +1700,7 @@ Page 50562 "Loan Application Card(Pending)"
 
     local procedure FnSendGuarantorAppSMS(LoanNo: Code[20])
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         Sms: Record "SMS Messages";
     begin
         LGuarantors.Reset;

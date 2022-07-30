@@ -10,7 +10,8 @@ Page 50366 "Members List"
     PageType = List;
     UsageCategory = Lists;
     ApplicationArea = All;
-    SourceTable = "Members Register";
+    SourceTable = Customer;
+    SourceTableView = order(ascending) where(ISNormalMember = filter(true));
 
     layout
     {

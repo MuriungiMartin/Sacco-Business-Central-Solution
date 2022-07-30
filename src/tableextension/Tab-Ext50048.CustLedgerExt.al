@@ -1,4 +1,4 @@
-tableextension 50048 CustLedgerExt extends "Cust. Ledger Entry"
+tableextension 50048 "CustLedgerExt" extends "Cust. Ledger Entry"
 {
 
 

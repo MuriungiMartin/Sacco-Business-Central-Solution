@@ -9,37 +9,37 @@ Table 50936 "Membership Cue"
         }
         field(2; "Active Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Status = const(Active)));
+            CalcFormula = count(Customer where(Status = const(Active)));
             FieldClass = FlowField;
         }
         field(3; "Dormant Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Status = const(Dormant)));
+            CalcFormula = count(Customer where(Status = const(Dormant)));
             FieldClass = FlowField;
         }
         field(4; "Deceased Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Status = const(Deceased)));
+            CalcFormula = count(Customer where(Status = const(Deceased)));
             FieldClass = FlowField;
         }
         field(5; "Withdrawn Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Status = const(Exited)));
+            CalcFormula = count(Customer where(Status = const(Exited)));
             FieldClass = FlowField;
         }
         field(6; "Male Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Gender = const(Male)));
+            CalcFormula = count(Customer where(Gender = const(Male)));
             FieldClass = FlowField;
         }
         field(7; "Female Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Gender = const(Female)));
+            CalcFormula = count(Customer where(Gender = const(Female)));
             FieldClass = FlowField;
         }
         field(8; "Resigned Members"; Integer)
         {
-            // CalcFormula = count("Members Register" where (Status=const("9")));
+            // CalcFormula = count(Customer where (Status=const("9")));
             // FieldClass = FlowField;
         }
         field(9; BOSA; Integer)
@@ -50,17 +50,17 @@ Table 50936 "Membership Cue"
         }
         field(14; "Members with ID No"; Integer)
         {
-            CalcFormula = count("Members Register" where("ID No." = filter(> '0')));
+            CalcFormula = count(Customer where("ID No." = filter(> '0')));
             FieldClass = FlowField;
         }
         field(15; "Members With Tell No"; Integer)
         {
-            CalcFormula = count("Members Register" where("Phone No." = filter(> '0')));
+            CalcFormula = count(Customer where("Phone No." = filter(> '0')));
             FieldClass = FlowField;
         }
         field(16; "Members With Mobile No"; Integer)
         {
-            CalcFormula = count("Members Register" where("Mobile Phone No" = filter(> '0')));
+            CalcFormula = count(Customer where("Mobile Phone No" = filter(> '0')));
             FieldClass = FlowField;
         }
         field(17; CROP; Integer)
@@ -71,7 +71,7 @@ Table 50936 "Membership Cue"
         }
         field(26; "Non-Active Members"; Integer)
         {
-            CalcFormula = count("Members Register" where(Status = const("Awaiting Exit")));
+            CalcFormula = count(Customer where(Status = const("Awaiting Exit")));
             FieldClass = FlowField;
         }
         field(27; "NoQsAsked Loan"; Integer)
@@ -193,7 +193,7 @@ Table 50936 "Membership Cue"
         }
         field(46; "Group Accounts"; Integer)
         {
-            CalcFormula = count("Members Register" where("Account Category" = filter(Group)));
+            CalcFormula = count(Customer where("Account Category" = filter(Group)));
             FieldClass = FlowField;
         }
         field(47; "Joint Accounts"; Integer)

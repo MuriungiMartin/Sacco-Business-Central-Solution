@@ -1,150 +1,6 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Page 50561 "Loans Approved Card"
 {
-    // 
-    // //IF Posted=TRUE THEN
-    // //ERROR('Loan has been posted, Can only preview schedule');
-    // {
-    // IF "Repayment Frequency"="Repayment Frequency"::Daily THEN
-    // EVALUATE(InPeriod,'1D')
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Weekly THEN
-    // EVALUATE(InPeriod,'1W')
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Monthly THEN
-    // EVALUATE(InPeriod,'1M')
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Quaterly THEN
-    // EVALUATE(InPeriod,'1Q');
-    // 
-    // 
-    // QCounter:=0;
-    // QCounter:=3;
-    // //EVALUATE(InPeriod,'1D');
-    // GrPrinciple:="Grace Period - Principle (M)";
-    // GrInterest:="Grace Period - Interest (M)";
-    // InitialGraceInt:="Grace Period - Interest (M)";
-    // 
-    // LoansR.RESET;
-    // LoansR.SETRANGE(LoansR."Loan  No.","Loan  No.");
-    // IF LoansR.FIND('-') THEN BEGIN
-    // 
-    // TESTFIELD("Loan Disbursement Date");
-    // TESTFIELD("Repayment Start Date");
-    // 
-    // RSchedule.RESET;
-    // RSchedule.SETRANGE(RSchedule."Loan No.","Loan  No.");
-    // RSchedule.DELETEALL;
-    // 
-    // LoanAmount:=LoansR."Approved Amount";
-    // InterestRate:=LoansR.Interest;
-    // RepayPeriod:=LoansR.Installments;
-    // InitialInstal:=LoansR.Installments+"Grace Period - Principle (M)";
-    // LBalance:=LoansR."Approved Amount";
-    // RunDate:="Repayment Start Date";//"Loan Disbursement Date";
-    // 
-    // InstalNo:=0;
-    // 
-    // //Repayment Frequency
-    // IF "Repayment Frequency"="Repayment Frequency"::Daily THEN
-    // RunDate:=CALCDATE('-1D',RunDate)
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Weekly THEN
-    // RunDate:=CALCDATE('-1W',RunDate)
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Monthly THEN
-    // RunDate:=CALCDATE('-1M',RunDate)
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Quaterly THEN
-    // RunDate:=CALCDATE('-1Q',RunDate);
-    // //Repayment Frequency
-    // 
-    // 
-    // REPEAT
-    // InstalNo:=InstalNo+1;
-    // 
-    // 
-    // //Repayment Frequency
-    // IF "Repayment Frequency"="Repayment Frequency"::Daily THEN
-    // RunDate:=CALCDATE('1D',RunDate)
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Weekly THEN
-    // RunDate:=CALCDATE('1W',RunDate)
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Monthly THEN
-    // RunDate:=CALCDATE('1M',RunDate)
-    // ELSE IF "Repayment Frequency"="Repayment Frequency"::Quaterly THEN
-    // RunDate:=CALCDATE('1Q',RunDate);
-    // //Repayment Frequency
-    // 
-    // 
-    // IF "Repayment Method"="Repayment Method"::Amortised THEN BEGIN
-    // TESTFIELD(Interest);
-    // TESTFIELD(Installments);
-    // TotalMRepay:=ROUND((InterestRate/12/100) / (1 - POWER((1 +(InterestRate/12/100)),- (RepayPeriod))) * (LoanAmount));
-    // LInterest:=ROUND(LBalance / 100 / 12 * InterestRate);
-    // LPrincipal:=TotalMRepay-LInterest;
-    // END;
-    // 
-    // IF "Repayment Method"="Repayment Method"::"Straight Line" THEN BEGIN
-    // TESTFIELD(Interest);
-    // TESTFIELD(Installments);
-    // LPrincipal:=ROUND(LoanAmount/RepayPeriod,0.05,'>');
-    // LInterest:=ROUND((InterestRate/12/100)*LoanAmount,0.05,'>');
-    // //Grace Period Interest
-    // LInterest:=ROUND((LInterest*InitialInstal)/(InitialInstal-InitialGraceInt),0.05,'>');
-    // END;
-    // 
-    // IF "Repayment Method"="Repayment Method"::"Reducing Balance" THEN BEGIN
-    // TESTFIELD(Interest);
-    // TESTFIELD(Installments);
-    // LPrincipal:=ROUND(LoanAmount/RepayPeriod,0.05,'>');
-    // LInterest:=ROUND((InterestRate/12/100)*LBalance,0.05,'>');
-    // END;
-    // 
-    // IF "Repayment Method"="Repayment Method"::Constants THEN BEGIN
-    // TESTFIELD(Repayment);
-    // IF LBalance < Repayment THEN
-    // LPrincipal:=LBalance
-    // ELSE
-    // LPrincipal:=Repayment;
-    // LInterest:=Interest;
-    // END;
-    // //kma
-    // 
-    // //Grace Period
-    // IF GrPrinciple > 0 THEN BEGIN
-    // LPrincipal:=0
-    // END ELSE BEGIN
-    // //IF "Instalment Period" <> InPeriod THEN
-    // LBalance:=LBalance-LPrincipal;
-    // 
-    // END;
-    // 
-    // IF GrInterest > 0 THEN
-    // LInterest:=0;
-    // 
-    // GrPrinciple:=GrPrinciple-1;
-    // GrInterest:=GrInterest-1;
-    // //Grace Period
-    // EVALUATE(RepayCode,FORMAT(InstalNo));
-    // 
-    // 
-    // 
-    // RSchedule.INIT;
-    // RSchedule."Repayment Code":=RepayCode;
-    // RSchedule."Loan No.":="Loan  No.";
-    // RSchedule."Loan Amount":=LoanAmount;
-    // RSchedule."Instalment No":=InstalNo;
-    // RSchedule."Repayment Date":=RunDate;
-    // RSchedule."Member No.":="Client Code";
-    // RSchedule."Loan Category":="Loan Product Type";
-    // RSchedule."Monthly Repayment":=LInterest + LPrincipal;
-    // RSchedule."Monthly Interest":=LInterest;
-    // RSchedule."Principal Repayment":=LPrincipal;
-    // RSchedule.INSERT;
-    // //WhichDay:=(DATE2DMY,RSchedule."Repayment Date",1);
-    //  WhichDay:=DATE2DWY(RSchedule."Repayment Date",1);
-    // //MESSAGE('which day is %1',WhichDay);
-    // //BEEP(2,10000);
-    // UNTIL LBalance < 1
-    // 
-    // END;
-    // 
-    // COMMIT;
-    // }
 
     DeleteAllowed = false;
     Editable = false;
@@ -1009,7 +865,7 @@ Page 50561 "Loans Approved Card"
         ScheduleCode: Code[20];
         PreviewShedule: Record "Loan Repayment Schedule";
         PeriodInterval: Code[10];
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record Customer;
         Gnljnline: Record "Gen. Journal Line";
         Jnlinepost: Codeunit "Gen. Jnl.-Post Line";
         CumInterest: Decimal;
@@ -1019,10 +875,10 @@ Page 50561 "Loans Approved Card"
         LineNo: Integer;
         GnljnlineCopy: Record "Gen. Journal Line";
         NewLNApplicNo: Code[10];
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LoanApp: Record "Loans Register";
         TestAmt: Decimal;
-        CustRec: Record "Members Register";
+        CustRec: Record Customer;
         CustPostingGroup: Record "Customer Posting Group";
         GenSetUp: Record "Sales & Receivables Setup";
         PCharges: Record "Loan Product Charges";
@@ -1058,7 +914,7 @@ Page 50561 "Loans Approved Card"
         DActivity: Code[20];
         DBranch: Code[20];
         TotalTopupComm: Decimal;
-        CustE: Record "Members Register";
+        CustE: Record Customer;
         DocN: Text[50];
         DocM: Text[100];
         DNar: Text[250];
@@ -1073,7 +929,7 @@ Page 50561 "Loans Approved Card"
         DiscountingAmount: Decimal;
         StatusPermissions: Record "Status Change Permision";
         BridgedLoans: Record "Loan Special Clearance";
-        SMSMessage: Record "Members Register";
+        SMSMessage: Record Customer;
         InstallNo2: Integer;
         currency: Record "Currency Exchange Rate";
         CURRENCYFACTOR: Decimal;

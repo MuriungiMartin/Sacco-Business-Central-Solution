@@ -1,8 +1,9 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50374 "Loan Collateral Details"
 {
-    //nownPage51516388;
-    //nownPage51516388;
+
+    DrillDownPageId = "Loan Collateral Security";
+    LookupPageId = "Loan Collateral Security";
 
     fields
     {
@@ -180,7 +181,7 @@ Table 50374 "Loan Collateral Details"
         }
         field(23; "Outstanding Balance"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Loan No" = field("Loan No"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Loan No" = field("Loan No"),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment")));
             FieldClass = FlowField;
         }

@@ -3,7 +3,7 @@ Page 50368 "Members Statistics"
 {
     DeleteAllowed = false;
     PageType = Card;
-    SourceTable = "Members Register";
+    SourceTable = Customer;
 
     layout
     {

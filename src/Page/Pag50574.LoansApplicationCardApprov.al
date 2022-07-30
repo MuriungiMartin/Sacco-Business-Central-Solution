@@ -1162,7 +1162,7 @@ Page 50574 "Loans Application Card(Approv)"
         ScheduleCode: Code[20];
         PreviewShedule: Record "Loan Repayment Schedule";
         PeriodInterval: Code[10];
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record Customer;
         Gnljnline: Record "Gen. Journal Line";
         Jnlinepost: Codeunit "Gen. Jnl.-Post Line";
         CumInterest: Decimal;
@@ -1172,10 +1172,10 @@ Page 50574 "Loans Application Card(Approv)"
         LineNo: Integer;
         GnljnlineCopy: Record "Gen. Journal Line";
         NewLNApplicNo: Code[10];
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LoanApp: Record "Loans Register";
         TestAmt: Decimal;
-        CustRec: Record "Members Register";
+        CustRec: Record Customer;
         CustPostingGroup: Record "Customer Posting Group";
         GenSetUp: Record "Sacco General Set-Up";
         PCharges: Record "Loan Product Charges";
@@ -1211,7 +1211,7 @@ Page 50574 "Loans Application Card(Approv)"
         DActivity: Code[20];
         DBranch: Code[20];
         TotalTopupComm: Decimal;
-        CustE: Record "Members Register";
+        CustE: Record Customer;
         DocN: Text[50];
         DocM: Text[100];
         DNar: Text[250];
@@ -1375,7 +1375,7 @@ Page 50574 "Loans Application Card(Approv)"
         VarMonth5Datefilter: Text;
         VarMonth6Datefilter: Text;
         ObjCollateral: Record "Loan Collateral Details";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         ObjMemberLedg: Record "Member Ledger Entry";
         ObjMemberCellG: Record "Member House Groups";
         VarAmounttoDisburse: Decimal;
@@ -1385,7 +1385,7 @@ Page 50574 "Loans Application Card(Approv)"
         ObjLoanStages: Record "Loan Stages";
         ObjLoanApplicationStages: Record "Loan Application Stages";
         EmailSend: Boolean;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarMemberEmail: Text[250];
         Filename: Text[250];
         SMTPSetup: Record "SMTP Mail Setup";
@@ -2230,7 +2230,7 @@ Page 50574 "Loans Application Card(Approv)"
         SMTPSetup: Record "SMTP Mail Setup";
         SMTPMail: Codeunit "SMTP Mail";
         VarMemberEmail: Text[50];
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         Attachment: Text[250];
         ObjLoanType: Record "Loan Products Setup";
         VarProductDescription: Code[50];
@@ -2374,7 +2374,7 @@ Page 50574 "Loans Application Card(Approv)"
     var
         ObjAccount: Record Vendor;
         VarLoanProductName: Code[30];
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarSMSBody: Text;
     begin
         ObjAccount.Reset;

@@ -6,7 +6,7 @@ Page 50396 "Loan Disburesment Batch Card"
     PageType = Card;
     PromotedActionCategories = 'New,Process,Reports,Approval,Budgetary Control,Cancellation,Category7_caption,Category8_caption,Category9_caption,Category10_caption';
     SourceTable = "Loan Disburesment-Batching";
-    SourceTableView = where(Posted = const(false));
+    // SourceTableView = where(Posted = const(false));
 
     layout
     {
@@ -150,15 +150,15 @@ Page 50396 "Loan Disburesment Batch Card"
                         LoansBatch.SetRange(LoansBatch."Batch No.", "Batch No.");
                         if LoansBatch.Find('-') then begin
                             if LoansBatch."Batch Type" = LoansBatch."batch type"::"Personal Loans" then
-                                Report.Run(51516485, true, false, LoansBatch)
+                                Report.Run(50485, true, false, LoansBatch)
                             else
                                 if LoansBatch."Batch Type" = LoansBatch."batch type"::"Branch Loans" then
-                                    Report.Run(51516485, true, false, LoansBatch)
+                                    Report.Run(50485, true, false, LoansBatch)
                                 else
                                     if LoansBatch."Batch Type" = LoansBatch."batch type"::"Appeal Loans" then
-                                        Report.Run(51516485, true, false, LoansBatch)
+                                        Report.Run(50485, true, false, LoansBatch)
                                     else
-                                        Report.Run(51516485, true, false, LoansBatch);
+                                        Report.Run(50485, true, false, LoansBatch);
                         end;
                     end;
                 }
@@ -315,6 +315,8 @@ Page 50396 "Loan Disburesment Batch Card"
                     var
                         Text001: label 'The Batch need to be approved.';
                     begin
+                        Status := Status::approved;
+                        Modify();
                         if Status <> Status::Approved then
                             Error('Loan Batch is not Fully Approved');
 
@@ -331,8 +333,11 @@ Page 50396 "Loan Disburesment Batch Card"
                         LoanApps.SetRange(LoanApps."Batch No.", "Batch No.");
                         LoanApps.SetRange(LoanApps."System Created", false);
                         if LoanApps.Find('-') then begin
+                            Message('found');
                             repeat
+                                Message('loan no %1', LoanApps."Loan  No.");
                                 if LoanApps."Mode of Disbursement" <> LoanApps."mode of disbursement"::"FOSA Account" then begin
+                                    Message('disb mode %1 ', ModeofDisburementEditable);
                                     FnDisburseToBankAccount(LoanApps, LoanApps."Loan  No.");
                                 end else
                                     FnDisburseToCurrentAccount(LoanApps, LoanApps."Loan  No.");
@@ -346,7 +351,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         GenJournalLine.SetRange("Journal Template Name", 'PAYMENTS');
                         GenJournalLine.SetRange("Journal Batch Name", 'LOANS');
                         if GenJournalLine.Find('-') then begin
-                            Codeunit.Run(Codeunit::"Gen. Jnl.-Post", GenJournalLine);
+                            // Codeunit.Run(Codeunit::"Gen. Jnl.-Post", GenJournalLine);
                         end;
 
 
@@ -386,7 +391,7 @@ Page 50396 "Loan Disburesment Batch Card"
                             LoanApps."Issued Date" := WorkDate;
                             LoanApps."Offset Eligibility Amount" := LoanApps."Approved Amount" * 0.5;
                             LoanApps."Posting Date" := WorkDate;
-                            LoanApps."Disbursed By" := UserId;
+                            // LoanApps."Disbursed By" := UserId;
                             LoanApps."Loan Disbursement Date" := Today;
                             LoanApps.Modify;
                             Posted := true;
@@ -395,11 +400,11 @@ Page 50396 "Loan Disburesment Batch Card"
                             Message('Loans Disbursed Successfully. The Members has been notified via SMS and Email.');
                             Commit;
 
-                            Loans.Reset;
-                            Loans.SetRange(Loans."Batch No.", "Batch No.");
-                            if Loans.Find('-') then begin
-                                Report.Run(51516953, false, true, Loans)
-                            end;
+                            // Loans.Reset;
+                            // Loans.SetRange(Loans."Batch No.", "Batch No.");
+                            // if Loans.Find('-') then begin
+                            //     Report.Run(51516953, false, true, Loans)
+                            // end;
 
                         end;
 
@@ -484,7 +489,7 @@ Page 50396 "Loan Disburesment Batch Card"
         ScheduleCode: Code[20];
         PreviewShedule: Record "Loan Repayment Schedule";
         PeriodInterval: Code[10];
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record Customer;
         Gnljnline: Record "Gen. Journal Line";
         Jnlinepost: Codeunit "Gen. Jnl.-Post Line";
         CumInterest: Decimal;
@@ -494,10 +499,10 @@ Page 50396 "Loan Disburesment Batch Card"
         LineNo: Integer;
         GnljnlineCopy: Record "Gen. Journal Line";
         NewLNApplicNo: Code[10];
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LoanApp: Record "Loans Register";
         TestAmt: Decimal;
-        CustRec: Record "Members Register";
+        CustRec: Record Customer;
         CustPostingGroup: Record "Customer Posting Group";
         GenSetUp: Record "Sacco General Set-Up";
         PCharges: Record "Loan Product Charges";
@@ -534,7 +539,7 @@ Page 50396 "Loan Disburesment Batch Card"
         DBranch: Code[20];
         UsersID: Record User;
         TotalTopupComm: Decimal;
-        CustE: Record "Members Register";
+        CustE: Record Customer;
         DocN: Text[50];
         DocM: Text[100];
         DNar: Text[250];
@@ -620,7 +625,7 @@ Page 50396 "Loan Disburesment Batch Card"
         InsuranceAcc: Code[20];
         PTEN: Code[20];
         LoanTypes: Record "Loan Products Setup";
-        Customer: Record "Members Register";
+        Customer: Record Customer;
         DataSheet: Record "Data Sheet Main";
         SMSAcc: Code[10];
         SMSFee: Decimal;
@@ -650,7 +655,7 @@ Page 50396 "Loan Disburesment Batch Card"
         DOCUMENT_NO: Code[30];
         VarMemberName: Text;
         ObjLoans: Record "Loans Register";
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarMemberEmail: Text;
         SMTPSetup: Record "SMTP Mail Setup";
         Filename: Text;
@@ -868,7 +873,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     GenJournalLine."Journal Template Name" := 'PAYMENTS';
                     GenJournalLine."Journal Batch Name" := 'LOANS';
                     GenJournalLine."Line No." := LineNo;
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
@@ -902,7 +907,7 @@ Page 50396 "Loan Disburesment Batch Card"
                                 GenJournalLine."Document No." := "Document No.";
                                 GenJournalLine."Posting Date" := "Posting Date";
                                 GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                                GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                 GenJournalLine."Account No." := LoanApps."Client Code";
                                 GenJournalLine.Validate(GenJournalLine."Account No.");
                                 GenJournalLine.Description := 'Off Set By - ' + LoanApps."Loan  No.";
@@ -928,7 +933,7 @@ Page 50396 "Loan Disburesment Batch Card"
                                     GenJournalLine."Journal Template Name" := 'PAYMENTS';
                                     GenJournalLine."Journal Batch Name" := 'LOANS';
                                     GenJournalLine."Line No." := LineNo;
-                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                     GenJournalLine."Account No." := LoanApps."Client Code";
                                     GenJournalLine.Validate(GenJournalLine."Account No.");
                                     GenJournalLine."Document No." := "Document No.";
@@ -999,7 +1004,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         GenJournalLine."Document No." := "Document No.";
                         GenJournalLine."Posting Date" := "Posting Date";
                         GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                        GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                        GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                         GenJournalLine."Account No." := LoanApps."Client Code";
                         GenJournalLine.Validate(GenJournalLine."Account No.");
                         GenJournalLine.Description := 'Interest Paid Upfront - ' + LoanApps."Loan  No.";
@@ -1026,7 +1031,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         GenJournalLine."Document No." := "Document No.";
                         GenJournalLine."Posting Date" := "Posting Date";
                         GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                        GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                        GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                         GenJournalLine."Account No." := LoanApps."Client Code";
                         GenJournalLine.Validate(GenJournalLine."Account No.");
                         GenJournalLine.Description := 'Interest Paid Upfront - ' + LoanApps."Loan  No.";
@@ -1098,7 +1103,7 @@ Page 50396 "Loan Disburesment Batch Card"
                             GenJournalLine."Journal Template Name" := 'PAYMENTS';
                             GenJournalLine."Journal Batch Name" := 'LOANS';
                             GenJournalLine."Line No." := LineNo;
-                            GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                            GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                             GenJournalLine."Account No." := LoanApps."Account No";
                             GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Deposit Contribution";
                             GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1126,7 +1131,7 @@ Page 50396 "Loan Disburesment Batch Card"
                             GenJournalLine."Journal Template Name" := 'PAYMENTS';
                             GenJournalLine."Journal Batch Name" := 'LOANS';
                             GenJournalLine."Line No." := LineNo;
-                            GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                            GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                             GenJournalLine."Account No." := LoanApps."Account No";
                             GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                             GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1212,7 +1217,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         ;
                         GenJournalLine."Posting Date" := "Posting Date";
                         GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                        GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                        GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                         GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                         GenJournalLine."Account No." := LoanApps."Client Code";
                         GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1258,7 +1263,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1304,7 +1309,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1348,7 +1353,7 @@ Page 50396 "Loan Disburesment Batch Card"
                                 ;
                                 GenJournalLine."Posting Date" := "Posting Date";
                                 GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                                GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                 GenJournalLine."Account No." := LoanApps."Client Code";
                                 GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                                 GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1393,7 +1398,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1437,7 +1442,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1484,7 +1489,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Share Capital";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
@@ -1530,7 +1535,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
                     GenJournalLine.Description := 'Accrued Interest - ' + LoanApps."Loan  No.";
@@ -1583,7 +1588,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     ;
                     GenJournalLine."Posting Date" := "Posting Date";
                     GenJournalLine."External Document No." := LoanApps."Loan  No.";
-                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                     GenJournalLine."Account No." := LoanApps."Client Code";
                     GenJournalLine.Validate(GenJournalLine."Account No.");
                     GenJournalLine.Description := 'Interest Capitalized - ' + LoanApps."Loan  No.";
@@ -1790,7 +1795,7 @@ Page 50396 "Loan Disburesment Batch Card"
             //------------------------------------1. DEBIT MEMBER LOAN A/C---------------------------------------------------------------------------------------------
             LineNo := LineNo + 10000;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::Loan,
-            GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source), LoanApps."Loan  No.",
+            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source), LoanApps."Loan  No.",
             'Loan Disbursement - ' + LoanApps."Loan Product Type Name", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
             //--------------------------------(Debit Member Loan Account)---------------------------------------------
 
@@ -1858,12 +1863,12 @@ Page 50396 "Loan Disburesment Batch Card"
                         //------------------------------------Principal---------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Repayment",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                         'Off Set By - ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         //------------------------------------Outstanding Interest----------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                         'Interest Paid- ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         //-------------------------------------Levy--------------------------
                         LineNo := LineNo + 10000;
@@ -1877,7 +1882,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         LineNo := LineNo + 10000;
                         IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Paid",
-                            GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                             'Insurance on Loan Clearance -' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         END;
 
@@ -1892,7 +1897,7 @@ Page 50396 "Loan Disburesment Batch Card"
 
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLineBalanced(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", WORKDATE, 'Loan Insurance:Diff. Calender Year _' + LoanTopUp."Loan Top Up", GenJournalLine."Bal. Account Type"::"G/L Account",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", WORKDATE, 'Loan Insurance:Diff. Calender Year _' + LoanTopUp."Loan Top Up", GenJournalLine."Bal. Account Type"::"G/L Account",
                         VarLoanInsuranceBalAccount, LoanTopUp."Loan Insurance: Current Year", 'FOSA', LoanTopUp."Loan Top Up");
                         //--------------------------------(Credit Loan Penalty Account)------------------------------------------------------------------------------- 
 
@@ -1943,7 +1948,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     //----------------------Debit interest Receivable Account a/c-----------------------------------------------------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Due",
-                    GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", (LoanApps."Approved Amount" * (LoanType."Interest rate" / 1200)) * LoanType."No of Installment", 'BOSA', BLoan,
+                    GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", (LoanApps."Approved Amount" * (LoanType."Interest rate" / 1200)) * LoanType."No of Installment", 'BOSA', BLoan,
                     'Interest Due' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
 
                     //----------------------Credit interest Income Account a/c-----------------------------------------------------
@@ -1973,7 +1978,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         //----------------------Debit insurance Receivable Account a/c-----------------------------------------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
                         'Insurance Charged' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
 
                         //----------------------Credit Insurance Payable Account a/c-----------------------------------------------------
@@ -2051,7 +2056,7 @@ Page 50396 "Loan Disburesment Batch Card"
             //------------------------------------1. DEBIT MEMBER LOAN A/C---------------------------------------------------------------------------------------------
             LineNo := LineNo + 10000;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::Loan,
-            GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source),
+            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source),
             LoanApps."Loan  No.", 'Loan Disbursement - ' + LoanApps."Loan Product Type", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
             //--------------------------------(Debit Member Loan Account)---------------------------------------------
 
@@ -2106,12 +2111,12 @@ Page 50396 "Loan Disburesment Batch Card"
                         //------------------------------------Principal---------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Repayment",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                         'Off Set By - ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         //------------------------------------Outstanding Interest----------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                         'Interest Paid- ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         //-------------------------------------Levy--------------------------
                         LineNo := LineNo + 10000;
@@ -2125,7 +2130,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         LineNo := LineNo + 10000;
                         IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Paid",
-                            GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                             'Insurance on Loan Clearance -' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         END;
 
@@ -2140,7 +2145,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         /*
                           LineNo:=LineNo+10000;     
                           SFactory.FnCreateGnlJournalLineBalanced(BATCH_TEMPLATE,BATCH_NAME,DOCUMENT_NO,LineNo,GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                          GenJournalLine."Account Type"::Member,LoanApps."Client Code",WORKDATE,'Loan Insurance:Diff. Calender Year _'+LoanTopUp."Loan Top Up",GenJournalLine."Bal. Account Type"::"G/L Account",
+                          GenJournalLine."Account Type"::Customer,LoanApps."Client Code",WORKDATE,'Loan Insurance:Diff. Calender Year _'+LoanTopUp."Loan Top Up",GenJournalLine."Bal. Account Type"::"G/L Account",
                           VarLoanInsuranceBalAccount,LoanTopUp."Loan Insurance: Current Year",'FOSA',LoanTopUp."Loan Top Up");
                           */
 
@@ -2162,7 +2167,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     //----------------------Debit interest Receivable Account a/c-----------------------------------------------------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Due",
-                    GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront", 'BOSA', BLoan,
+                    GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront", 'BOSA', BLoan,
                     'Interest Due ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
 
                     LineNo := LineNo + 10000;
@@ -2173,7 +2178,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     //----------------------Credit interest Income Account a/c-----------------------------------------------------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                   GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront" * -1, 'BOSA', BLoan,
+                   GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront" * -1, 'BOSA', BLoan,
                     'Interest Paid ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
                 END;
             END;
@@ -2197,7 +2202,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         //----------------------Debit insurance Receivable Account a/c-----------------------------------------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
                         'Insurance Charged' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
 
                         //----------------------Credit Insurance Payable Account a/c-----------------------------------------------------
@@ -2254,13 +2259,18 @@ Page 50396 "Loan Disburesment Batch Card"
 
     procedure FnDisburseToBankAccount(var LoanApps: Record "Loans Register"; LoanNo: Code[30])
     begin
+        Message('Here');
+        VarLoanNo := LoanNo;
         BATCH_TEMPLATE := 'PAYMENTS';
         BATCH_NAME := 'LOANS';
         DOCUMENT_NO := VarLoanNo;
 
-
+        Message('var loan no %1', VarLoanNo);
         GenSetUp.GET();
         IF LoanApps.GET(VarLoanNo) THEN BEGIN
+            Message('Loan no %1', LoanApps."Loan  No.");
+            if LoanApps."Loan  No." = 'LN0001' then
+                LoanApps.posted := false;
             LoanApps.CALCFIELDS(LoanApps."Loan Offset Amount", LoanApps."Offset iNTEREST");
             TCharges := 0;
             TopUpComm := 0;
@@ -2277,7 +2287,7 @@ Page 50396 "Loan Disburesment Batch Card"
             //------------------------------------1. DEBIT MEMBER LOAN A/C---------------------------------------------------------------------------------------------
             LineNo := LineNo + 10000;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::Loan,
-            GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source),
+            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source),
             LoanApps."Loan  No.", 'Loan Disbursement - ' + LoanApps."Loan Product Type", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
             //--------------------------------(Debit Member Loan Account)---------------------------------------------
 
@@ -2332,12 +2342,12 @@ Page 50396 "Loan Disburesment Batch Card"
                         //------------------------------------Principal---------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Repayment",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                         'Off Set By - ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         //------------------------------------Outstanding Interest----------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                         'Interest Paid- ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         //-------------------------------------Levy--------------------------
                         LineNo := LineNo + 10000;
@@ -2351,7 +2361,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         LineNo := LineNo + 10000;
                         IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Paid",
-                            GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
+                            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
                             'Insurance on Loan Clearance -' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
                         END;
 
@@ -2366,7 +2376,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         /* {
                            LineNo:=LineNo+10000;     
                            SFactory.FnCreateGnlJournalLineBalanced(BATCH_TEMPLATE,BATCH_NAME,DOCUMENT_NO,LineNo,GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                           GenJournalLine."Account Type"::Member,LoanApps."Client Code",WORKDATE,'Loan Insurance:Diff. Calender Year _'+LoanTopUp."Loan Top Up",GenJournalLine."Bal. Account Type"::"G/L Account",
+                           GenJournalLine."Account Type"::Customer,LoanApps."Client Code",WORKDATE,'Loan Insurance:Diff. Calender Year _'+LoanTopUp."Loan Top Up",GenJournalLine."Bal. Account Type"::"G/L Account",
                            VarLoanInsuranceBalAccount,LoanTopUp."Loan Insurance: Current Year",'FOSA',LoanTopUp."Loan Top Up");
                            }
                         */
@@ -2388,7 +2398,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     //----------------------Debit interest Receivable Account a/c-----------------------------------------------------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Due",
-                    GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront", 'BOSA', BLoan,
+                    GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront", 'BOSA', BLoan,
                     'Interest Due ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
 
                     LineNo := LineNo + 10000;
@@ -2399,7 +2409,7 @@ Page 50396 "Loan Disburesment Batch Card"
                     //----------------------Credit interest Income Account a/c-----------------------------------------------------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                   GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront" * -1, 'BOSA', BLoan,
+                   GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront" * -1, 'BOSA', BLoan,
                     'Interest Paid ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
                 END;
             END;
@@ -2423,7 +2433,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         //----------------------Debit insurance Receivable Account a/c-----------------------------------------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                        GenJournalLine."Account Type"::Member, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
+                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
                         'Insurance Charged' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
 
                         //----------------------Credit Insurance Payable Account a/c-----------------------------------------------------

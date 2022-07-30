@@ -10,19 +10,19 @@ Table 50388 "Receipts & Payments"
         field(2; "Account No."; Code[30])
         {
             NotBlank = true;
-            TableRelation = if ("Account Type" = const(Member)) "Members Register"."No." where("Customer Type" = filter(Member))
+            TableRelation = if ("Account Type" = const(Customer)) Customer."No." where(ISNormalMember = filter(true))
             else
-            if ("Account Type" = const(Debtor)) Customer."No."
+            if ("Account Type" = const(Debtor)) Customer."No." where(ISNormalMember = filter(false))
             else
             if ("Account Type" = const("G/L Account")) "G/L Account"."No."
             else
-            if ("Account Type" = const("FOSA Loan")) "Members Register"."No." where("Customer Type" = const(Member))
+            if ("Account Type" = const("FOSA Loan")) Customer."No." where(ISNormalMember = filter(true))
             else
             if ("Account Type" = const(Vendor)) Vendor."No." where("Creditor Type" = filter("FOSA Account"),
                                                                                        Status = filter(<> Closed | Deceased),
                                                                                        Blocked = filter(<> Payment | All))
             else
-            if ("Account Type" = const(Micro)) "Members Register"."No." where("Customer Posting Group" = filter('MICRO'));
+            if ("Account Type" = const(Micro)) Customer."No." where("Customer Posting Group" = filter('MICRO'));
 
             trigger OnValidate()
             begin
@@ -35,7 +35,7 @@ Table 50388 "Receipts & Payments"
 
                     end;
                 end;
-                if ("Account Type" = "account type"::Member) or ("Account Type" = "account type"::Micro) then begin
+                if ("Account Type" = "account type"::Customer) or ("Account Type" = "account type"::Micro) then begin
                     if Mem.Get("Account No.") then
                         Name := Mem.Name;
                 end;
@@ -301,7 +301,7 @@ Table 50388 "Receipts & Payments"
         NoSeriesMgt: Codeunit NoSeriesManagement;
         BOSARcpt: Record "Receipts & Payments";
         GLAcct: Record "G/L Account";
-        Mem: Record "Members Register";
+        Mem: Record Customer;
         Vend: Record Vendor;
         GLAcc: Record "G/L Account";
         PayLine: Record "Payment Line.";

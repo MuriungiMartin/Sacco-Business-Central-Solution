@@ -17,7 +17,6 @@ Table 50385 "Loan Applicaton Charges"
         }
         field(4; "Code"; Code[20])
         {
-            TableRelation = "HR Employee Kin".Relationship;
         }
         field(5; "Use Perc"; Boolean)
         {

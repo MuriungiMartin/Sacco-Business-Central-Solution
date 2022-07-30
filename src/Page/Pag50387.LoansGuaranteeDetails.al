@@ -96,21 +96,11 @@ Page 50387 "Loans Guarantee Details"
 
     trigger OnOpenPage()
     begin
-        /*//**Prevent modification of approved entries
-        LoanApps.RESET;
-        LoanApps.SETRANGE(LoanApps."Loan  No.","Loan No");
-        IF LoanApps.FIND('-') THEN BEGIN
-         IF LoanApps."Loan Status"=LoanApps."Loan Status"::Approved THEN BEGIN
-          CurrPage.EDITABLE:=FALSE;
-         END ELSE
-          CurrPage.EDITABLE:=TRUE;
-        END;
-        */
 
     end;
 
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         EmployeeCode: Code[20];
         CStatus: Option Active,"Non-Active",Blocked,Dormant,"Re-instated",Deceased,Withdrawal,Retired,Termination,Resigned,"Ex-Company",Casuals,"Family Member","New (Pending Confirmation)","Defaulter Recovery";
         LoanApps: Record "Loans Register";

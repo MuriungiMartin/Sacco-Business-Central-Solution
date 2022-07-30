@@ -16,11 +16,15 @@ Page 50849 "Membership Cue"
                     Image = "None";
                     Style = Favorable;
                     StyleExpr = true;
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Dormant Members"; "Dormant Members")
                 {
                     ApplicationArea = Basic;
                     Image = "None";
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Non-Active Members"; "Non-Active Members")
                 {
@@ -29,24 +33,34 @@ Page 50849 "Membership Cue"
                     Style = Attention;
                     StyleExpr = true;
                     Visible = true;
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Deceased Members"; "Deceased Members")
                 {
                     ApplicationArea = Basic;
                     Image = People;
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Withdrawn Members"; "Withdrawn Members")
                 {
                     ApplicationArea = Basic;
                     Image = "None";
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Group Accounts"; "Group Accounts")
                 {
                     ApplicationArea = Basic;
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Joint Accounts"; "Joint Accounts")
                 {
                     ApplicationArea = Basic;
+                    DrillDownPageId = "Members List";
+
                 }
             }
             cuegroup("Account Categories")
@@ -55,16 +69,22 @@ Page 50849 "Membership Cue"
                 {
                     ApplicationArea = Basic;
                     Image = "None";
+                    DrillDownPageId = "Members List";
+
                 }
                 field("Male Members"; "Male Members")
                 {
                     ApplicationArea = Basic;
                     Image = "None";
+                    DrillDownPageId = "Members List";
+
+
                 }
                 field("Junior Members"; "Junior Members")
                 {
                     ApplicationArea = Basic;
                     Image = Library;
+                    DrillDownPageId = "Members List";
                 }
             }
             cuegroup(Loans)
@@ -120,9 +140,6 @@ Page 50849 "Membership Cue"
                     Image = "None";
                     LookupPageID = "Loans  List All";
                 }
-            }
-            cuegroup(Control15)
-            {
                 field("Asset Finance"; "Asset Finance")
                 {
                     ApplicationArea = Basic;
@@ -144,6 +161,7 @@ Page 50849 "Membership Cue"
                     Image = "None";
                     LookupPageID = "Loans  List All";
                 }
+
             }
             cuegroup(Approvals)
             {

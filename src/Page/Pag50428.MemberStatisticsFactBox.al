@@ -5,7 +5,7 @@ Page 50428 "Member Statistics FactBox"
     Editable = false;
     PageType = CardPart;
     SaveValues = true;
-    SourceTable = "Members Register";
+    SourceTable = Customer;
 
     layout
     {

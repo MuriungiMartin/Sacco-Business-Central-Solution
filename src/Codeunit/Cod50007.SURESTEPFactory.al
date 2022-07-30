@@ -77,13 +77,13 @@ Codeunit 50007 "SURESTEP Factory"
         UserSetup: Record User;
         ObjVendor: Record Vendor;
         ObjProducts: Record "Account Types-Saving Products";
-        ObjMemberLedgerEntry: Record "Member Ledger Entry";
+        ObjMemberLedgerEntry: Record "Cust. Ledger Entry";
         ObjLoans: Record "Loans Register";
         ObjBanks: Record "Bank Account";
         ObjLoanProductSetup: Record "Loan Products Setup";
         ObjProductCharges: Record "Loan Product Charges";
-        ObjMembers: Record "Members Register";
-        ObjMembers2: Record "Members Register";
+        ObjMembers: Record Customer;
+        ObjMembers2: Record Customer;
         ObjGenSetUp: Record "Sacco General Set-Up";
         ObjCompInfo: Record "Company Information";
         BAND1: Decimal;
@@ -410,7 +410,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnGetMemberBranch(MemberNo: Code[100]) MemberBranch: Code[100]
     var
-        ObjMemberLocal: Record "Members Register";
+        ObjMemberLocal: Record Customer;
     begin
         ObjMemberLocal.Reset;
         ObjMemberLocal.SetRange(ObjMemberLocal."No.", MemberNo);
@@ -422,7 +422,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     local procedure FnReturnRetirementDate(MemberNo: Code[50]): Date
     var
-        ObjMembers: Record "Members Register";
+        ObjMembers: Record Customer;
     begin
         ObjGenSetUp.Get();
         ObjMembers.Reset;
@@ -457,7 +457,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnGetFosaAccount(MemberNo: Code[50]) FosaAccount: Code[50]
     var
-        ObjMembers: Record "Members Register";
+        ObjMembers: Record Customer;
     begin
         ObjMembers.Reset;
         ObjMembers.SetRange(ObjMembers."No.", MemberNo);
@@ -562,7 +562,7 @@ Codeunit 50007 "SURESTEP Factory"
         loanTypes: Record "Loan Products Setup";
         ObjLoanX: Record "Loans Register";
         LoansRec: Record "Loans Register";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
     begin
         loanTypes.Reset;
         loanTypes.SetRange(loanTypes.Code, 'BLOAN');
@@ -2861,7 +2861,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnGetMemberMonthlyContributionDepositstier(MemberNo: Code[30]) VarMemberMonthlyContribution: Decimal
     var
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         ObjLoans: Record "Loans Register";
         VarTotalLoansIssued: Decimal;
         ObjDeposittier: Record "Member Deposit Tier";
@@ -2906,7 +2906,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnGetMemberMonthlyContributionAsAt(MemberNo: Code[30]; AsAtDate: Date) VarMemberMonthlyContribution: Decimal
     var
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         ObjLoans: Record "Loans Register";
         VarTotalLoansIssued: Decimal;
         ObjDeposittier: Record "Member Deposit Tier";
@@ -3051,13 +3051,13 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnGetGroupNetworth(HouseGroupNo: Code[20]) VarNetWorth: Decimal
     var
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarCollateralSecurity: Decimal;
         VarRepaymentPeriod: Date;
         VarArrears: Decimal;
         VarTotalArrears: Decimal;
         ObjLoanCollateral: Record "Loan Collateral Details";
-        ObjCustII: Record "Members Register";
+        ObjCustII: Record Customer;
         VarLoanRisk: Decimal;
         VarRepaymentDate: Date;
         VarRepayDate: Integer;
@@ -6629,7 +6629,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunGetDepositArrearsPenalty()
     var
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         ObjDetailedVendorLedger: Record "Detailed Vendor Ledg. Entry";
         VarCurrMonthEndMonthDate: Date;
         VarCurrMonthBeginDate: Date;
@@ -8583,7 +8583,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunGetMemberMonthlyTurnover(VarMemberNo: Code[30])
     var
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         ObjAccount: Record Vendor;
         ObjAuditSetup: Record "Audit General Setup";
         VarStartingMonthDate: Date;
@@ -8648,7 +8648,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunGetMemberExpectedMonthlyTurnover(VarMemberNo: Code[30])
     var
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         ObjAccount: Record Vendor;
         ObjAuditSetup: Record "Audit General Setup";
         VarStartingMonthDate: Date;
@@ -8741,7 +8741,7 @@ Codeunit 50007 "SURESTEP Factory"
         ObjLoanCollateralDetails: Record "Loan Collateral Details";
         ObjCollateralRegister: Record "Loan Collateral Register";
         ObjCollateralMovement: Record "Collateral Movement  Register";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarRecepientEmail: Text;
         VarEmailBody: Text;
         VarEmailSubject: Text;
@@ -9176,7 +9176,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunAutoFreezeMemberLoanDueAmount()
     var
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarLoanDueAmount: Decimal;
         ObjAccount: Record Vendor;
         VarAvailableBalance: Decimal;
@@ -9187,7 +9187,7 @@ Codeunit 50007 "SURESTEP Factory"
         VarAmounttoFreeze: Decimal;
         ObjNoSeries: Record "Sacco No. Series";
         VarDocumentNo: Code[30];
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarMemberNo: Text[20];
     begin
         ObjMember.CalcFields(ObjMember."Total Loans Outstanding");
@@ -9277,7 +9277,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunFreezeMemberLoanDueAmountAfterPayoff(VarMemberNo: Text[20])
     var
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarLoanDueAmount: Decimal;
         ObjAccount: Record Vendor;
         VarAvailableBalance: Decimal;
@@ -9288,7 +9288,7 @@ Codeunit 50007 "SURESTEP Factory"
         VarAmounttoFreeze: Decimal;
         ObjNoSeries: Record "Sacco No. Series";
         VarDocumentNo: Code[30];
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
     begin
         ObjMember.Reset;
         ObjMember.SetRange(ObjMember."No.", VarMemberNo);
@@ -10544,7 +10544,7 @@ Codeunit 50007 "SURESTEP Factory"
         VarMailSubject: Text;
         VarMailBody: Text;
         VarAccountType: Text;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarReportStartDate: Date;
         VarDateFilter: Text;
         FilePath: Text;
@@ -10708,7 +10708,7 @@ Codeunit 50007 "SURESTEP Factory"
         VarMailSubject: Text;
         VarMailBody: Text;
         VarAccountType: Text;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarReportStartDate: Date;
         VarDateFilter: Text;
         FilePath: Text;
@@ -11512,7 +11512,7 @@ Codeunit 50007 "SURESTEP Factory"
         NoSeriesMgt: Codeunit NoSeriesManagement;
         ObjAccountTypes: Record "Account Types-Saving Products";
         VarAccountPostingGroup: Code[30];
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
     begin
         ObjMember.Reset;
         ObjMember.SetRange(ObjMember."No.", VarMemberNo);
@@ -12023,7 +12023,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunProcessRefereeComissions()
     var
-        ObjMembersIV: Record "Members Register";
+        ObjMembersIV: Record Customer;
         VarStartDate: Date;
         DateFilter: Text;
         ObjGenSetup: Record "Sacco General Set-Up";
@@ -12034,7 +12034,7 @@ Codeunit 50007 "SURESTEP Factory"
         VarMonth2Contributed: Boolean;
         VarMonth3Contributed: Boolean;
         ObjAccountLedger: Record "Detailed Vendor Ledg. Entry";
-        ObjReferee: Record "Members Register";
+        ObjReferee: Record Customer;
         VarMonth1ContributedValue: Integer;
         VarMonth2ContributedValue: Integer;
         VarMonth3ContributedValue: Integer;
@@ -12199,7 +12199,7 @@ Codeunit 50007 "SURESTEP Factory"
         VarMonthsCredittoDate: Decimal;
         VarMonthsCreditWithTolerance: Decimal;
         ObjAuditGeneralSetup: Record "Audit General Setup";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarMonthlyTurnOver: Decimal;
     begin
 
@@ -12322,7 +12322,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunGetMembershipDormancyStatus(VarActionDate: Date)
     var
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarDormancyBaseDate: Date;
         ObjGensetup: Record "Sacco General Set-Up";
         VarSixMonthsBack: Date;
@@ -12528,8 +12528,8 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunMemberCreditScoring(VarMemberNo: Code[30])
     var
-        ObjMembers: Record "Members Register";
-        ObjMember: Record "Members Register";
+        ObjMembers: Record Customer;
+        ObjMember: Record Customer;
         VarAge: Integer;
         VarAge2: Integer;
         ObjCreditScoreCriteria: Record "Credit Score Criteria";
@@ -13443,7 +13443,7 @@ Codeunit 50007 "SURESTEP Factory"
 
     procedure FnRunGetShareBoostingDetailsCreditScoring(VarMemberNo: Code[30]; VarDateFilterLocal: Text; VarBoostingEndMonthDate: Date; VarShareBoostingCheckDate: Date; VarBoostingBeginMonthDate: Date) VarBoosted: Boolean
     var
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         ObjGenSetUp: Record "Sacco General Set-Up";
         ObjDetailedLedg: Record "Detailed Vendor Ledg. Entry";
         VarBoostedAmount2: Decimal;

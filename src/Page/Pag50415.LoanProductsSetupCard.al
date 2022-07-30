@@ -82,7 +82,7 @@ Page 50415 "Loan Products Setup Card"
                 {
                     ApplicationArea = Basic;
                 }
-                field("Shares Multiplier"; "Shares Multiplier")
+                field("Deposits Multiplier"; "Deposits Multiplier")
                 {
                     ApplicationArea = Basic;
                     Caption = 'Deposits Multiplier';

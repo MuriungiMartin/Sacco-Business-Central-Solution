@@ -1,4 +1,4 @@
-pageextension 50114 CustomerLedgerEntExt extends "Customer Ledger Entries"
+pageextension 50118 "DetCustLedgerpExt" extends "Detailed Cust. Ledg. Entries"
 {
     layout
     {
@@ -16,18 +16,6 @@ pageextension 50114 CustomerLedgerEntExt extends "Customer Ledger Entries"
                 Editable = false;
             }
             field("Loan Type"; "Loan Type")
-            {
-                ApplicationArea = Basic, Suite;
-                Editable = false;
-
-            }
-            field("Final Amount"; "Final Amount")
-            {
-                ApplicationArea = Basic, Suite;
-                Editable = false;
-
-            }
-            field("Transaction Amount"; "Transaction Amount")
             {
                 ApplicationArea = Basic, Suite;
                 Editable = false;

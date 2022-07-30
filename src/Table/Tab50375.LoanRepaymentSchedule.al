@@ -9,14 +9,6 @@ Table 50375 "Loan Repayment Schedule"
 
             trigger OnValidate()
             begin
-                /*IF ObjLoan.GET("Loan No.") THEN
-                  BEGIN
-                    "Member No.":=ObjLoan."Client Code";
-                    "Member Name":=ObjLoan."Client Name";
-                    RENAME("Member No.");
-                    END;
-                    */
-
             end;
         }
         field(2; "Member No."; Code[50])

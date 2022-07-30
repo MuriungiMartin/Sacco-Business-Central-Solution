@@ -1181,10 +1181,10 @@ Report 50493 "Loan Appraisal-Advances"
     end;
 
     var
-        CustRec: Record "Members Register";
+        CustRec: Record Customer;
         GenSetUp: Record "Sacco General Set-Up";
-        Cust: Record "Members Register";
-        CustRecord: Record "Members Register";
+        Cust: Record Customer;
+        CustRecord: Record Customer;
         TShares: Decimal;
         TLoans: Decimal;
         LoanApp: Record "Loans Register";
@@ -1414,11 +1414,11 @@ Report 50493 "Loan Appraisal-Advances"
         ToDateS: Text[100];
         DivTotal: Decimal;
         CDeposits: Decimal;
-        CustDiv: Record "Members Register";
+        CustDiv: Record Customer;
         DivProg: Record "Dividends Progression";
         CDiv: Decimal;
         BDate: Date;
-        CustR: Record "Members Register";
+        CustR: Record Customer;
         BasicPay: Decimal;
         HouseAllowance: Decimal;
         TransportAll: Decimal;
@@ -1434,7 +1434,7 @@ Report 50493 "Loan Appraisal-Advances"
         SaccoDed: Decimal;
         ProductCharges: Record "Loan Product Charges";
         LoanInsurance: Decimal;
-        CustLeg: Record "Member Ledger Entry";
+        CustLeg: Record "Cust. Ledger Entry";
         BoostedAmount2: Decimal;
         ShareBoostComm: Decimal;
         currentshare: Decimal;
@@ -1486,7 +1486,7 @@ Report 50493 "Loan Appraisal-Advances"
 
     local procedure FnReturnRetirementDate(MemberNo: Code[50]): Date
     var
-        ObjMembers: Record "Members Register";
+        ObjMembers: Record Customer;
     begin
         GenSetUp.Get();
         ObjMembers.Reset;

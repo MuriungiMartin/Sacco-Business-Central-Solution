@@ -1,8 +1,8 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50372 "Loans Guarantee Details"
 {
-    //nownPage51516387;
-    //nownPage51516387;
+    DrillDownPageId = "Loans Guarantee Details";
+    LookupPageId = "Loans Guarantee Details";
 
     fields
     {
@@ -14,19 +14,10 @@ Table 50372 "Loans Guarantee Details"
         field(2; "Member No"; Code[20])
         {
             NotBlank = false;
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
-
-                /*MemberCust.RESET;
-                MemberCust.SETRANGE(MemberCust."No.","Member No");
-                IF MemberCust.FIND('-') THEN BEGIN
-                IF  MemberCust.Status=MemberCust.Status::d THEN
-                ERROR('THE MEMBER  IS  A  DEFAULTER');
-                END;*/
-
-
                 LnGuarantor.Reset;
                 LnGuarantor.SetRange(LnGuarantor."Loan  No.", "Loan No");
                 if LnGuarantor.Find('-') then begin
@@ -181,7 +172,7 @@ Table 50372 "Loans Guarantee Details"
         }
         field(16; "Outstanding Balance"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Transaction Type" = filter(Loan | "Loan Repayment"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Loan No" = field("Loan No")));
             FieldClass = FlowField;
         }
@@ -194,7 +185,7 @@ Table 50372 "Loans Guarantee Details"
         }
         field(18; "Loans Outstanding"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Transaction Type" = filter(Loan | "Loan Repayment"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Loan No" = field("Loan No")));
             FieldClass = FlowField;
 
@@ -208,7 +199,7 @@ Table 50372 "Loans Guarantee Details"
         }
         field(19; "Guarantor Outstanding"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Member No"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Member No"),
                                                                   "Transaction Type" = filter(Loan | "Loan Repayment"),
                                                                   "Loan Type" = filter('301' | '302' | '303' | '306' | '322')));
             FieldClass = FlowField;
@@ -222,7 +213,7 @@ Table 50372 "Loans Guarantee Details"
         }
         field(22; "Substituted Guarantor"; Code[80])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -320,7 +311,7 @@ Table 50372 "Loans Guarantee Details"
         }
         field(69162; "Oustanding Interest"; Decimal)
         {
-            CalcFormula = sum("Member Ledger Entry".Amount where("Customer No." = field("Member No"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Member No"),
                                                                   "Transaction Type" = filter("Interest Paid"),
                                                                   "Loan No" = field("Loan No")));
             FieldClass = FlowField;
@@ -375,7 +366,7 @@ Table 50372 "Loans Guarantee Details"
     }
 
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LoanGuarantors: Record "Loans Guarantee Details";
         Loans: Record "Loans Register";
         LoansR: Record "Loans Register";
@@ -385,21 +376,21 @@ Table 50372 "Loans Guarantee Details"
         StatusPermissions: Record "Status Change Permision";
         Employer: Record "Sacco Employers";
         loanG: Record "Loans Guarantee Details";
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record Customer;
         MemberSaccoAge: Date;
         ComittedShares: Decimal;
         LoanApp: Record "Loans Register";
         DefaultInfo: Text;
         ok: Boolean;
         SharesVariance: Decimal;
-        MemberCust: Record "Members Register";
+        MemberCust: Record Customer;
         LnGuarantor: Record "Loans Register";
         LoanApps: Record "Loans Register";
         Text0001: label 'This Member has an Outstanding Defaulter Loan which has never been serviced';
         freeshares: Decimal;
         loanrec: Record "Loans Guarantee Details";
         ObjWithApp: Record "Membership Exist";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         LoansGuaranteeDetails: Record "Loans Guarantee Details";
         ObjSaccoGeneralSetUp: Record "Sacco General Set-Up";
 
@@ -415,7 +406,7 @@ Table 50372 "Loans Guarantee Details"
         VarArreasAmount: Decimal;
         VarNoGroupMembers: Integer;
         VarGroupNetWorth: Decimal;
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarLastMonth: Date;
         ObjRepaymentSch: Record "Loan Repayment Schedule";
         VarArrears: Decimal;
@@ -477,7 +468,7 @@ Table 50372 "Loans Guarantee Details"
         VarCollateralSecurity: Decimal;
         ObjLoanCollateral: Record "Loan Collateral Details";
         ObjLoans: Record "Loans Register";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
     begin
         //-----------------------------------------------------Get Group Networth
         VarCollateralSecurity := 0;

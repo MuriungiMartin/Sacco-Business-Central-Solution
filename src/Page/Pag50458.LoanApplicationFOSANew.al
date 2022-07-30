@@ -487,7 +487,7 @@ Page 50458 "Loan Application FOSA(New)"
         ScheduleCode: Code[20];
         PreviewShedule: Record "Loan Repayment Schedule";
         PeriodInterval: Code[10];
-        CustomerRecord: Record "Members Register";
+        CustomerRecord: Record "SMS Messages";
         Gnljnline: Record "Gen. Journal Line";
         Jnlinepost: Codeunit "Gen. Jnl.-Post Line";
         CumInterest: Decimal;
@@ -496,9 +496,9 @@ Page 50458 "Loan Application FOSA(New)"
         GenBatch: Record "Gen. Journal Batch";
         GnljnlineCopy: Record "Gen. Journal Line";
         NewLNApplicNo: Code[10];
-        Cust: Record "Members Register";
+        Cust: Record "SMS Messages";
         TestAmt: Decimal;
-        CustRec: Record "Members Register";
+        CustRec: Record "SMS Messages";
         CustPostingGroup: Record "Customer Posting Group";
         GenSetUp: Record "Sales & Receivables Setup";
         PCharges: Record "Loan Product Charges";
@@ -529,7 +529,7 @@ Page 50458 "Loan Application FOSA(New)"
         BOSAInt: Decimal;
         TopUpComm: Decimal;
         TotalTopupComm: Decimal;
-        CustE: Record "Members Register";
+        CustE: Record "SMS Messages";
         DocN: Text[50];
         DocM: Text[100];
         DNar: Text[250];
@@ -540,7 +540,7 @@ Page 50458 "Loan Application FOSA(New)"
         FOSAName: Text[150];
         IDNo: Code[50];
         MovementTracker: Record "File Movement Tracker";
-        SMSMessage: Record "Members Register";
+        SMSMessage: Record "SMS Messages";
         InstallNo2: Integer;
         currency: Record "Currency Exchange Rate";
         CURRENCYFACTOR: Decimal;

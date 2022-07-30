@@ -8,9 +8,9 @@ Page 50367 "Member Account Card"
     PageType = Card;
     PromotedActionCategories = 'New,Process,Reports,Approval,Budgetary Control,Cancellation,Category7_caption,Category8_caption,Category9_caption,Category10_caption';
     RefreshOnActivate = true;
-    SourceTable = "Members Register";
+    SourceTable = Customer;
     SourceTableView = sorting("Employer Code")
-                      where("Customer Type" = const(Member));
+                      where(ISNormalMember = filter(true));
 
     layout
     {

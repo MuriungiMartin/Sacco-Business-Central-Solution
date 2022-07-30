@@ -25,7 +25,7 @@ Page 50383 "Receipt Allocation-BOSA"
                     trigger OnValidate()
                     begin
                         if ("Transaction Type" <> "transaction type"::"FOSA Account") and ("Transaction Type" <> "transaction type"::" ") then begin
-                            "Account Type" := "account type"::Member
+                            "Account Type" := "account type"::Customer
                         end else
                             "Account Type" := "account type"::Vendor;
                     end;

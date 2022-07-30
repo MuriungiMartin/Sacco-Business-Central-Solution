@@ -1,4 +1,4 @@
-tableextension 50049 DetlCustLedgerExt extends "Detailed Cust. Ledg. Entry"
+tableextension 50049 "DetlCustLedgerExt" extends "Detailed Cust. Ledg. Entry"
 {
     fields
     {

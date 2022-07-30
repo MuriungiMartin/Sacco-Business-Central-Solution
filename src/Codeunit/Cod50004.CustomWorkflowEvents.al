@@ -4,14 +4,14 @@ Codeunit 50004 "Custom Workflow Events"
 
     trigger OnRun()
     begin
-        AddEventsPredecessor();
-        AddEventsToLib();
     end;
 
     var
         WFHandler: Codeunit "Workflow Event Handling";
         WorkflowManagement: Codeunit "Workflow Management";
-
+        WFEventHandler: Codeunit "Workflow Event Handling";
+        SurestepWFEvents: Codeunit "Custom Workflow Events";
+        WFResponseHandler: Codeunit "Workflow Response Handling";
 
     procedure AddEventsToLib()
     begin
@@ -1572,6 +1572,21 @@ Codeunit 50004 "Custom Workflow Events"
     //     WorkflowManagement.HandleEvent(RunWorkflowOnSendMembershipApplicationForApprovalCode, MembershipApplication);
     // end;
 
+    [EventSubscriber(ObjectType::Codeunit, 1521, 'OnExecuteWorkflowResponse', '', false, false)]
+    procedure addresponses(var ResponseExecuted: Boolean; Variant: Variant; xVariant: Variant; ResponseWorkflowStepInstance: Record "Workflow Step Instance")
+    begin
+        WFResponseHandler.AddResponsePredecessor(WFResponseHandler.SetStatusToPendingApprovalCode,
+                                         SurestepWFEvents.RunWorkflowOnSendLoanApplicationForApprovalCode);
+        WFResponseHandler.AddResponsePredecessor(WFResponseHandler.CreateApprovalRequestsCode,
+                                                 SurestepWFEvents.RunWorkflowOnSendLoanApplicationForApprovalCode);
+        WFResponseHandler.AddResponsePredecessor(WFResponseHandler.SendApprovalRequestForApprovalCode,
+                                                 SurestepWFEvents.RunWorkflowOnSendLoanApplicationForApprovalCode);
+        WFResponseHandler.AddResponsePredecessor(WFResponseHandler.OpenDocumentCode,
+                                                 SurestepWFEvents.RunWorkflowOnCancelLoanApplicationApprovalRequestCode);
+        WFResponseHandler.AddResponsePredecessor(WFResponseHandler.CancelAllApprovalRequestsCode,
+                                                 SurestepWFEvents.RunWorkflowOnCancelLoanApplicationApprovalRequestCode);
+    end;
+
     [EventSubscriber(ObjectType::Codeunit, Codeunit::WorkflowIntegration, 'OnCancelMembershipApplicationApprovalRequest', '', false, false)]
 
     procedure RunWorkflowOnCancelPaymentReceiptApprovalRequest(var MembershipApplication: Record "Membership Applications")
@@ -1581,75 +1596,62 @@ Codeunit 50004 "Custom Workflow Events"
 
 
 
-    // procedure SetStatusMemberAppStatusToPendingApprovalCode(): Code[128]
-    // begin
-    //     exit(UpperCase('SetMemberAppStatusTopendingApproval'))
-    // end;
+    procedure SetStatusLoanAppStatusToPendingApprovalCode(): Code[128]
+    begin
+        exit(UpperCase('SetLoanAppStatusTopendingApproval'))
+    end;
 
-    // procedure SetMemberAppStatusTopendingApproval(var variant: Variant)
-    // var
-    //     RecRef: RecordRef;
-    //     MembershipApp: Record "Membership Applications";
-    // begin
-    //     RecRef.GetTable(variant);
-    //     case
-    //         RecRef.Number of
-    //         DATABASE::"Membership Applications":
-    //             begin
-    //                 Message('status 1 %1', MembershipApp.Status);
-    //                 RecRef.SetTable(MembershipApp);
-    //                 MembershipApp.Validate(Status, MembershipApp.Status::"Pending Approval");
-    //                 //  MembershipApp.Modify();
-    //                 variant := MembershipApp;
-    //                 Message('status 2 %1', MembershipApp.Status);
+    procedure SetLoanAppStatusTopendingApproval(var variant: Variant)
+    var
+        RecRef: RecordRef;
+        LoanApp: Record "Loans Register";
+    begin
+        RecRef.GetTable(variant);
+        case
+            RecRef.Number of
+            DATABASE::"Loans Register":
+                begin
+                    Message('status 1 %1', LoanApp."Approval Status");
+                    RecRef.SetTable(LoanApp);
+                    LoanApp.Validate("Approval Status", LoanApp."Approval Status"::Pending);
+                    //  MembershipApp.Modify();
+                    variant := LoanApp;
+                    Message('status 2 %1', LoanApp."Approval Status");
 
-    //             end;
-    //     end;
+                end;
+        end;
 
-    // end;
+    end;
 
-    // [EventSubscriber(ObjectType::Codeunit, codeunit::"Workflow Response Handling", 'OnAddWorkflowResponsesToLibrary', '', false, false)]
-    // procedure AddResponsesToLib()
-    // var
-    //     Workfloweventhandling: Codeunit "Workflow Response Handling";
-    // begin
-    //     Workfloweventhandling.AddResponseToLibrary(SetStatusMemberAppStatusToPendingApprovalCode(), 0, 'Set status to pending', 'GROUP 0');
-    // end;
+    [EventSubscriber(ObjectType::Codeunit, codeunit::"Workflow Response Handling", 'OnAddWorkflowResponsesToLibrary', '', false, false)]
+    procedure AddResponsesToLib()
+    var
+        Workfloweventhandling: Codeunit "Workflow Response Handling";
+    begin
+        Workfloweventhandling.AddResponseToLibrary(SetStatusLoanAppStatusToPendingApprovalCode(), 0, 'Set status to pending', 'GROUP 0');
+    end;
 
-    // [EventSubscriber(ObjectType::codeunit, codeunit::"Workflow Response Handling", 'OnExecuteWorkflowResponse', '', false, false)]
-    // procedure ExecuteResponses(var ResponseExecuted: Boolean; Variant: Variant; xVariant: Variant; ResponseWorkflowStepInstance: Record "Workflow Step Instance")
-    // var
-    //     WorkflowResponses: Record "Workflow Response";
-    // begin
-    //     if WorkflowResponses.Get(ResponseWorkflowStepInstance."Function Name") then
-    //         case
-    //             WorkflowResponses."Function Name" of
-    //             SetStatusMemberAppStatusToPendingApprovalCode():
-    //                 begin
-    //                     Message('nimeingia');
-    //                     SetMemberAppStatusTopendingApproval(Variant);
-    //                     ResponseExecuted := true;
-    //                 end;
-    //         end;
-    // end;
+    [EventSubscriber(ObjectType::codeunit, codeunit::"Workflow Response Handling", 'OnExecuteWorkflowResponse', '', false, false)]
+    procedure ExecuteResponses(var ResponseExecuted: Boolean; Variant: Variant; xVariant: Variant; ResponseWorkflowStepInstance: Record "Workflow Step Instance")
+    var
+        WorkflowResponses: Record "Workflow Response";
+    begin
+        if WorkflowResponses.Get(ResponseWorkflowStepInstance."Function Name") then
+            case
+                WorkflowResponses."Function Name" of
+                SetStatusLoanAppStatusToPendingApprovalCode():
+                    begin
+                        Message('nimeingia');
+                        SetLoanAppStatusTopendingApproval(Variant);
+                        ResponseExecuted := true;
+                    end;
+            end;
+    end;
+
 
     [EventSubscriber(ObjectType::Codeunit, codeunit::"Approvals Mgmt.", 'OnSetStatusToPendingApproval', '', false, false)]
     procedure OnSetStatusToPendingApproval(RecRef: RecordRef; var Variant: Variant; var IsHandled: Boolean)
     var
-        //     MemberApp: Record "Membership Applications";
-        // begin
-        //     case
-        //         RecRef.Number of
-        //         database::"Membership Applications":
-        //             begin
-        //                 Message('status 3 %1', MemberApp.Status);
-        //                 RecRef.SetTable(MemberApp);
-        //                 MemberApp.Status := MemberApp.Status::"Pending Approval";
-        //                 MemberApp.Modify(true);
-        //                 IsHandled := true;
-        //                 Message('status 4 %1', MemberApp.Status);
-        //             end;
-        //     end;
         PaymentHeader: Record "Payments Header";
         MembershipApplication: Record "Membership Applications";
         LoanApplication: Record "Loans Register";
@@ -1719,8 +1721,8 @@ Codeunit 50004 "Custom Workflow Events"
                     RecRef.SetTable(LoanApplication);
                     LoanApplication.Validate("Loan Status", LoanApplication."loan status"::Appraisal);
                     LoanApplication.Validate("Approval Status", LoanApplication."approval status"::Pending);
+                    IsHandled := true;
                     LoanApplication.Modify(true);
-                    Variant := LoanApplication;
                 end;
             //Guarantor substitutionn
             Database::"Guarantorship Substitution H":
@@ -2080,7 +2082,7 @@ Codeunit 50004 "Custom Workflow Events"
         GuarantorRecovery: Record "Loan Recovery Header";
     begin
         // RecRef.GetTable();
-        // Message('tablle no onrelease %1', RecRef.Number);
+        Message('tablle no onrelease %1', RecRef.Number);
         case RecRef.Number of
             DATABASE::"Membership Applications":
                 begin
@@ -2088,7 +2090,7 @@ Codeunit 50004 "Custom Workflow Events"
                     MemberShipApp.Status := MemberShipApp.Status::Approved;
                     MemberShipApp.Modify(true);
                     Handled := true;
-                    // Message('status is on release %1', MemberShipApp.Status);
+                    Message('status is on release %1', MemberShipApp.Status);
                 end;
             Database::"Sacco Transfers":
                 begin
@@ -2340,4 +2342,3 @@ Codeunit 50004 "Custom Workflow Events"
     end;
 
 }
-

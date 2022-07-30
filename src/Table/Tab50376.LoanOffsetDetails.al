@@ -1,8 +1,8 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50376 "Loan Offset Details"
 {
-    //nownPage51516389;
-    //nownPage51516389;
+    DrillDownPageId="Loan Offset Detail List";
+    LookupPageId="Loan Offset Detail List";
 
     fields
     {
@@ -42,8 +42,7 @@ Table 50376 "Loan Offset Details"
                     Loans.CalcFields(Loans."Outstanding Balance");
                     if "Principle Top Up" > Loans."Outstanding Balance" then
                         Error('Amount cannot be greater than the loan oustanding balance.');
-                    // "Interest Top Up":="Principle Top Up"*(Loans.Interest/100);
-                end;
+                    end;
 
                 if "Principle Top Up" > Loans."Requested Amount" then
                     Error('Amount cannot be greater than the loan oustanding balance.');
@@ -92,7 +91,7 @@ Table 50376 "Loan Offset Details"
         }
         field(9; "Interest Paid"; Decimal)
         {
-            CalcFormula = - sum("Member Ledger Entry".Amount where("Customer No." = field("Client Code"),
+            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("Client Code"),
                                                                    "Loan No" = field("Loan Top Up"),
                                                                    "Transaction Type" = filter("Interest Paid")));
             FieldClass = FlowField;
@@ -212,7 +211,7 @@ Table 50376 "Loan Offset Details"
         Loans: Record "Loans Register";
         Loantypes: Record "Loan Products Setup";
         Interest: Decimal;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LoansTop: Record "Loans Register";
         GenSetUp: Record "Sacco General Set-Up";
         ObjRepaymentSchedule: Record "Loan Repayment Schedule";

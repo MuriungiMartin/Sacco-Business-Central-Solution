@@ -1,8 +1,8 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50377 "Loan Disburesment-Batching"
 {
-    //nownPage51516395;
-    //nownPage51516395;
+    DrillDownPageId="Loans Disbursment Batch List";
+    LookupPageId="Loans Disbursment Batch List";
 
     fields
     {

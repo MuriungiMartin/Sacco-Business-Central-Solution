@@ -226,7 +226,7 @@ Page 50400 "BOSA Receipt Card"
                         TransType := 'Deposit';
 
                     BOSABank := "Employer No.";
-                    if ("Account Type" = "account type"::Member) or ("Account Type" = "account type"::"FOSA Loan") or ("Account Type" = "account type"::Micro) then begin
+                    if ("Account Type" = "account type"::Customer) or ("Account Type" = "account type"::"FOSA Loan") or ("Account Type" = "account type"::Micro) then begin
 
                         if Amount <> "Allocated Amount" then
                             Error('Receipt amount must be equal to the allocated amount.');
@@ -263,7 +263,7 @@ Page 50400 "BOSA Receipt Card"
                     if GenJournalLine.Amount <> 0 then
                         GenJournalLine.Insert;
 
-                    if ("Account Type" <> "account type"::Member) and ("Account Type" <> "account type"::"FOSA Loan") and ("Account Type" <> "account type"::Vendor) and
+                    if ("Account Type" <> "account type"::Customer) and ("Account Type" <> "account type"::"FOSA Loan") and ("Account Type" <> "account type"::Vendor) and
                       ("Account Type" <> "account type"::Micro) then begin
                         LineNo := LineNo + 10000;
                         GenJournalLine.Init;
@@ -281,11 +281,11 @@ Page 50400 "BOSA Receipt Card"
                                 if "Account Type" = "account type"::Vendor then
                                     GenJournalLine."Account Type" := "Account Type"
                                 else
-                                    if "Account Type" = "account type"::Member then
+                                    if "Account Type" = "account type"::Customer then
                                         GenJournalLine."Account Type" := "Account Type"
                                     else
                                         if "Account Type" = "account type"::Micro then
-                                            GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                            GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                         GenJournalLine."Account No." := ReceiptAllocations."Member No";
                         GenJournalLine.Validate(GenJournalLine."Account No.");
                         GenJournalLine."Posting Date" := "Cheque Date";
@@ -305,7 +305,7 @@ Page 50400 "BOSA Receipt Card"
 
                     GenSetup.Get();
 
-                    if ("Account Type" = "account type"::Member) or ("Account Type" = "account type"::"FOSA Loan") or ("Account Type" = "account type"::Vendor) or
+                    if ("Account Type" = "account type"::Customer) or ("Account Type" = "account type"::"FOSA Loan") or ("Account Type" = "account type"::Vendor) or
                       ("Account Type" = "account type"::Micro) then begin
                         ReceiptAllocations.Reset;
                         ReceiptAllocations.SetRange(ReceiptAllocations."Document No", "Transaction No.");
@@ -321,11 +321,11 @@ Page 50400 "BOSA Receipt Card"
                                 GenJournalLine."Posting Date" := "Cheque Date";
                                 //GenJournalLine."Posting Date":="Transaction Date";
                                 if ReceiptAllocations."Account No" <> '' then begin
-                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                     GenJournalLine."Account No." := ReceiptAllocations."Member No";
                                     GenJournalLine.Validate(GenJournalLine."Account No.");
                                 end else begin
-                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                     GenJournalLine."Account No." := ReceiptAllocations."Member No";
                                     GenJournalLine.Validate(GenJournalLine."Account No.");
                                 end;
@@ -419,7 +419,7 @@ Page 50400 "BOSA Receipt Card"
         LOustanding: Decimal;
         TotalCommision: Decimal;
         TotalOustanding: Decimal;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         BOSABank: Code[20];
         LineNo: Integer;
         BOSARcpt: Record "Receipts & Payments";
@@ -464,7 +464,7 @@ Page 50400 "BOSA Receipt Card"
                                 AmountToDeduct := RunningBalance;
                             ObjReceiptTransactions.Init;
                             ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
-                            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+                            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
                             ObjReceiptTransactions."Member No" := ObjRcptBuffer."Account No.";
                             ObjReceiptTransactions."Loan No." := LoanApp."Loan  No.";
                             ObjReceiptTransactions."Transaction Type" := ObjReceiptTransactions."transaction type"::"Interest Paid";
@@ -527,7 +527,7 @@ Page 50400 "BOSA Receipt Card"
                                 ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
                                 ObjReceiptTransactions."Loan No." := LoanApp."Loan  No.";
                                 ObjReceiptTransactions."Member No" := LoanApp."Client Code";
-                                ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+                                ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
                                 ObjReceiptTransactions."Transaction Type" := ObjReceiptTransactions."transaction type"::"Loan Repayment";
                                 ObjReceiptTransactions."Global Dimension 1 Code" := Format(LoanApp.Source);
                                 ObjReceiptTransactions."Global Dimension 2 Code" := SURESTEPFactory.FnGetMemberBranch(ObjRcptBuffer."Account No.");
@@ -551,7 +551,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
     begin
         if RunningBalance > 0 then begin
             GenSetup.Get();
@@ -568,7 +568,7 @@ Page 50400 "BOSA Receipt Card"
                         if RunningBalance <= AmountToDeduct then
                             AmountToDeduct := RunningBalance;
                         ObjReceiptTransactions.Init;
-                        ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+                        ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
                         ObjReceiptTransactions."Account No" := '';
                         ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
                         ObjReceiptTransactions."Member No" := ObjRcptBuffer."Account No.";
@@ -594,7 +594,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         SharesCap: Decimal;
         DIFF: Decimal;
     begin
@@ -602,7 +602,7 @@ Page 50400 "BOSA Receipt Card"
             GenSetup.Get();
             ObjMember.Reset;
             ObjMember.SetRange(ObjMember."No.", ObjRcptBuffer."Account No.");
-            ObjMember.SetRange(ObjMember."Customer Type", ObjMember."customer type"::Member);
+            ObjMember.SetRange(ObjMember.ISNormalMember, true);
             if ObjMember.Find('-') then begin
                 //REPEAT Deducted once unless otherwise advised
                 ObjMember.CalcFields(ObjMember."Shares Retained");
@@ -620,7 +620,7 @@ Page 50400 "BOSA Receipt Card"
                                 AmountToDeduct := RunningBalance;
 
                             ObjReceiptTransactions.Init;
-                            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+                            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
                             ObjReceiptTransactions."Account No" := ObjMember."Share Capital No";
                             ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
                             ObjReceiptTransactions."Member No" := ObjRcptBuffer."Account No.";
@@ -650,14 +650,14 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         SharesCap: Decimal;
         DIFF: Decimal;
     begin
         if RunningBalance > 0 then begin
             ObjMember.Reset;
             ObjMember.SetRange(ObjMember."No.", ObjRcptBuffer."Account No.");
-            ObjMember.SetRange(ObjMember."Customer Type", ObjMember."customer type"::Member);
+            ObjMember.SetRange(ObjMember.ISNormalMember, true);
             if ObjMember.Find('-') then begin
                 AmountToDeduct := 0;
                 AmountToDeduct := ROUND(ObjMember."Monthly Contribution", 0.05, '>');
@@ -665,7 +665,7 @@ Page 50400 "BOSA Receipt Card"
                     AmountToDeduct := RunningBalance;
 
                 ObjReceiptTransactions.Init;
-                ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+                ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
                 ObjReceiptTransactions."Account No" := ObjMember."Deposits Account No";
                 ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
                 ObjReceiptTransactions."Member No" := ObjRcptBuffer."Account No.";
@@ -690,7 +690,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
     begin
         GenSetup.Get();
         if RunningBalance > 0 then begin
@@ -726,7 +726,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
     begin
         if RunningBalance > 0 then begin
             GenSetup.Get();
@@ -741,7 +741,7 @@ Page 50400 "BOSA Receipt Card"
                         AmountToDeduct := RunningBalance;
                     ObjReceiptTransactions.Init;
                     ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
-                    ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+                    ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
                     ObjReceiptTransactions."Account No" := ObjMember."Benevolent Fund No";
                     ObjReceiptTransactions."Member No" := ObjRcptBuffer."Account No.";
                     ObjReceiptTransactions."Transaction Type" := ObjReceiptTransactions."transaction type"::"Benevolent Fund";
@@ -765,7 +765,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
     begin
         ObjMember.Reset;
         ObjMember.SetRange(ObjMember."No.", ObjRcptBuffer."Account No.");
@@ -794,7 +794,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         SharesCap: Decimal;
         DIFF: Decimal;
         TransType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account";
@@ -802,13 +802,13 @@ Page 50400 "BOSA Receipt Card"
 
         ObjMember.Reset;
         ObjMember.SetRange(ObjMember."No.", ObjRcptBuffer."Account No.");
-        ObjMember.SetRange(ObjMember."Customer Type", ObjMember."customer type"::Member);
+        ObjMember.SetRange(ObjMember.ISNormalMember, true);
         if ObjMember.Find('-') then begin
             AmountToDeduct := 0;
             AmountToDeduct := RunningBalance + FnReturnAmountToClear(Transtype::"Deposit Contribution");
             ObjReceiptTransactions.Init;
             ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
-            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
             ObjReceiptTransactions."Account No" := ObjMember."Deposits Account No";
             ObjReceiptTransactions."Member No" := ObjRcptBuffer."Account No.";
             ObjReceiptTransactions."Transaction Type" := ObjReceiptTransactions."transaction type"::"Deposit Contribution";
@@ -842,7 +842,7 @@ Page 50400 "BOSA Receipt Card"
         varMultipleLoan: Decimal;
         varLRepayment: Decimal;
         PRpayment: Decimal;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         SharesCap: Decimal;
         DIFF: Decimal;
         TransType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account";
@@ -850,14 +850,14 @@ Page 50400 "BOSA Receipt Card"
 
         ObjMember.Reset;
         ObjMember.SetRange(ObjMember."No.", ObjRcptBuffer."Account No.");
-        ObjMember.SetRange(ObjMember."Customer Type", ObjMember."customer type"::Member);
+        ObjMember.SetRange(ObjMember.ISNormalMember, true);
         if ObjMember.Find('-') then begin
             AmountToDeduct := 0;
             AmountToDeduct := RunningBalance + FnReturnAmountToClear(Transtype::"FOSA Account");
             ObjReceiptTransactions.Init;
             ObjReceiptTransactions."Document No" := ObjRcptBuffer."Transaction No.";
             ObjReceiptTransactions."Member No" := ObjMember."No.";
-            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Member;
+            ObjReceiptTransactions."Account Type" := ObjReceiptTransactions."account type"::Customer;
             ObjReceiptTransactions."Account No" := ObjReceiptTransactions."Member No";
             if "Excess Transaction Type" = "excess transaction type"::"Junior Savings" then
                 ObjReceiptTransactions."Transaction Type" := ObjReceiptTransactions."transaction type"::"Junior Savings";

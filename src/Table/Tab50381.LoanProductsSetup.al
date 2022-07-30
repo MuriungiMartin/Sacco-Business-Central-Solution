@@ -1,8 +1,8 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50381 "Loan Products Setup"
 {
-    //nownPage51516410;
-    //nownPage51516410;
+    DrillDownPageId = "Loan Products Setup List";
+    LookupPageId = "Loan Products Setup List";
 
     fields
     {
@@ -121,9 +121,6 @@ Table 50381 "Loan Products Setup"
 
             trigger OnValidate()
             begin
-                /*TestNoEntriesExist(FIELDCAPTION(Code),Code);
-                TestNoEntriesExist(FIELDCAPTION("Loan Account"),"Loan Account")
-                */
 
             end;
         }
@@ -487,15 +484,6 @@ Table 50381 "Loan Products Setup"
     var
         GLLedgEntry: Record "G/L Entry";
     begin
-        /*
-          //To prevent change of field
-         GLLedgEntry.SETCURRENTKEY(GLLedgEntry."G/L Account No.");
-         GLLedgEntry.SETRANGE("G/L Account No.",GLNO);
-        IF GLLedgEntry.FIND('-') THEN
-          ERROR(
-          Text000,   CurrentFieldName)
-          */
-
     end;
 }
 

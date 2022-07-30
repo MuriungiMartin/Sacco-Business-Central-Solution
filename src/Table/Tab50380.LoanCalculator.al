@@ -1,8 +1,7 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50380 "Loan Calculator"
 {
-    //nownPage50025;
-    //nownPage50025;
+    
 
     fields
     {
@@ -340,7 +339,7 @@ Table 50380 "Loan Calculator"
         }
         field(23; "Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -483,7 +482,7 @@ Table 50380 "Loan Calculator"
         LBalance: Decimal;
         BosaLoans: Record "Loans Register";
         FosaLoans: Record Vendor;
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         Psalary: Decimal;
         Msalary: Decimal;
         ObjProductDepositLoan: Record "Product Deposit>Loan Analysis";
