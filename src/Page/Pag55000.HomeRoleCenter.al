@@ -722,7 +722,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
             }
             group("Loans Management")
             {
-                Caption = 'Loans Management';
+                Caption = 'Loans';
                 Image = CreditCard;
                 ToolTip = 'Loans'' Management Module';
                 action("BOSA Loan Application")
@@ -756,6 +756,30 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Open the list of the Loans Posted.';
                 }
 
+            }
+
+            group(Receipts)
+            {
+                Caption = 'BOSA Receipts';
+                Image = Receivables;
+                ToolTip = 'Member Receipting Process.';
+
+                action("BOSA Receipts")
+                {
+                    Caption = 'Open BOSA Receipts';
+                    Image = Receipt;
+                    RunObject = page "BOSA Receipts List";
+                    ToolTip = 'New Member Receipts for payments done.';
+
+                }
+                action("Posted BOSA Receipts")
+                {
+                    Caption = 'Posted BOSA Receipts';
+                    Image = PostedReceipts;
+                    RunObject = page "Posted BOSA Receipts List";
+                    ToolTip = 'New Member Receipts for payments done.';
+
+                }
             }
 #if not CLEAN18
             group(SetupAndExtensions)

@@ -96,7 +96,7 @@ codeunit 50163 "PostCustomerExtension"
                         CustPostingGroupBuffer.Reset();
                         CustPostingGroupBuffer.SetRange(Code, TransactionTypestable."Posting Group Code");
                         if CustPostingGroupBuffer.FindFirst() then begin
-                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Account";
+                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Receivable Interest Account";
                             CustPostingGroupBuffer.Modify();
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
@@ -127,7 +127,7 @@ codeunit 50163 "PostCustomerExtension"
                         CustPostingGroupBuffer.Reset();
                         CustPostingGroupBuffer.SetRange(Code, TransactionTypestable."Posting Group Code");
                         if CustPostingGroupBuffer.FindFirst() then begin
-                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Account";
+                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Interest Account";
                             CustPostingGroupBuffer.Modify();
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
@@ -189,7 +189,7 @@ codeunit 50163 "PostCustomerExtension"
                         CustPostingGroupBuffer.Reset();
                         CustPostingGroupBuffer.SetRange(Code, TransactionTypestable."Posting Group Code");
                         if CustPostingGroupBuffer.FindFirst() then begin
-                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Account";
+                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Receivable Insurance Accounts";
                             CustPostingGroupBuffer.Modify();
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
@@ -221,7 +221,7 @@ codeunit 50163 "PostCustomerExtension"
                         CustPostingGroupBuffer.Reset();
                         CustPostingGroupBuffer.SetRange(Code, TransactionTypestable."Posting Group Code");
                         if CustPostingGroupBuffer.FindFirst() then begin
-                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Account";
+                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Receivable Insurance Accounts";
                             CustPostingGroupBuffer.Modify();
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
@@ -255,7 +255,7 @@ codeunit 50163 "PostCustomerExtension"
                         CustPostingGroupBuffer.Reset();
                         CustPostingGroupBuffer.SetRange(Code, TransactionTypestable."Posting Group Code");
                         if CustPostingGroupBuffer.FindFirst() then begin
-                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Account";
+                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Penalty Charged Account";
                             CustPostingGroupBuffer.Modify();
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
@@ -287,7 +287,7 @@ codeunit 50163 "PostCustomerExtension"
                         CustPostingGroupBuffer.Reset();
                         CustPostingGroupBuffer.SetRange(Code, TransactionTypestable."Posting Group Code");
                         if CustPostingGroupBuffer.FindFirst() then begin
-                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Loan Account";
+                            CustPostingGroupBuffer."Receivables Account" := LoanTypes."Penalty Charged Account";
                             CustPostingGroupBuffer.Modify();
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
@@ -316,7 +316,26 @@ codeunit 50163 "PostCustomerExtension"
         CustLedgerEntry."Transaction Date" := WorkDate();
         CustLedgerEntry."Application Source" := GenJournalLine."Application Source";
         CustLedgerEntry."Created On" := CurrentDateTime;
+        CustLedgerEntry.CalcFields(Amount);
         CustLedgerEntry."Transaction Amount" := GenJournalLine.Amount;
+    end;
+
+    [EventSubscriber(ObjectType::Table, 179, 'OnAfterReverseEntries', '', false, false)]
+    procedure modifyreversedCustLedger(Number: Integer)
+    var
+        Custledger: Record "Cust. Ledger Entry";
+        CustledgeentPage: page "Customer Ledger Entries";
+
+    begin
+        Custledger.reset;
+        if Custledger.Findlast then begin
+            Custledger.CalcFields(Amount);
+            if Custledger.Reversed then
+                Custledger."Transaction Amount" := Custledger.amount;
+            Custledger.Modify();
+        end;
 
     end;
+
+
 }

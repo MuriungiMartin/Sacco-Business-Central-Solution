@@ -112,6 +112,7 @@ Page 50873 "Member Picture-App"
     procedure TakeNewPicture()
     var
         CameraOptions: dotnet CameraOptions;
+        CameraCodeunit: Codeunit Camera;
     begin
         Find;
         TestField("No.");
