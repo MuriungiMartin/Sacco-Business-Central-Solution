@@ -39,7 +39,8 @@ codeunit 50163 "PostCustomerExtension"
                 if TransactionTypestable.Find('-') then begin
                     GenJournalLine."Posting Group" := TransactionTypestable."Posting Group Code";
                     GenJournalLine.Modify();
-                end;
+                end else
+                    Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
             end;
         end;
 
@@ -70,7 +71,8 @@ codeunit 50163 "PostCustomerExtension"
 
                         end;
 
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
                 end;
             end;
         end;
@@ -101,7 +103,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
 
                 end;
             end;
@@ -132,7 +135,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
 
                 end;
             end;
@@ -163,7 +167,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
                 end;
             end;
 
@@ -194,7 +199,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
 
                 end;
             end;
@@ -226,7 +232,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
 
                 end;
             end;
@@ -260,7 +267,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
 
                 end;
             end;
@@ -292,7 +300,8 @@ codeunit 50163 "PostCustomerExtension"
                             GenJournalLine."Posting Group" := CustPostingGroupBuffer.code;
                             GenJournalLine.Modify();
                         end;
-                    end;
+                    end else
+                        Error('The transaction setup for transaction %1 is missing', GenJournalLine."Transaction Type");
 
                 end;
             end;
@@ -325,6 +334,7 @@ codeunit 50163 "PostCustomerExtension"
     var
         Custledger: Record "Cust. Ledger Entry";
         CustledgeentPage: page "Customer Ledger Entries";
+        ReversalEntry: Record "Reversal Entry";
 
     begin
         Custledger.reset;

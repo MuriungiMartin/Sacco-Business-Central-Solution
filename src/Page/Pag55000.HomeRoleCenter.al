@@ -8,10 +8,10 @@ page 55000 "Home Role Center" // default role center change to comapny name
         area(rolecenter)
         {
 
-            // part(Control75; "Headline RC Accountant")
-            // {
-            //     ApplicationArea = Basic, Suite;
-            // }
+            part(Control75; "Headline RC Accountant")
+            {
+                ApplicationArea = Basic, Suite;
+            }
 
             // part("Logo Cue"; "Sacco Logo")
             // {
