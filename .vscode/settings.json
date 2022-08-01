@@ -9,7 +9,6 @@
     
     },
     "al.assemblyProbingPaths": [
-        "D:/BC Apps/BC180/Surestep Sacco Sln/src/dotnetpackages",
-        "C:/Program Files/Reports ForNAV/Add-ins/ReportsForNAV"
+        "C:\\Users\\Admin\\Documents\\AL\\Sacco-Business-Central-Solution\\src\\dotnetpackages"
     ]
 }
