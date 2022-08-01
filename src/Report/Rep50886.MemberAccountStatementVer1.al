@@ -26,9 +26,7 @@ Report 50886 "Member Account Statement(Ver1)"
             column(EmployerName; EmployerName)
             {
             }
-            column(PageNo_Members; Format(ReportForNav.PageNo))
-            {
-            }
+
             column(Shares_Retained; "Members Register"."Shares Retained")
             {
             }
@@ -671,17 +669,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 group(Options)
                 {
                     Caption = 'Options';
-                    field(ForNavOpenDesigner; ReportForNavOpenDesigner)
-                    {
-                        ApplicationArea = Basic;
-                        Caption = 'Design';
-                        Visible = ReportForNavAllowDesign;
-                        trigger OnValidate()
-                        begin
-                            CurrReport.RequestOptionsPage.Close();
-                        end;
 
-                    }
                 }
             }
         }
