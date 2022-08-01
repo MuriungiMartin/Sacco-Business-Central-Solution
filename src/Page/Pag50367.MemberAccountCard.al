@@ -1553,7 +1553,7 @@ Page 50367 "Member Account Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.Run(50531, true, false, Cust);
                     end;
                 }
                 action("Member Deposit Statement")
@@ -1846,7 +1846,7 @@ Page 50367 "Member Account Card"
         StatusPermissions: Record "Status Change Permision";
         Charges: Record Charges;
         Vend: Record Vendor;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         LineNo: Integer;
         UsersID: Record User;
         GeneralSetup: Record "Sacco General Set-Up";
