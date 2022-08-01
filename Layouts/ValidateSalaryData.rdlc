@@ -63,11 +63,7 @@ End Function
   <rd:ReportID>0eeb6585-38ae-40f1-885b-8d50088d51b4</rd:ReportID>
   <DataSets>
     <DataSet Name="DataSet_Result">
-      <Fields>
-        <Field Name="ReportForNavId_1000000000">
-          <DataField>ReportForNavId_1000000000</DataField>
-        </Field>
-      </Fields>
+      <Fields />
       <Query>
         <DataSourceName>DataSource</DataSourceName>
         <CommandText />

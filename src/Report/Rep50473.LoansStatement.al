@@ -1,8 +1,8 @@
-#pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
+#pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // 
 Report 50473 "Loans Statement"
 {
     DefaultLayout = RDLC;
-    RDLCLayout = './Layouts/Loans Statement.rdlc';
+    RDLCLayout = 'Layouts/Loans Statement.rdlc';
 
     dataset
     {
@@ -10,9 +10,7 @@ Report 50473 "Loans Statement"
         {
             DataItemTableView = sorting("No.") where("Customer Type" = const(FOSA));
             RequestFilterFields = "No.", "Loan Product Filter", "Outstanding Balance";
-            column(ReportForNavId_1000000000; 1000000000)
-            {
-            }
+
             column(No; "Members Register"."No.")
             {
             }
@@ -22,9 +20,6 @@ Report 50473 "Loans Statement"
             dataitem("Loans Register"; "Loans Register")
             {
                 DataItemLink = "Client Code" = field("No."), "Loan Product Type" = field("Loan Product Filter");
-                column(ReportForNavId_1000000003; 1000000003)
-                {
-                }
                 column(Loan_No; "Loans Register"."Loan  No.")
                 {
                 }
@@ -38,9 +33,7 @@ Report 50473 "Loans Statement"
 
                 {
                     DataItemLink = "Customer No." = field("Client Code"), "Posting Date" = field("Date filter"), "Loan No" = field("Loan  No.");
-                    column(ReportForNavId_1000000012; 1000000012)
-                    {
-                    }
+
                     column(Posting_Date; CustL2."Posting Date")
                     {
                     }
@@ -67,9 +60,6 @@ Report 50473 "Loans Statement"
                 {
                     DataItemLink = "Customer No." = field("Client Code"), "Posting Date" = field("Date filter"), "Loan No" = field("Loan  No.");
                     DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Interest Due" | "Interest Paid"));
-                    column(ReportForNavId_1000000022; 1000000022)
-                    {
-                    }
                     column(DataItem1000000021; CustL2."Posting Date")
                     {
                     }

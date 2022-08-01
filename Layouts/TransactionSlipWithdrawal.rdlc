@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_5806">
-          <DataField>ReportForNavId_5806</DataField>
-        </Field>
         <Field Name="No_Transactions">
           <DataField>No_Transactions</DataField>
         </Field>
@@ -576,9 +573,6 @@ End Function
         </Field>
         <Field Name="AvailBALFormat">
           <DataField>AvailBALFormat</DataField>
-        </Field>
-        <Field Name="ReportForNavId_8541">
-          <DataField>ReportForNavId_8541</DataField>
         </Field>
         <Field Name="Transaction_Charges_Description">
           <DataField>Transaction_Charges_Description</DataField>

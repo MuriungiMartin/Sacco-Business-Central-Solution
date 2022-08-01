@@ -9,7 +9,7 @@
 
 Report 50474 "Account Closure Slip"
 {
-    RDLCLayout = './Layouts/AccountClosureSlip.rdlc';
+    RDLCLayout = 'Layouts/AccountClosureSlip.rdlc';
     DefaultLayout = RDLC;
 
     dataset

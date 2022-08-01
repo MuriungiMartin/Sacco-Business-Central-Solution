@@ -5,7 +5,7 @@ Report 50886 "Member Account Statement(Ver1)"
 
     dataset
     {
-        dataitem("Members Register"; "Members Register")
+        dataitem("Members Register"; Customer)
         {
             RequestFilterFields = "No.", "Loan Product Filter", "Outstanding Balance", "Date Filter";
             column(UserId; UserId)
@@ -57,7 +57,7 @@ Report 50886 "Member Account Statement(Ver1)"
             column(Company_Email; Company."E-Mail")
             {
             }
-            dataitem(ShareCapital; "Member Ledger Entry")
+            dataitem(ShareCapital; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Benevolent Fund" | "Share Capital"), Reversed = filter(false));
@@ -107,7 +107,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(Deposits; "Member Ledger Entry")
+            dataitem(Deposits; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Deposit Contribution"), Reversed = const(false));
@@ -157,7 +157,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(Dividend; "Member Ledger Entry")
+            dataitem(Dividend; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Junior Savings"), Reversed = filter(false));
@@ -207,7 +207,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(Junior; "Member Ledger Entry")
+            dataitem(Junior; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Junior Savings"), Reversed = filter(false));
@@ -257,7 +257,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(Safari; "Member Ledger Entry")
+            dataitem(Safari; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Safari Savings"), Reversed = filter(false));
@@ -307,7 +307,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(Silver; "Member Ledger Entry")
+            dataitem(Silver; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Silver Savings"), Reversed = filter(false));
@@ -357,7 +357,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(FOSAShares; "Member Ledger Entry")
+            dataitem(FOSAShares; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("FOSA Shares"));
@@ -407,7 +407,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 end;
 
             }
-            dataitem(AdditionalShares; "Member Ledger Entry")
+            dataitem(AdditionalShares; "Cust. Ledger Entry")
             {
                 DataItemLink = "Customer No." = field("No."), "Posting Date" = field("Date Filter");
                 DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter("Additional Shares"));
@@ -501,7 +501,7 @@ Report 50886 "Member Account Statement(Ver1)"
                 column(OustandingInterest_Loans; Loans."Outstanding Interest")
                 {
                 }
-                dataitem(loan; "Member Ledger Entry")
+                dataitem(loan; "Cust. Ledger Entry")
                 {
                     DataItemLink = "Customer No." = field("Client Code"), "Loan No" = field("Loan  No."), "Posting Date" = field("Date filter");
                     DataItemTableView = sorting("Posting Date") where("Transaction Type" = filter(Loan | "Loan Repayment" | "Interest Paid" | "Interest Due"), Reversed = const(false));

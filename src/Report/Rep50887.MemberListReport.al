@@ -1,7 +1,9 @@
 Report 50887 "Member List Report"
 {
-    RDLCLayout = './Layouts/MemberListReport.rdlc';
+    RDLCLayout = 'Layouts/MemberListReport.rdlc';
     DefaultLayout = RDLC;
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = all;
 
     dataset
     {

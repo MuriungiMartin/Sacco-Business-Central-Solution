@@ -120,9 +120,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_6437">
-          <DataField>ReportForNavId_6437</DataField>
-        </Field>
         <Field Name="CI_Name">
           <DataField>CI_Name</DataField>
         </Field>
@@ -401,9 +398,6 @@ End Function
         </Field>
         <Field Name="DimensionSetID_StaffClaimsHeader">
           <DataField>DimensionSetID_StaffClaimsHeader</DataField>
-        </Field>
-        <Field Name="ReportForNavId_3474">
-          <DataField>ReportForNavId_3474</DataField>
         </Field>
         <Field Name="No_StaffClaimLines">
           <DataField>No_StaffClaimLines</DataField>

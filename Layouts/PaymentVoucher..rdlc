@@ -93,9 +93,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_6437">
-          <DataField>ReportForNavId_6437</DataField>
-        </Field>
         <Field Name="DOCNAME">
           <DataField>DOCNAME</DataField>
         </Field>
@@ -294,9 +291,6 @@ End Function
         <Field Name="PVNOS">
           <DataField>PVNOS</DataField>
         </Field>
-        <Field Name="ReportForNavId_8">
-          <DataField>ReportForNavId_8</DataField>
-        </Field>
         <Field Name="DocNo">
           <DataField>DocNo</DataField>
         </Field>
@@ -305,9 +299,6 @@ End Function
         </Field>
         <Field Name="AmtFormat">
           <DataField>AmtFormat</DataField>
-        </Field>
-        <Field Name="ReportForNavId_3474">
-          <DataField>ReportForNavId_3474</DataField>
         </Field>
         <Field Name="Payment_Line__Net_Amount__">
           <DataField>Payment_Line__Net_Amount__</DataField>
@@ -375,21 +366,6 @@ End Function
         <Field Name="TTotal2Format">
           <DataField>TTotal2Format</DataField>
         </Field>
-        <Field Name="ReportForNavId_3476">
-          <DataField>ReportForNavId_3476</DataField>
-        </Field>
-        <Field Name="ReportForNavId_3570">
-          <DataField>ReportForNavId_3570</DataField>
-        </Field>
-        <Field Name="ReportForNavId_5444">
-          <DataField>ReportForNavId_5444</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1937">
-          <DataField>ReportForNavId_1937</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000014">
-          <DataField>ReportForNavId_1000000014</DataField>
-        </Field>
         <Field Name="SequenceNo_ApprovalEntry">
           <DataField>SequenceNo_ApprovalEntry</DataField>
         </Field>
@@ -401,9 +377,6 @@ End Function
         </Field>
         <Field Name="SenderID_ApprovalEntry">
           <DataField>SenderID_ApprovalEntry</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000025">
-          <DataField>ReportForNavId_1000000025</DataField>
         </Field>
         <Field Name="SequenceNo_CreationApprovalEntry">
           <DataField>SequenceNo_CreationApprovalEntry</DataField>

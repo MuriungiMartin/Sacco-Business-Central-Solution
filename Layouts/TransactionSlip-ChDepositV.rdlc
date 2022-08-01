@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_5806">
-          <DataField>ReportForNavId_5806</DataField>
-        </Field>
         <Field Name="Transactions_Type">
           <DataField>Transactions_Type</DataField>
         </Field>
@@ -157,9 +154,6 @@ End Function
         <Field Name="ValueDate">
           <DataField>ValueDate</DataField>
         </Field>
-        <Field Name="ReportForNavId_8541">
-          <DataField>ReportForNavId_8541</DataField>
-        </Field>
         <Field Name="Transaction_Charges_Description">
           <DataField>Transaction_Charges_Description</DataField>
         </Field>
@@ -174,9 +168,6 @@ End Function
         </Field>
         <Field Name="Transaction_Charges_Charge_Code">
           <DataField>Transaction_Charges_Charge_Code</DataField>
-        </Field>
-        <Field Name="ReportForNavId_5909">
-          <DataField>ReportForNavId_5909</DataField>
         </Field>
       </Fields>
       <Query>

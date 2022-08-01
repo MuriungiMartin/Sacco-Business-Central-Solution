@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_1000000014">
-          <DataField>ReportForNavId_1000000014</DataField>
-        </Field>
         <Field Name="No_EFTHeaderDetails">
           <DataField>No_EFTHeaderDetails</DataField>
         </Field>
@@ -129,9 +126,6 @@ End Function
         </Field>
         <Field Name="Bank_EFTHeaderDetails">
           <DataField>Bank_EFTHeaderDetails</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000000">
-          <DataField>ReportForNavId_1000000000</DataField>
         </Field>
         <Field Name="DateEntered_EFTDetails">
           <DataField>DateEntered_EFTDetails</DataField>

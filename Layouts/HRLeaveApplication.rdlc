@@ -219,9 +219,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_1000000000">
-          <DataField>ReportForNavId_1000000000</DataField>
-        </Field>
         <Field Name="CI_Picture">
           <DataField>CI_Picture</DataField>
         </Field>
@@ -302,15 +299,6 @@ End Function
         </Field>
         <Field Name="Approveddays_HRLeaveApplication">
           <DataField>Approveddays_HRLeaveApplication</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000007">
-          <DataField>ReportForNavId_1000000007</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000008">
-          <DataField>ReportForNavId_1000000008</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000009">
-          <DataField>ReportForNavId_1000000009</DataField>
         </Field>
       </Fields>
       <Query>
