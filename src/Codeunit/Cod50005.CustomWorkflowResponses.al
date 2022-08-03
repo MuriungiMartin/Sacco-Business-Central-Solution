@@ -33,7 +33,7 @@ Codeunit 50005 "Custom Workflow Responses"
                                                  SurestepWFEvents.RunWorkflowOnCancelPaymentApprovalRequestCode);
 
         //Membership Application
-        Message('naweka response predecessors');
+        //Message('naweka response predecessors');
         WFResponseHandler.AddResponsePredecessor(WFResponseHandler.SetStatusToPendingApprovalCode,
                                                  SurestepWFEvents.RunWorkflowOnSendMembershipApplicationForApprovalCode);
         WFResponseHandler.AddResponsePredecessor(WFResponseHandler.CreateApprovalRequestsCode,
@@ -554,6 +554,7 @@ Codeunit 50005 "Custom Workflow Responses"
         InternalPV: Record "Internal PV Header";
         JournalBatch: Record "Gen. Journal Batch";
         SProcessing: Record "Salary Processing Headerr";
+        // PaymentHeader: Record "Payments Header";
         GuarantorshipSubstitution: Record "Guarantorship Substitution H";
     begin
         case RecRef.Number of
@@ -2606,6 +2607,7 @@ Codeunit 50005 "Custom Workflow Responses"
         ImprestSurrender: Record "Imprest Surrender Header";
         ImprestRequisition: Record "Imprest Header";
         PRequest: Record "Purchase Header";
+        PaymentHeader: Record "Payments Header";
         LoanPayOff: Record "Loan PayOff";
         GuarantorRecovery: Record "Loan Recovery Header";
         LoanDisbursememnt: Record "Loan Disburesment-Batching";
@@ -2713,6 +2715,13 @@ Codeunit 50005 "Custom Workflow Responses"
                     RecRef.SetTable(LoanPayOff);
                     LoanPayOff.Status := LoanPayOff.Status::Approved;
                     LoanPayOff.Modify(true);
+                    Handled := true;
+                end;
+            Database::"Payments Header":
+                begin
+                    RecRef.SetTable(PaymentHeader);
+                    PaymentHeader.Status := PaymentHeader.Status::Approved;
+                    PaymentHeader.Modify(true);
                     Handled := true;
                 end;
             Database::"Loan Recovery Header":

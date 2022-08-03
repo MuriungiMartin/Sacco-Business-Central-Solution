@@ -1065,7 +1065,7 @@ Page 50367 "Member Account Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516503, true, false, Cust);
+                            Report.Run(50503, true, false, Cust);
                     end;
                 }
                 action("Member is  Guaranteed")
@@ -1083,7 +1083,7 @@ Page 50367 "Member Account Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.Run(50504, true, false, Cust);
                         //51516482
                     end;
                 }
@@ -1672,7 +1672,7 @@ Page 50367 "Member Account Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516474, true, false, Cust);
+                            Report.Run(50474, true, false, Cust);
                     end;
                 }
             }

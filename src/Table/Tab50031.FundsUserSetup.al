@@ -10,7 +10,7 @@ Table 50031 "Funds User Setup"
 
             trigger OnLookup()
             begin
-                //TODO UserManager.LookupUserID(UserID);
+                UserManager.LookupUserID(UserID);
             end;
 
             trigger OnValidate()
@@ -383,7 +383,7 @@ Table 50031 "Funds User Setup"
 
     var
         UserTemp: Record "Funds User Setup";
-        UserManager: Codeunit "User Management";
+        UserManager: Codeunit "User Management2";
         SameBatch: label 'Another User has been assign to the batch:%1';
 }
 
