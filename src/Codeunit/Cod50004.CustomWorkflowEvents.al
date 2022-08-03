@@ -502,7 +502,6 @@ Codeunit 50004 "Custom Workflow Events"
 
     procedure RunWorkflowOnSendMembershipApplicationForApproval(var MembershipApplication: Record "Membership Applications")
     begin
-        // Message('niko kwa custom events');
         WorkflowManagement.HandleEvent(RunWorkflowOnSendMembershipApplicationForApprovalCode, MembershipApplication);
     end;
 
@@ -1611,12 +1610,10 @@ Codeunit 50004 "Custom Workflow Events"
             RecRef.Number of
             DATABASE::"Loans Register":
                 begin
-                    Message('status 1 %1', LoanApp."Approval Status");
                     RecRef.SetTable(LoanApp);
                     LoanApp.Validate("Approval Status", LoanApp."Approval Status"::Pending);
                     //  MembershipApp.Modify();
                     variant := LoanApp;
-                    Message('status 2 %1', LoanApp."Approval Status");
 
                 end;
         end;
@@ -1641,7 +1638,6 @@ Codeunit 50004 "Custom Workflow Events"
                 WorkflowResponses."Function Name" of
                 SetStatusLoanAppStatusToPendingApprovalCode():
                     begin
-                        Message('nimeingia');
                         SetLoanAppStatusTopendingApproval(Variant);
                         ResponseExecuted := true;
                     end;
@@ -2082,7 +2078,6 @@ Codeunit 50004 "Custom Workflow Events"
         GuarantorRecovery: Record "Loan Recovery Header";
     begin
         // RecRef.GetTable();
-        Message('tablle no onrelease %1', RecRef.Number);
         case RecRef.Number of
             DATABASE::"Membership Applications":
                 begin
@@ -2090,7 +2085,6 @@ Codeunit 50004 "Custom Workflow Events"
                     MemberShipApp.Status := MemberShipApp.Status::Approved;
                     MemberShipApp.Modify(true);
                     Handled := true;
-                    Message('status is on release %1', MemberShipApp.Status);
                 end;
             Database::"Sacco Transfers":
                 begin

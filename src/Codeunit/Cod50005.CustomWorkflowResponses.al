@@ -33,7 +33,7 @@ Codeunit 50005 "Custom Workflow Responses"
                                                  SurestepWFEvents.RunWorkflowOnCancelPaymentApprovalRequestCode);
 
         //Membership Application
-        Message('naweka response predecessors');
+        //  Message('naweka response predecessors');
         WFResponseHandler.AddResponsePredecessor(WFResponseHandler.SetStatusToPendingApprovalCode,
                                                  SurestepWFEvents.RunWorkflowOnSendMembershipApplicationForApprovalCode);
         WFResponseHandler.AddResponsePredecessor(WFResponseHandler.CreateApprovalRequestsCode,
@@ -569,7 +569,7 @@ Codeunit 50005 "Custom Workflow Responses"
             //Membership Application
             Database::"Membership Applications":
                 begin
-                    Message('we here');
+                    //  Message('we here');
                     RecRef.SetTable(MembershipApplication);
                     MembershipApplication.Validate(Status, MembershipApplication.Status::"Pending Approval");
                     MembershipApplication.Modify(true);
