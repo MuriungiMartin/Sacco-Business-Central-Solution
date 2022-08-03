@@ -3,6 +3,8 @@ Report 50486 "BOSA Receipt Slipx"
 {
     RDLCLayout = 'Layouts/BOSAReceiptSlipx.rdlc';
     DefaultLayout = RDLC;
+    UsageCategory = ReportsAndAnalysis;
+    applicationarea = all;
 
     dataset
     {
@@ -216,7 +218,7 @@ Report 50486 "BOSA Receipt Slipx"
     end;
 
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         Comms: Decimal;
         CashPayType: Record "HR Leave Family Employees";
         companyInfo: Record "Company Information";

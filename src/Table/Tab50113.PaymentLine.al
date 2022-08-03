@@ -1,8 +1,7 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50113 "Payment Line"
 {
-    //nownPage51516146;
-    //nownPage51516146;
+    DrillDownPageId = "Payment Voucher List Nafaka";
 
     fields
     {
@@ -198,7 +197,7 @@ Table 50113 "Payment Line"
             else
             if ("Account Type" = const("IC Partner")) "IC Partner"
             else
-            if ("Account Type" = const(Member)) "Members Register";
+            if ("Account Type" = const(Member)) Customer;
 
             trigger OnValidate()
             var
@@ -1135,7 +1134,7 @@ Table 50113 "Payment Line"
         VendEntrySetApplID: Codeunit "Vend. Entry-SetAppl.ID";
         GenJnlApply: Codeunit "Gen. Jnl.-Apply";
         GenJnILine: Record "Gen. Journal Line";
-        Member: Record "Members Register";
+        Member: Record Customer;
         ApplyVendEntries: Page "Apply Vendor Entries";
         Gen: Record "Sacco General Set-Up";
         PLine: Record "Payments Header";

@@ -7,16 +7,7 @@ Table 50031 "Funds User Setup"
         field(10; UserID; Code[50])
         {
             NotBlank = true;
-
-            trigger OnLookup()
-            begin
-                //TODO UserManager.LookupUserID(UserID);
-            end;
-
-            trigger OnValidate()
-            begin
-                // UserManager.ValidateUserID(UserID);
-            end;
+            TableRelation = "User Setup"."User ID";
         }
         field(11; "Receipt Journal Template"; Code[20])
         {

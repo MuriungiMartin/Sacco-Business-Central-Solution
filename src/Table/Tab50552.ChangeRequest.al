@@ -1,8 +1,10 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Table 50552 "Change Request"
 {
-    //nownPage51516842;
-    //nownPage51516842;
+
+    DrillDownPageId = "Change Request List";
+    LookupPageId = "Change Request List";
+
 
     fields
     {
@@ -31,7 +33,7 @@ Table 50552 "Change Request"
         }
         field(3; "Account No"; Code[50])
         {
-            TableRelation = if (Type = const("Backoffice Change")) "Members Register"."No."
+            TableRelation = if (Type = const("Backoffice Change")) Customer."No." where(ISNormalMember = filter(true))
             else
             if (Type = const("Mobile Change")) Vendor."No."
             else
@@ -39,7 +41,7 @@ Table 50552 "Change Request"
             else
             if (Type = const("Agile Change")) Vendor."No." where("Vendor Posting Group" = filter(<> 'TCREDITORS'))
             else
-            if (Type = filter("Microfinance Change")) "Members Register"."No.";
+            if (Type = filter("Microfinance Change")) Customer."No." where(ISNormalMember = filter(true));
 
             trigger OnValidate()
             begin
@@ -314,7 +316,7 @@ Table 50552 "Change Request"
         }
         field(52; "Group Account No"; Code[30])
         {
-            TableRelation = "Members Register"."No." where("Group Account" = filter(true));
+            TableRelation = Customer."No." where("Group Account" = filter(true));
         }
         field(53; "Group Account Name"; Code[30])
         {
@@ -635,7 +637,7 @@ Table 50552 "Change Request"
         SalesSetup: Record "Sacco No. Series";
         NoSeriesMgt: Codeunit NoSeriesManagement;
         vend: Record Vendor;
-        Memb: Record "Members Register";
+        Memb: Record Customer;
         MemberCell: Record "Hexa Binary";
         MediaId: Guid;
         Dates: Codeunit "Dates Calculation";

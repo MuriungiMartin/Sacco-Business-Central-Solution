@@ -16,7 +16,7 @@ Table 50582 "Sacco Transfers Schedule"
             else
             if ("Destination Account Type" = const("G/L ACCOUNT")) "G/L Account"."No."
             else
-            if ("Destination Account Type" = const(MEMBER)) "Members Register"."No.";
+            if ("Destination Account Type" = const(MEMBER)) Customer."No.";
 
             trigger OnValidate()
             begin
@@ -192,12 +192,12 @@ Table 50582 "Sacco Transfers Schedule"
     end;
 
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         Vend: Record Vendor;
         Bank: Record "Bank Account";
         Bosa: Record "BOSA Transfers";
         "G/L": Record "G/L Account";
-        memb: Record "Members Register";
+        memb: Record Customer;
         Loans: Record "Loans Register";
         ReceiptAll: Record "Sacco Transfers Schedule";
 }
