@@ -372,7 +372,7 @@ Page 50400 "BOSA Receipt Card"
                         BOSARcpt.Reset;
                     BOSARcpt.SetRange(BOSARcpt."Transaction No.", "Transaction No.");
                     if BOSARcpt.Find('-') then
-                        Report.Run(51516486, true, false, BOSARcpt);
+                        Report.Run(50486, true, false, BOSARcpt);
 
                     //END;
 
@@ -394,7 +394,7 @@ Page 50400 "BOSA Receipt Card"
                     BOSARcpt.Reset;
                     BOSARcpt.SetRange(BOSARcpt."Transaction No.", "Transaction No.");
                     if BOSARcpt.Find('-') then
-                        Report.Run(51516486, true, true, BOSARcpt)
+                        Report.Run(50486, true, true, BOSARcpt)
                 end;
             }
         }

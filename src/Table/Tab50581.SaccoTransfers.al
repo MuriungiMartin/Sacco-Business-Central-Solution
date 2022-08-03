@@ -65,7 +65,7 @@ Table 50581 "Sacco Transfers"
         field(11; "Source Account No."; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = if ("Source Account Type" = const(MEMBER)) "Members Register"."No."
+            TableRelation = if ("Source Account Type" = const(MEMBER)) Customer."No."
             else
             if ("Source Account Type" = const(MWANANGU)) Vendor."No." where("BOSA Account No" = field("Member No"))
             else
@@ -223,7 +223,7 @@ Table 50581 "Sacco Transfers"
         }
         field(51516064; "Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -335,9 +335,9 @@ Table 50581 "Sacco Transfers"
         Cust: Record Customer;
         Bank: Record "Bank Account";
         Vend: Record Vendor;
-        memb: Record "Members Register";
+        memb: Record Customer;
         "G/L": Record "G/L Account";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         ObjLoans: Record "Loans Register";
 
 

@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_1">
-          <DataField>ReportForNavId_1</DataField>
-        </Field>
         <Field Name="Company_Name">
           <DataField>Company_Name</DataField>
         </Field>
@@ -111,9 +108,6 @@ End Function
         </Field>
         <Field Name="MemberName_IndividualCustomerRiskRate">
           <DataField>MemberName_IndividualCustomerRiskRate</DataField>
-        </Field>
-        <Field Name="ReportForNavId_3">
-          <DataField>ReportForNavId_3</DataField>
         </Field>
         <Field Name="No_MembersRegister">
           <DataField>No_MembersRegister</DataField>

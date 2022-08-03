@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_1">
-          <DataField>ReportForNavId_1</DataField>
-        </Field>
         <Field Name="PF_No">
           <DataField>PF_No</DataField>
         </Field>

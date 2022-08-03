@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_4645">
-          <DataField>ReportForNavId_4645</DataField>
-        </Field>
         <Field Name="LoanDisbursementDate_LoanCalculator">
           <DataField>LoanDisbursementDate_LoanCalculator</DataField>
         </Field>
@@ -117,9 +114,6 @@ End Function
         </Field>
         <Field Name="CompanyInfo_Picture">
           <DataField>CompanyInfo_Picture</DataField>
-        </Field>
-        <Field Name="ReportForNavId_9169">
-          <DataField>ReportForNavId_9169</DataField>
         </Field>
         <Field Name="ROUND__Monthly_Repayment__10_____">
           <DataField>ROUND__Monthly_Repayment__10_____</DataField>

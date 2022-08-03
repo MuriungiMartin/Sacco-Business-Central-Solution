@@ -599,7 +599,7 @@ Page 50843 "Updated Change Request Card"
                         Memb.SetRange(Memb."No.", "Account No");
                         if Memb.Find('-') then begin
 
-                            Memb.CalcFields(Memb.Picture, Memb.Signature);
+                            Memb.CalcFields(Memb.Signature);
                             Memb.Name := Name;
                             Memb."Global Dimension 2 Code" := Branch;
                             Memb.Address := "Address(New Value)";
@@ -659,7 +659,7 @@ Page 50843 "Updated Change Request Card"
                                     GenJournalLine."Line No." := GenJournalLine."Line No." + 1000;
                                     GenJournalLine."Account Type" := GenJournalLine."account type"::"IC Partner";
                                     GenJournalLine."Account No." := "Account No";
-                                    GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::Loan;
+                                    GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Registration Fee";
                                     GenJournalLine."Posting Date" := Today;
                                     GenJournalLine."Document No." := No;
                                     GenJournalLine.Description := 'Account Reactivation Fee' + ' ' + No;
@@ -753,7 +753,7 @@ Page 50843 "Updated Change Request Card"
 
     var
         vend: Record Vendor;
-        Memb: Record "Members Register";
+        Memb: Record Customer;
         MobileVisible: Boolean;
         AtmVisible: Boolean;
         AccountVisible: Boolean;

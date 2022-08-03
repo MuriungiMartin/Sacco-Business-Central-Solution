@@ -9,7 +9,7 @@
 
 Report 50868 "Loans Balances Report"
 {
-    RDLCLayout = './Layouts/LoansBalancesReport.rdlc';
+    RDLCLayout = 'Layouts/LoansBalancesReport.rdlc';
     DefaultLayout = RDLC;
     ApplicationArea = all;
     UsageCategory = ReportsAndAnalysis;

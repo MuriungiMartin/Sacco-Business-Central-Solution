@@ -1398,6 +1398,26 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Find entries and documents that exist for the document number and posting date on the selected document. (Formerly this action was named Navigate.)';
                 }
             }
+            group("Sacco Transfer")
+            {
+                caption = 'Sacco Transfer';
+                action("Sacco Transfer List")
+                {
+                    Applicationarea = basic, suite;
+                    Caption = 'Open Sacco Transfer List';
+                    Image = Payment;
+                    RunObject = page "Internal Transfer List.";
+                }
+
+                action("POsted Sacco Transfers")
+                {
+                    Caption = 'Posted Sacco Transfers';
+                    ApplicationArea = basic, suite;
+                    Image = PostedPayment;
+                    RunObject = page "Posted Internal Transfer List.";
+                }
+
+            }
         }
     }
 }

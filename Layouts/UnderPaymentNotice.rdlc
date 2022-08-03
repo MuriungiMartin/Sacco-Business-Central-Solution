@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_1102755000">
-          <DataField>ReportForNavId_1102755000</DataField>
-        </Field>
         <Field Name="Staff_No">
           <DataField>Staff_No</DataField>
         </Field>
@@ -94,9 +91,6 @@ End Function
         <Field Name="LBalance1Format">
           <DataField>LBalance1Format</DataField>
         </Field>
-        <Field Name="ReportForNavId_1102755005">
-          <DataField>ReportForNavId_1102755005</DataField>
-        </Field>
         <Field Name="LBalance2">
           <DataField>LBalance2</DataField>
         </Field>
@@ -123,9 +117,6 @@ End Function
         </Field>
         <Field Name="Current_PaymentsFormat">
           <DataField>Current_PaymentsFormat</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000008">
-          <DataField>ReportForNavId_1000000008</DataField>
         </Field>
         <Field Name="Loan_No">
           <DataField>Loan_No</DataField>
@@ -159,9 +150,6 @@ End Function
         </Field>
         <Field Name="Total_AmountFormat">
           <DataField>Total_AmountFormat</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1000000003">
-          <DataField>ReportForNavId_1000000003</DataField>
         </Field>
         <Field Name="Member_No">
           <DataField>Member_No</DataField>

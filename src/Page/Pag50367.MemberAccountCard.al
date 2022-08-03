@@ -1084,7 +1084,6 @@ Page 50367 "Member Account Card"
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
                             Report.Run(50504, true, false, Cust);
-                        //51516482
                     end;
                 }
                 action("Create Withdrawal Application")
@@ -1537,7 +1536,7 @@ Page 50367 "Member Account Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516886, true, false, Cust);
+                            Report.Run(50886, true, false, Cust);
                     end;
                 }
                 action("Loan Statement BOSA")
@@ -1568,7 +1567,7 @@ Page 50367 "Member Account Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516354, true, false, Cust);
+                            Report.Run(50354, true, false, Cust);
                     end;
                 }
                 action("Detailed Interest Statement")
@@ -1596,19 +1595,20 @@ Page 50367 "Member Account Card"
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedOnly = true;
+                    Visible = false;
 
                     trigger OnAction()
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516533, true, false, Cust);
+                            Report.Run(50533, true, false, Cust);
 
                         /*
                         Cust.RESET;
                         Cust.SETRANGE(Cust."No.","No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516474,TRUE,FALSE,Cust);
+                        REPORT.RUN(50474,TRUE,FALSE,Cust);
                         */
 
                     end;
@@ -1619,20 +1619,21 @@ Page 50367 "Member Account Card"
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedOnly = true;
+                    Visible = false;
 
                     trigger OnAction()
                     begin
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "FOSA Account No.");
                         if Vend.Find('-') then begin
-                            Report.Run(51516890, true, false, Vend);
+                            Report.Run(50890, true, false, Vend);
                         end;
 
 
                         /*Cust.RESET;
                         Cust.SETRANGE(Cust."FOSA Account No.","FOSA Account No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516890,TRUE,FALSE,Cust);
+                        REPORT.RUN(50890,TRUE,FALSE,Cust);
                         */
 
                     end;
@@ -1644,13 +1645,14 @@ Page 50367 "Member Account Card"
                     Promoted = true;
                     PromotedCategory = "Report";
                     PromotedOnly = true;
+                    Visible = false;
 
                     trigger OnAction()
                     begin
                         ObjCellGroups.Reset;
                         ObjCellGroups.SetRange(ObjCellGroups."Cell Group Code", "Member House Group");
                         if ObjCellGroups.Find('-') then
-                            Report.Run(51516920, true, false, ObjCellGroups);
+                            Report.Run(50920, true, false, ObjCellGroups);
                     end;
                 }
                 group("Issued Documents")

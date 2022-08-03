@@ -9,7 +9,7 @@
 
 Report 50910 "Loans Disburesment Bal Report"
 {
-    RDLCLayout = './Layouts/LoansDisburesmentBalReport.rdlc';
+    RDLCLayout = 'Layouts/LoansDisburesmentBalReport.rdlc';
     DefaultLayout = RDLC;
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = all;

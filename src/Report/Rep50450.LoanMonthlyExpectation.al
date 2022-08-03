@@ -9,7 +9,7 @@
 
 Report 50450 "Loan Monthly Expectation"
 {
-    RDLCLayout = './Layouts/LoanMonthlyExpectation.rdlc';
+    RDLCLayout = 'Layouts/LoanMonthlyExpectation.rdlc';
     DefaultLayout = RDLC;
     UsageCategory = ReportsAndAnalysis;
     ApplicationArea = all;

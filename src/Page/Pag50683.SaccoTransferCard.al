@@ -269,7 +269,7 @@ Page 50683 "Sacco Transfer Card"
                                 GenJournalLine."Journal Batch Name" := Jbatch;
                                 GenJournalLine."Document No." := No;
                                 GenJournalLine."Line No." := GenJournalLine."Line No." + 10000;
-                                GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                 GenJournalLine."Account No." := "Source Account No.";
                                 GenJournalLine."Loan No" := "Source Loan No";
                                 GenJournalLine."Posting Date" := "Transaction Date";
@@ -301,7 +301,7 @@ Page 50683 "Sacco Transfer Card"
                                   GenJournalLine."Journal Batch Name":=Jbatch;
                                   GenJournalLine."Document No.":=No;
                                   GenJournalLine."Line No.":=GenJournalLine."Line No."+10000;
-                                  GenJournalLine."Account Type":=GenJournalLine."Account Type"::Member;
+                                  GenJournalLine."Account Type":=GenJournalLine."Account Type"::Customer;
                                   GenJournalLine."Account No.":="Source Account No.";
                                   GenJournalLine."Loan No":="Source Loan No";
                                   GenJournalLine."Posting Date":="Transaction Date";
@@ -340,8 +340,8 @@ Page 50683 "Sacco Transfer Card"
                                 GenJournalLine."Account No." := "Source Account No.";
                                 GenJournalLine."Loan No" := "Source Loan No";
                             end else
-                                if "Source Account Type" = "source account type"::MEMBER then begin
-                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                if "Source Account Type" = "source account type"::Customer then begin
+                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                     GenJournalLine."Transaction Type" := "Source Transaction Type";
                                     GenJournalLine.Description := "Transaction Description" + ' ' + "Source Account No.";
                                     GenJournalLine."Shortcut Dimension 1 Code" := 'BOSA';
@@ -393,8 +393,9 @@ Page 50683 "Sacco Transfer Card"
                                     GenJournalLine."Document No." := No;
                                     GenJournalLine."Line No." := GenJournalLine."Line No." + 10000;
 
-                                    if BSched."Destination Account Type" = BSched."destination account type"::MEMBER then begin
-                                        GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                    if BSched."Destination Account Type" = BSched."destination account type"::MEMBER
+                                     then begin
+                                        GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                         GenJournalLine."Transaction Type" := BSched."Destination Type";
                                         GenJournalLine."Account No." := BSched."Destination Account No.";
                                         GenJournalLine.Description := "Transaction Description" + ' ' + "Source Account No.";
@@ -619,12 +620,12 @@ Page 50683 "Sacco Transfer Card"
         ObjVendors: Record Vendor;
         AvailableBal: Decimal;
         ObjAccTypes: Record "Account Types-Saving Products";
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         VarMemberNoEditable: Boolean;
         ObjLoans: Record "Loans Register";
         window: Dialog;
         SourceLoanVisible: Boolean;
-        cust: Record "Members Register";
+        cust: Record Customer;
 
     local procedure AddRecordRestriction()
     begin

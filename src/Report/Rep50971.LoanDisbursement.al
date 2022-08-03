@@ -2,7 +2,7 @@
 
 Report 50971 "Loan Disbursement"
 {
-    RDLCLayout = './Layouts/LoanDisbursement.rdlc';
+    RDLCLayout = 'Layouts/LoanDisbursement.rdlc';
     DefaultLayout = RDLC;
     ApplicationArea = all;
     UsageCategory = ReportsAndAnalysis;

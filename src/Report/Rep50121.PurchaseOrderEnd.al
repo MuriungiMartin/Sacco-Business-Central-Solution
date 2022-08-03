@@ -11,7 +11,7 @@ Report 50121 "Purchase Order End"
 {
     Caption = 'Order';
     PreviewMode = PrintLayout;
-    RDLCLayout = './Layouts/PurchaseOrderEnd.rdlc';
+    RDLCLayout = 'Layouts/PurchaseOrderEnd.rdlc';
     DefaultLayout = RDLC;
 
     dataset

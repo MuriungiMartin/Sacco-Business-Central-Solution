@@ -1,7 +1,7 @@
-#pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
+
 Report 50492 "Process Loan Monthly Interest"
 {
-    RDLCLayout = './Layouts/ProcessLoanMonthlyInterest.rdlc';
+    RDLCLayout = 'Layouts/ProcessLoanMonthlyInterest.rdlc';
     DefaultLayout = RDLC;
 
     dataset
@@ -18,7 +18,6 @@ Report 50492 "Process Loan Monthly Interest"
             column(COMPANYNAME; COMPANYNAME)
             {
             }
-
             column(UserId; UserId)
             {
             }
@@ -101,46 +100,46 @@ Report 50492 "Process Loan Monthly Interest"
                 if loanapp.Find('-') then begin
                     loanapp.CalcFields(loanapp."Outstanding Balance");
                     if loanapp."Issued Date" <> 0D then begin
-                        // if (Date2dmy(loanapp."Issued Date", 1)) = (Date2dmy(Today, 1)) then begin
-                        if loanapp."Outstanding Balance" > 0 then begin
-                            if (loanapp."Loan Product Type" <> 'FL353') and (loanapp."Loan Product Type" <> 'FL354') and (loanapp."Loan Product Type" <> 'FL358') and (loanapp."Loan Product Type" <> 'FL364') then begin
-                                LineNo := LineNo + 10000;
-                                GenJournalLine.Init;
-                                GenJournalLine."Journal Template Name" := 'General';
-                                GenJournalLine."Journal Batch Name" := 'INTDUE';
-                                GenJournalLine."Line No." := LineNo;
-                                GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
-                                GenJournalLine."Account No." := loanapp."Client Code";
-                                GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Interest Due";
-                                GenJournalLine.Validate(GenJournalLine."Account No.");
-                                GenJournalLine."Document No." := DocNo;
-                                GenJournalLine."Posting Date" := PostDate;
-                                GenJournalLine.Description := DocNo + ' ' + 'Interest Due';
-                                GenJournalLine.Amount := ROUND(loanapp."Outstanding Balance" * (loanapp.Interest / 1200), 1, '>');
-                                if loanapp."Repayment Method" = loanapp."repayment method"::"Straight Line" then
-                                    GenJournalLine.Amount := ROUND(loanapp."Approved Amount" * (loanapp.Interest / 1200), 1, '>');
-                                GenJournalLine.Validate(GenJournalLine.Amount);
-                                if LoanType.Get(loanapp."Loan Product Type") then begin
-                                    GenJournalLine."Bal. Account Type" := GenJournalLine."bal. account type"::"G/L Account";
-                                    LoanType.TestField("Receivable Interest Account");
-                                    GenJournalLine."Bal. Account No." := LoanType."Receivable Interest Account";
-                                    GenJournalLine.Validate(GenJournalLine."Bal. Account No.");
+                        if (Date2dmy(loanapp."Issued Date", 1)) = (Date2dmy(Today, 1)) then begin
+                            if loanapp."Outstanding Balance" > 0 then begin
+                                if (loanapp."Loan Product Type" <> 'FL353') and (loanapp."Loan Product Type" <> 'FL354') and (loanapp."Loan Product Type" <> 'FL358') and (loanapp."Loan Product Type" <> 'FL364') then begin
+                                    LineNo := LineNo + 10000;
+                                    GenJournalLine.Init;
+                                    GenJournalLine."Journal Template Name" := 'General';
+                                    GenJournalLine."Journal Batch Name" := 'INTDUE';
+                                    GenJournalLine."Line No." := LineNo;
+                                    GenJournalLine."Account Type" := GenJournalLine."account type"::None;
+                                    GenJournalLine."Account No." := loanapp."Client Code";
+                                    GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::"Interest Due";
+                                    GenJournalLine.Validate(GenJournalLine."Account No.");
+                                    GenJournalLine."Document No." := DocNo;
+                                    GenJournalLine."Posting Date" := PostDate;
+                                    GenJournalLine.Description := DocNo + ' ' + 'Interest Due';
+                                    GenJournalLine.Amount := ROUND(loanapp."Outstanding Balance" * (loanapp.Interest / 1200), 1, '>');
+                                    if loanapp."Repayment Method" = loanapp."repayment method"::"Straight Line" then
+                                        GenJournalLine.Amount := ROUND(loanapp."Approved Amount" * (loanapp.Interest / 1200), 1, '>');
+                                    GenJournalLine.Validate(GenJournalLine.Amount);
+                                    if LoanType.Get(loanapp."Loan Product Type") then begin
+                                        GenJournalLine."Bal. Account Type" := GenJournalLine."bal. account type"::"G/L Account";
+                                        LoanType.TestField("Receivable Interest Account");
+                                        GenJournalLine."Bal. Account No." := LoanType."Receivable Interest Account";
+                                        GenJournalLine.Validate(GenJournalLine."Bal. Account No.");
+                                    end;
+                                    if loanapp.Source = loanapp.Source::" " then begin
+                                        GenJournalLine."Shortcut Dimension 2 Code" := loanapp."Branch Code";
+                                    end;
+                                    if loanapp.Source = loanapp.Source::BOSA then begin
+                                        GenJournalLine."Shortcut Dimension 2 Code" := loanapp."Branch Code";
+                                    end;
+                                    GenJournalLine."Shortcut Dimension 1 Code" := FnProductSource(loanapp."Loan Product Type");
+                                    GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 1 Code");
+                                    GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 2 Code");
+                                    GenJournalLine."Loan No" := loanapp."Loan  No.";
+                                    if GenJournalLine.Amount <> 0 then
+                                        GenJournalLine.Insert;
                                 end;
-                                if loanapp.Source = loanapp.Source::" " then begin
-                                    GenJournalLine."Shortcut Dimension 2 Code" := loanapp."Branch Code";
-                                end;
-                                if loanapp.Source = loanapp.Source::BOSA then begin
-                                    GenJournalLine."Shortcut Dimension 2 Code" := loanapp."Branch Code";
-                                end;
-                                GenJournalLine."Shortcut Dimension 1 Code" := FnProductSource(loanapp."Loan Product Type");
-                                GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 1 Code");
-                                GenJournalLine.Validate(GenJournalLine."Shortcut Dimension 2 Code");
-                                GenJournalLine."Loan No" := loanapp."Loan  No.";
-                                if GenJournalLine.Amount <> 0 then
-                                    GenJournalLine.Insert;
                             end;
                         end;
-                        //  end;
                     end;
                 end;
                 /*
@@ -186,6 +185,7 @@ Report 50492 "Process Loan Monthly Interest"
         }
         trigger OnOpenPage()
         begin
+
         end;
     }
 
@@ -199,15 +199,21 @@ Report 50492 "Process Loan Monthly Interest"
             DocNo := AccountingPeriod.Name + '-' + Format(PostDate);
         end;
         //Accounting periods
+        ;
+
+
     end;
 
     trigger OnPostReport()
     begin
+        ;
 
     end;
 
     trigger OnPreReport()
     begin
+        ;
+
     end;
 
     var
@@ -249,4 +255,8 @@ Report 50492 "Process Loan Monthly Interest"
         end;
         exit(Source);
     end;
+
+
+    var
+
 }

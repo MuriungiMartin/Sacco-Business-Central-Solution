@@ -707,7 +707,7 @@ Page 50841 "Change Request Card"
                                 Memb."Group Account Name" := "Group Account Name";
                             if "Employer Code(New)" <> '' then
                                 Memb."Employer Code" := "Employer Code(New)";
-                            Memb.Picture := Picture;
+                            Memb.Piccture := Picture;
                             Memb."Date of Birth" := "Date Of Birth";
                             //Memb."Total BOSA Loan Balance":=Age;
                             Memb.Gender := Gender;
@@ -735,7 +735,7 @@ Page 50841 "Change Request Card"
                                     GenJournalLine."Journal Template Name" := 'PURCHASES';
                                     GenJournalLine."Journal Batch Name" := 'FTRANS';
                                     GenJournalLine."Line No." := GenJournalLine."Line No." + 1000;
-                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Member;
+                                    GenJournalLine."Account Type" := GenJournalLine."account type"::Customer;
                                     GenJournalLine."Account No." := "Account No";
                                     GenJournalLine."Transaction Type" := GenJournalLine."transaction type"::Loan;
                                     GenJournalLine."Posting Date" := Today;
@@ -948,7 +948,7 @@ Page 50841 "Change Request Card"
 
     var
         vend: Record Vendor;
-        Memb: Record "Members Register";
+        Memb: Record Customer;
         MobileVisible: Boolean;
         AtmVisible: Boolean;
         AccountVisible: Boolean;

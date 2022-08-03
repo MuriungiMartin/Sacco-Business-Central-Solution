@@ -15,8 +15,9 @@ Table 50031 "Funds User Setup"
 
             trigger OnValidate()
             begin
-                // UserManager.ValidateUserID(UserID);
+                UserManager.ValidateUserID(UserID);
             end;
+
         }
         field(11; "Receipt Journal Template"; Code[20])
         {

@@ -53,7 +53,6 @@ pageextension 50179 UserSetupExtension extends "User Setup"
             }
             field("Post Pv"; "Post Pv") { ApplicationArea = all; }
 
-
         }
     }
 

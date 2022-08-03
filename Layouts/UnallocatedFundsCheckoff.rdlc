@@ -64,9 +64,6 @@ End Function
   <DataSets>
     <DataSet Name="DataSet_Result">
       <Fields>
-        <Field Name="ReportForNavId_1102755000">
-          <DataField>ReportForNavId_1102755000</DataField>
-        </Field>
         <Field Name="UserId">
           <DataField>UserId</DataField>
         </Field>
@@ -108,9 +105,6 @@ End Function
         </Field>
         <Field Name="DocumentNo_CheckoffHeaderDistributed">
           <DataField>DocumentNo_CheckoffHeaderDistributed</DataField>
-        </Field>
-        <Field Name="ReportForNavId_1102755031">
-          <DataField>ReportForNavId_1102755031</DataField>
         </Field>
         <Field Name="MemberNo_ChecKoffLines">
           <DataField>MemberNo_ChecKoffLines</DataField>
