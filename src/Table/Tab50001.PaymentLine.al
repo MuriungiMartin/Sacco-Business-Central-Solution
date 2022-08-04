@@ -34,8 +34,9 @@ Table 50001 "Payment Line."
         field(3; Type; Code[20])
         {
             NotBlank = true;
-            // TableRelation = "Receipts and Payment Types".Code where(Type = filter(Payment),
-            //                                                          Blocked = const(No));
+            TableRelation = "Receipts and Payment Types".Code where(Type = filter(Payment),
+                                                                     Blocked = const(false));
+
 
             trigger OnValidate()
             var
@@ -1209,7 +1210,7 @@ Table 50001 "Payment Line."
     var
         FundsTaxCodes: Record "Funds Tax Codes";
         CurrExchRate: Record "Currency Exchange Rate";
-        PH: Record "Payments Header";
+        PH: Record "Payment Header.";
         VLedgEntry: Record "Vendor Ledger Entry";
         ICPartner: Record "IC Partner";
         FPurch: Record "Purch. Inv. Header";

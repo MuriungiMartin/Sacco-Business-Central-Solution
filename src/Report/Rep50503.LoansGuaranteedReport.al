@@ -1,4 +1,3 @@
-
 Report 50503 "Loans Guaranteed Report"
 {
     RDLCLayout = 'Layouts/LoansGuaranteedReport.rdlc';
@@ -6,7 +5,7 @@ Report 50503 "Loans Guaranteed Report"
 
     dataset
     {
-        dataitem("Members Register"; "Members Register")
+        dataitem("Members Register"; Customer)
         {
             CalcFields = "Current Shares";
             RequestFilterFields = "No.", Name;
@@ -37,7 +36,6 @@ Report 50503 "Loans Guaranteed Report"
             column(Company_Email; Company."E-Mail")
             {
             }
-
             column(UserId; UserId)
             {
             }
@@ -241,7 +239,6 @@ Report 50503 "Loans Guaranteed Report"
                 group(Options)
                 {
                     Caption = 'Options';
-
                 }
             }
         }
@@ -251,27 +248,21 @@ Report 50503 "Loans Guaranteed Report"
         }
         trigger OnOpenPage()
         begin
-
         end;
     }
 
     trigger OnInitReport()
     begin
         ;
-
-
     end;
 
     trigger OnPostReport()
     begin
-        ;
-
-    end;
+            end;
 
     trigger OnPreReport()
     begin
-        ;
-
+        
     end;
 
     var
@@ -289,13 +280,10 @@ Report 50503 "Loans Guaranteed Report"
         AmountGuar: Decimal;
         OutstandingBAlSt: Decimal;
         RNo: Integer;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         Company: Record "Company Information";
         VarCurrLiability: Decimal;
         ObjLoans: Record "Loans Register";
         LoanProductsSetup: Record "Loan Products Setup";
-
-
-    var
 
 }

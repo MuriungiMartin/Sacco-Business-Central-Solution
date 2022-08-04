@@ -1,6 +1,6 @@
 page 55000 "Home Role Center" // default role center change to comapny name
 {
-    Caption = 'HOME PAGE';
+    Caption = 'INDEX PAGE';
     PageType = RoleCenter;
 
     layout
@@ -722,7 +722,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
             }
             group("Loans Management")
             {
-                Caption = 'Loans';
+                Caption = 'Loan Management';
                 Image = CreditCard;
                 ToolTip = 'Loans'' Management Module';
                 action("BOSA Loan Application")
@@ -775,11 +775,145 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 action("Posted BOSA Receipts")
                 {
                     Caption = 'Posted BOSA Receipts';
-                    Image = PostedReceipts;
+                    Image = PostedReceipt;
                     RunObject = page "Posted BOSA Receipts List";
                     ToolTip = 'New Member Receipts for payments done.';
 
                 }
+            }
+            group("Payment Management")
+            {
+                Caption = 'Payment Process';
+                Image = Payables;
+                ToolTip = 'Payment Process.';
+                action("Check Payment")
+                {
+
+                    Caption = 'Check Payment ';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Payment Voucher List";
+                    ToolTip = 'Payment Voucher List.';
+                }
+
+                action("Cash Payment")
+                {
+
+                    Caption = 'New Petty Cash Payments List ';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "New Petty Cash Payments List";
+                    ToolTip = 'New Petty Cash Payments List.';
+                }
+                action("Posted Cash Payment")
+                {
+
+                    Caption = 'Posted Cash Payment';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Posted Petty Cash Payments";
+                    ToolTip = 'Posted Cash Payment';
+                }
+                action("Posted Cheque Payment")
+                {
+
+                    Caption = 'Posted Cheque Payment';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Posted Cheque Payment Vouchers";
+                    ToolTip = 'Posted Cheque Payment';
+                }
+            }
+            group("Payment Setup Management")
+            {
+                Caption = 'Payment Setup';
+                Image = Setup;
+                ToolTip = 'Payment Setup.';
+                action("Funds Genral Setup")
+                {
+
+                    Caption = 'Funds General Setup. ';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Funds General Setup";
+                    ToolTip = 'Funds General Setup.';
+                }
+
+                action("Budgetary Control Setup")
+                {
+
+                    Caption = 'Budgetary Control Setup ';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Budgetary Control Setup";
+                    ToolTip = 'Budgetary Control Setup';
+                }
+                action("Funds User Setup")
+                {
+
+                    Caption = 'Funds User Setup ';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Funds User Setup";
+                    ToolTip = 'Funds User Setup';
+                }
+                action("Receipt and Payment Types List")
+                {
+
+                    Caption = 'Receipt and Payment Types List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Receipt and Payment Types List";
+                    ToolTip = 'Receipt and Payment Types List';
+                }
+            }
+            group("Funds Transfer")
+            {
+                Caption = 'Funds Transfer';
+                Image = Setup;
+                ToolTip = 'Funds Transfer';
+                action("Funds Transfer List")
+                {
+                    Caption = 'Funds Transfer List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Funds Transfer List";
+                    ToolTip = 'Funds Transfer List';
+                }
+
+                action("Posted Funds Transfer List")
+                {
+                    Caption = 'Posted Funds Transfer List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Posred Funds Transfer List";
+                    ToolTip = 'Posted Funds Transfer List';
+                }
+
+            }
+            group("Receipting Process")
+            {
+                Caption = 'Receipting Process';
+                Image = Setup;
+                ToolTip = 'Receipting Process';
+                action("Receipt Header List")
+                {
+                    Caption = 'Receipt Header List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Receipt Header List";
+                    ToolTip = 'Receipt Header List';
+                }
+
+                action("Posted Receipt Header List ")
+                {
+                    Caption = 'Posted Receipt Header List ';
+                    ApplicationArea = Basic, Suite;
+                    Image = PostedOrder;
+                    RunObject = page "Posted Receipt Header List";
+                    ToolTip = 'Posted Receipt Header List ';
+                }
+
             }
 #if not CLEAN18
             group(SetupAndExtensions)

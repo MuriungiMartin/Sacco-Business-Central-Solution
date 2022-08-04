@@ -6,7 +6,7 @@ Report 50504 "Members Loans Guarantors"
 
     dataset
     {
-        dataitem("Members Register"; "Members Register")
+        dataitem("Members Register"; Customer)
         {
             RequestFilterFields = "No.", Name;
             column(FORMAT_TODAY_0_4_; Format(Today, 0, 4))
@@ -138,6 +138,7 @@ Report 50504 "Members Loans Guarantors"
                 group(Options)
                 {
                     Caption = 'Options';
+
                 }
             }
         }
@@ -147,6 +148,7 @@ Report 50504 "Members Loans Guarantors"
         }
         trigger OnOpenPage()
         begin
+            // ReportForNavOpenDesigner := false;
 
         end;
     }
@@ -154,20 +156,16 @@ Report 50504 "Members Loans Guarantors"
     trigger OnInitReport()
     begin
         ;
-
-
     end;
 
     trigger OnPostReport()
     begin
         ;
-
     end;
 
     trigger OnPreReport()
     begin
         ;
-
     end;
 
     var
@@ -183,10 +181,8 @@ Report 50504 "Members Loans Guarantors"
         OutStandingBal: Decimal;
         FNo: Integer;
         Company: Record "Company Information";
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarGuarantorDeposits: Decimal;
 
-
     var
-
 }

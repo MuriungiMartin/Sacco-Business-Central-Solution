@@ -1084,7 +1084,6 @@ Page 50367 "Member Account Card"
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
                             Report.Run(50504, true, false, Cust);
-                        //50482
                     end;
                 }
                 action("Create Withdrawal Application")

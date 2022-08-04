@@ -1610,6 +1610,7 @@ Codeunit 50004 "Custom Workflow Events"
             RecRef.Number of
             DATABASE::"Loans Register":
                 begin
+
                     RecRef.SetTable(LoanApp);
                     LoanApp.Validate("Approval Status", LoanApp."Approval Status"::Pending);
                     //  MembershipApp.Modify();

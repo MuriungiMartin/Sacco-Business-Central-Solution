@@ -3,6 +3,8 @@ Page 50050 "Funds General Setup"
 {
     PageType = Card;
     SourceTable = "Funds General Setup";
+    ApplicationArea = all;
+    UsageCategory = Administration;
 
     layout
     {

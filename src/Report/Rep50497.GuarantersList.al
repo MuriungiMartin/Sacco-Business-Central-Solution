@@ -1,8 +1,9 @@
-
 Report 50497 "Guaranters List"
 {
     RDLCLayout = 'Layouts/GuarantersList.rdlc';
     DefaultLayout = RDLC;
+    UsageCategory = ReportsAndAnalysis;
+    ApplicationArea = all;
 
     dataset
     {
@@ -75,7 +76,7 @@ Report 50497 "Guaranters List"
             begin
                 Company.Get();
                 Company.CalcFields(Company.Picture);
-                Error('<Month Text>');
+                //Error('<Month Text>');
             end;
 
         }
@@ -102,26 +103,21 @@ Report 50497 "Guaranters List"
         }
         trigger OnOpenPage()
         begin
-
         end;
     }
 
     trigger OnInitReport()
     begin
-        ;
-
 
     end;
 
     trigger OnPostReport()
     begin
-        ;
 
     end;
 
     trigger OnPreReport()
     begin
-        ;
 
     end;
 

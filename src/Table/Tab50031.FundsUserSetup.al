@@ -7,7 +7,17 @@ Table 50031 "Funds User Setup"
         field(10; UserID; Code[50])
         {
             NotBlank = true;
-            TableRelation = "User Setup"."User ID";
+
+            trigger OnLookup()
+            begin
+                UserManager.LookupUserID(UserID);
+            end;
+
+            trigger OnValidate()
+            begin
+                UserManager.ValidateUserID(UserID);
+            end;
+
         }
         field(11; "Receipt Journal Template"; Code[20])
         {
@@ -374,7 +384,7 @@ Table 50031 "Funds User Setup"
 
     var
         UserTemp: Record "Funds User Setup";
-        UserManager: Codeunit "User Management";
+        UserManager: Codeunit "User Management2";
         SameBatch: label 'Another User has been assign to the batch:%1';
 }
 
