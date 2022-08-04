@@ -2,13 +2,13 @@
 Page 50875 "Member Picture-Uploaded"
 {
     PageType = CardPart;
-    SourceTable = "Members Register";
+    SourceTable = Customer;
 
     layout
     {
         area(content)
         {
-            field(Picture; Picture)
+            field(Picture; Piccture)
             {
                 ApplicationArea = Basic, Suite;
                 ShowCaption = false;
@@ -71,8 +71,8 @@ Page 50875 "Member Picture-Uploaded"
                     //TESTFIELD(Description);
 
                     NameValueBuffer.DeleteAll;
-                    ExportPath := TemporaryPath + "No." + Format(Picture.MediaId);
-                    Picture.ExportFile(ExportPath);
+                    ExportPath := TemporaryPath + "No." + Format(Piccture.MediaId);
+                    Piccture.ExportFile(ExportPath);
                     FileManagement.GetServerDirectoryFilesList(TempNameValueBuffer, TemporaryPath);
                     TempNameValueBuffer.SetFilter(Name, StrSubstNo('%1*', ExportPath));
                     TempNameValueBuffer.FindFirst;

@@ -154,7 +154,7 @@ tableextension 50007 "customertableEXT" extends Customer
         }
         field(68003; "Current Shares"; Decimal)
         {
-            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("No."),
+            CalcFormula = - sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("No."),
                                                                    "Transaction Type" = filter("Deposit Contribution"),
                                                                    "Posting Date" = field("Date Filter")));
             Editable = false;
@@ -513,7 +513,7 @@ tableextension 50007 "customertableEXT" extends Customer
         }
         field(68041; "Shares Retained"; Decimal)
         {
-            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("No."),
+            CalcFormula = - sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("No."),
                                                                    "Transaction Type" = const("Share Capital"),
                                                                    "Posting Date" = field("Date Filter")));
             Editable = false;
@@ -521,7 +521,7 @@ tableextension 50007 "customertableEXT" extends Customer
         }
         field(68043; "Registration Fee Paid"; Decimal)
         {
-            CalcFormula = sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("No."),
+            CalcFormula = - sum("Cust. Ledger Entry"."Transaction Amount" where("Customer No." = field("No."),
                                                                            "Transaction Type" = const("Registration Fee")));
             Editable = false;
             FieldClass = FlowField;
