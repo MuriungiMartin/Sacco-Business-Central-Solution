@@ -823,8 +823,49 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     RunObject = page "Posted Cheque Payment Vouchers";
                     ToolTip = 'Posted Cheque Payment';
                 }
+
+
+
+
+
+                action("Funds Transfer List")
+                {
+                    Caption = 'Funds Transfer List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Funds Transfer List";
+                    ToolTip = 'Funds Transfer List';
+                }
+
+                action("Posted Funds Transfer List")
+                {
+                    Caption = 'Posted Funds Transfer List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Posred Funds Transfer List";
+                    ToolTip = 'Posted Funds Transfer List';
+                }
+
+                action("Receipt Header List")
+                {
+                    Caption = 'Receipt Header List';
+                    ApplicationArea = Basic, Suite;
+                    Image = Check;
+                    RunObject = page "Receipt Header List";
+                    ToolTip = 'Receipt Header List';
+                }
+
+                action("Posted Receipt Header List ")
+                {
+                    Caption = 'Posted Receipt Header List ';
+                    ApplicationArea = Basic, Suite;
+                    Image = PostedOrder;
+                    RunObject = page "Posted Receipt Header List";
+                    ToolTip = 'Posted Receipt Header List ';
+                }
+
             }
-            group("Payment Setup Management")
+            group("Payments Setup")
             {
                 Caption = 'Payment Setup';
                 Image = Setup;
@@ -862,58 +903,10 @@ page 55000 "Home Role Center" // default role center change to comapny name
 
                     Caption = 'Receipt and Payment Types List';
                     ApplicationArea = Basic, Suite;
-                    Image = Check;
+                    Image = Setup;
                     RunObject = page "Receipt and Payment Types List";
                     ToolTip = 'Receipt and Payment Types List';
                 }
-            }
-            group("Funds Transfer")
-            {
-                Caption = 'Funds Transfer';
-                Image = Setup;
-                ToolTip = 'Funds Transfer';
-                action("Funds Transfer List")
-                {
-                    Caption = 'Funds Transfer List';
-                    ApplicationArea = Basic, Suite;
-                    Image = Check;
-                    RunObject = page "Funds Transfer List";
-                    ToolTip = 'Funds Transfer List';
-                }
-
-                action("Posted Funds Transfer List")
-                {
-                    Caption = 'Posted Funds Transfer List';
-                    ApplicationArea = Basic, Suite;
-                    Image = Check;
-                    RunObject = page "Posred Funds Transfer List";
-                    ToolTip = 'Posted Funds Transfer List';
-                }
-
-            }
-            group("Receipting Process")
-            {
-                Caption = 'Receipting Process';
-                Image = Setup;
-                ToolTip = 'Receipting Process';
-                action("Receipt Header List")
-                {
-                    Caption = 'Receipt Header List';
-                    ApplicationArea = Basic, Suite;
-                    Image = Check;
-                    RunObject = page "Receipt Header List";
-                    ToolTip = 'Receipt Header List';
-                }
-
-                action("Posted Receipt Header List ")
-                {
-                    Caption = 'Posted Receipt Header List ';
-                    ApplicationArea = Basic, Suite;
-                    Image = PostedOrder;
-                    RunObject = page "Posted Receipt Header List";
-                    ToolTip = 'Posted Receipt Header List ';
-                }
-
             }
 #if not CLEAN18
             group(SetupAndExtensions)
