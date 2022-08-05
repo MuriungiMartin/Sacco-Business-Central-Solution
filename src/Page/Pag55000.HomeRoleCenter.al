@@ -720,6 +720,22 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Post recurring fixed asset transactions, such as acquisition and depreciation book without integration to the general ledger.';
                 }
             }
+            group("Saving Products Management")
+            {
+                Caption = 'Saving Products Management';
+                Image = Bank;
+                ToolTip = 'Manage Saving Accounts Eg. FOSA Savings and Fixed Deposits';
+                action("Account Applications")
+                {
+                    ApplicationArea = basic, suite;
+                    Caption = 'Membership Products Application';
+                    Image = Customer;
+                    RunObject = page "Member Account Application";
+                    ToolTip = 'Open New membership products accounts Application.';
+
+                }
+
+            }
             group("Loans Management")
             {
                 Caption = 'Loan Management';

@@ -134,6 +134,7 @@ Page 50431 "Member Account Appl. Card"
 
                     trigger OnValidate()
                     begin
+
                         if ("Account Type" <> 'FD201') or ("Account Type" <> 'JEWEL') then begin
                             ParentEditable := false;
                             SavingsEditable := false;
@@ -186,16 +187,19 @@ Page 50431 "Member Account Appl. Card"
                 }
                 field("Global Dimension 1 Code"; "Global Dimension 1 Code")
                 {
+                    Caption = 'ACTIVITY';
                     ApplicationArea = Basic;
                     Editable = SigningInstructionEditable;
                     Importance = Additional;
-                    Visible = false;
+                    Visible = true;
                 }
                 field("Global Dimension 2 Code"; "Global Dimension 2 Code")
                 {
+                    Caption = 'BRANCH CODE';
                     ApplicationArea = Basic;
                     Editable = true;
                     Importance = Additional;
+                    VISIBLE = TRUE;
                 }
                 field(Status; Status)
                 {
@@ -562,7 +566,7 @@ Page 50431 "Member Account Appl. Card"
                     Promoted = true;
                     PromotedCategory = Process;
                     // RunObject = Page "Product App Signatories";
-                    // RunPageLink = "Account No"=field("No.");
+                    // RunPageLink = "Account No" = field("No.");
                 }
                 action("Account Agent Details")
                 {
@@ -1120,12 +1124,19 @@ Page 50431 "Member Account Appl. Card"
                         if Confirm('Are you sure you want to create this account?', true) = false then
                             exit;
 
-                        ObjMemberNoseries.Reset;
-                        ObjMemberNoseries.SetRange(ObjMemberNoseries."Account Type", "Account Type");
-                        ObjMemberNoseries.SetRange(ObjMemberNoseries."Branch Code", "Global Dimension 2 Code");
-                        if ObjMemberNoseries.FindSet then begin
-                            VarAcctNo := ObjMemberNoseries."Account No";
+                        // ObjMemberNoseries.Reset;
+                        // ObjMemberNoseries.SetRange(ObjMemberNoseries."Account Type", "Account Type");
+                        // ObjMemberNoseries.SetRange(ObjMemberNoseries."Branch Code", "Global Dimension 2 Code");
+                        // if ObjMemberNoseries.FindSet then begin
+                        //     VarAcctNo := ObjMemberNoseries."Account No";
+                        // end;
+                        ObjAccountTypes.Reset();
+                        ;
+                        ObjAccountTypes.SetRange(ObjAccountTypes.code, "Account Type");
+                        if ObjAccountTypes.Find('-') then begin
+                            VarAcctNo := ObjAccountTypes."Account No Prefix" + '-' + "BOSA Account No" + '-'+ IncStr(ObjAccountTypes."Last No Used");
                         end;
+                        Message('Generated account number is %1', VarAcctNo);
                         ObjAccountTypes.Reset;
                         ObjAccountTypes.SetRange(ObjAccountTypes.Code, "Account Type");
                         if ObjAccountTypes.FindSet then begin
@@ -1532,6 +1543,7 @@ Page 50431 "Member Account Appl. Card"
     begin
         //"Debtor Type":="Debtor Type"::Account;
         //"Application Date":=TODAY;
+        "Global Dimension 1 Code" := 'FOSA';
     end;
 
     trigger OnOpenPage()
@@ -1666,9 +1678,11 @@ Page 50431 "Member Account Appl. Card"
         AddressEditable: Boolean;
         GlobalDim1Editable: Boolean;
         GlobalDim2Editable: Boolean;
+        DocNo: code[40];
         VendorPostingGroupEdit: Boolean;
         PhoneEditable: Boolean;
         MaritalstatusEditable: Boolean;
+        Accountypessetup: Record "Account Types-Saving Products";
         IDNoEditable: Boolean;
         RegistrationDateEdit: Boolean;
         EmployerCodeEditable: Boolean;

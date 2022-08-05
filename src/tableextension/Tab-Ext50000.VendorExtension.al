@@ -1030,7 +1030,7 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(69117; "Recruited By"; Code[20])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -1093,7 +1093,7 @@ tableextension 50000 "VendorExtension" extends Vendor
         }
         field(69131; "Assigned No."; Code[20])
         {
-            CalcFormula = Lookup("Members Register"."No." WHERE("ID No." = FIELD("ID No.")));
+            CalcFormula = Lookup(Customer."No." WHERE("ID No." = FIELD("ID No.")));
             FieldClass = FlowField;
         }
         field(69132; "Home Town"; Text[20])
@@ -1546,11 +1546,11 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(69217; "Referee Member No"; Code[15])
         {
             DataClassification = ToBeClassified;
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             var
-                Cust: Record "Members Register";
+                Cust: Record Customer;
             begin
                 IF Cust.GET("Referee Member No") THEN BEGIN
                     "Referee Name" := Cust.Name;
@@ -1805,6 +1805,10 @@ tableextension 50000 "VendorExtension" extends Vendor
         {
             DataClassification = ToBeClassified;
         }
+        field(69266; piccture; MediaSet)
+        {
+            DataClassification = ToBeClassified;
+        }
 
 
     }
@@ -1818,7 +1822,7 @@ tableextension 50000 "VendorExtension" extends Vendor
         Vends: Record Vendor;
         gnljnlLine: Record "Gen. Journal Line";
         FOSAAccount: Record Vendor;
-        Member: Record "Members Register";
+        Member: Record Customer;
         Vend: Record Vendor;
         Loans: Record "Loans Register";
         // StatusPermissions: Record "Status Change Permision";
@@ -1826,7 +1830,7 @@ tableextension 50000 "VendorExtension" extends Vendor
         GenSetUp: Record "Sacco General Set-Up";
         Parishes: Record "Member's Parishes";
         FDDuration: Integer;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
 
 
 }

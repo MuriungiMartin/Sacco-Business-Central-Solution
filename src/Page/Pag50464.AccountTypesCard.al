@@ -278,6 +278,11 @@ Page 50464 "Account Types Card"
                 {
                     ApplicationArea = Basic;
                 }
+                field("Account Type"; "Account Type")
+                {
+                    ApplicationArea = all;
+
+                }
             }
             part(Control3; "Account Types Interest Rates")
             {

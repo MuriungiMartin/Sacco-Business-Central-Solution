@@ -372,6 +372,10 @@ Table 50436 "Account Types-Saving Products"
         field(121; "Dormancy Period (-M)"; DateFormula)
         {
         }
+        field(122; "Account Type"; enum MembershipProducts)
+        {
+
+        }
     }
 
     keys

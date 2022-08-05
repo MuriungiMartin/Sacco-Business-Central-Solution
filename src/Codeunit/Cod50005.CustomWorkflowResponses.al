@@ -2610,6 +2610,7 @@ Codeunit 50005 "Custom Workflow Responses"
         LoanPayOff: Record "Loan PayOff";
         GuarantorRecovery: Record "Loan Recovery Header";
         LoanDisbursememnt: Record "Loan Disburesment-Batching";
+        FAccount: Record "FOSA Account Applicat. Details";
     begin
         case RecRef.Number of
             DATABASE::"Membership Applications":
@@ -2617,6 +2618,13 @@ Codeunit 50005 "Custom Workflow Responses"
                     RecRef.SetTable(MemberShipApp);
                     MemberShipApp.Status := MemberShipApp.Status::Approved;
                     MemberShipApp.Modify(true);
+                    Handled := true;
+                end;
+            Database::"FOSA Account Applicat. Details":
+                begin
+                    RecRef.SetTable(FAccount);
+                    FAccount.Status := FAccount.status::Approved;
+                    FAccount.Modify();
                     Handled := true;
                 end;
             Database::"Sacco Transfers":
