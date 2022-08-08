@@ -743,6 +743,80 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Open Members'' FOSA Accounts';
 
                 }
+                group("Fixed Deposits Mgmt ")
+                {
+                    Caption = 'Fixed Deposits Mgmt';
+                    Image = Bank;
+                    ToolTip = 'Open Fixed Deposits Submodule';
+                    action("Fixed Deposits List")
+                    {
+                        ApplicationArea = basic, suite;
+                        Caption = 'Fixed Deposits Savings Accounts';
+                        Image = Account;
+                        RunObject = page "Fixed Deposit Acc. List";
+                        ToolTip = 'Open Fixed Deposits'' FOSA Accounts';
+
+                    }
+                    action("Fixed Deposits Setup")
+                    {
+                        ApplicationArea = basic, suite;
+                        Caption = 'Fixed Deposits Types';
+                        Image = Account;
+                        RunObject = page "Fixed deposit Types list";
+                        ToolTip = 'Open Fixed Deposits'' Types';
+
+                    }
+                    action("Fixed Deposits interest")
+                    {
+                        ApplicationArea = basic, suite;
+                        Caption = 'Fixed Deposits Interest';
+                        Image = Account;
+                        RunObject = page "Fixed Deposit Interest Rates";
+                        ToolTip = 'Open Fixed Deposits'' Interest Rates';
+
+                    }
+                }
+                group("Cashier Banking")
+                {
+                    Caption = 'Cashier-Banking';
+                    Image = FixedAssets;
+                    action("Cashier Transactions")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Cashier Transactions';
+                        RunObject = Page "Cashier Transactions - List";
+                    }
+                    action("Cashier Transactions Authorisation")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Cashier Transactions Authorisation';
+                        RunObject = Page "Cashier Trans Authorisations";
+                    }
+                    action("EFT List")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'EFT List';
+                        RunObject = Page "New EFT/RTGS List";
+                    }
+                    action("Petty Cash")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Petty Cash';
+                        RunObject = Page "New Petty Cash Payments List";
+                    }
+                    action("Posted Petty Cash")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Posted Petty Cash';
+                        RunObject = Page "Posted Petty Cash Payments";
+                    }
+                    action("Funds Transfer")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Funds Transfer';
+                        RunObject = Page "Funds Transfer List";
+                    }
+                }
 
             }
             group("Loans Management")
@@ -1069,13 +1143,13 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 RunPageMode = Create;
                 ToolTip = 'Charge Monthly Loan Interest.';
             }
-            action("G/L Journal Entry")
+            action("Salary Processing")
             {
-                AccessByPermission = TableData "G/L Entry" = IMD;
+                AccessByPermission = TableData "Salary Processing Headerr" = IMD;
                 ApplicationArea = Basic, Suite;
-                Caption = 'G/L Journal Entry';
-                RunObject = Page "General Journal";
-                ToolTip = 'Prepare to post any transaction to the company books.';
+                Caption = 'Salary Processing ';
+                RunObject = Page "Salary Processing List";
+                ToolTip = 'Prepare Salaries.';
             }
             action("Payment Journal Entry")
             {

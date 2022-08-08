@@ -415,13 +415,13 @@ Page 50490 "Salary Processing Header"
         DActivityBOSA: Code[20];
         DBranchBOSA: Code[20];
         ReptProcHeader: Record "Checkoff Header-Distributed";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         salarybuffer: Record "Salary Processing Lines";
         SalHeader: Record "Salary Processing Headerr";
         Sto: Record "Standing Orders";
         ELoanBuffer: Record "E-Loan Salary Buffer";
         ObjVendor: Record Vendor;
-        MembLedg: Record "Member Ledger Entry";
+        MembLedg: Record "Cust. Ledger Entry";
         SFactory: Codeunit "SURESTEP Factory";
         BATCH_NAME: Code[50];
         BATCH_TEMPLATE: Code[50];
@@ -535,7 +535,7 @@ Page 50490 "Salary Processing Header"
                             //-------------PAY----------------------------
                             LineNo := LineNo + 10000;
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Interest Paid",
-                            GenJournalLine."account type"::Member, ObjRcptBuffer."Account No.", "Posting date", AmountToDeduct * -1, 'FOSA', EXTERNAL_DOC_NO,
+                            GenJournalLine."account type"::Customer, ObjRcptBuffer."Account No.", "Posting date", AmountToDeduct * -1, 'FOSA', EXTERNAL_DOC_NO,
                             Format(GenJournalLine."transaction type"::"Interest Paid"), LoanApp."Loan  No.", GenJournalLine."application source"::" ");
                             //-------------RECOVER------------------------
                             LineNo := LineNo + 10000;
@@ -587,7 +587,7 @@ Page 50490 "Salary Processing Header"
                             //---------------------PAY-------------------------------
                             LineNo := LineNo + 10000;
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Loan Repayment",
-                            GenJournalLine."account type"::Member, ObjRcptBuffer."Account No.", "Posting date", AmountToDeduct * -1, 'FOSA', EXTERNAL_DOC_NO,
+                            GenJournalLine."account type"::Customer, ObjRcptBuffer."Account No.", "Posting date", AmountToDeduct * -1, 'FOSA', EXTERNAL_DOC_NO,
                             Format(GenJournalLine."transaction type"::"Loan Repayment"), LoanApp."Loan  No.", GenJournalLine."application source"::" ");
                             //--------------------RECOVER-----------------------------
                             LineNo := LineNo + 10000;
@@ -849,7 +849,7 @@ Page 50490 "Salary Processing Header"
                         if LoanApp.Get(ObjReceiptTransactions."Loan No.") then begin
                             LineNo := LineNo + 10000;
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Loan Repayment",
-                            GenJournalLine."account type"::Member, LoanApp."Client Code", "Posting date", (ObjReceiptTransactions.Amount - ObjReceiptTransactions."Interest Amount") * -1,
+                            GenJournalLine."account type"::Customer, LoanApp."Client Code", "Posting date", (ObjReceiptTransactions.Amount - ObjReceiptTransactions."Interest Amount") * -1,
                             'FOSA', ObjRcptBuffer."No.", Format(GenJournalLine."transaction type"::"Loan Repayment"), ObjReceiptTransactions."Loan No.", GenJournalLine."application source"::" ");
 
                             //-------------PAY Principal----------------------------
@@ -864,7 +864,7 @@ Page 50490 "Salary Processing Header"
                             //-------------RECOVER Interest-----------------------
                             LineNo := LineNo + 10000;
                             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Interest Paid",
-                            GenJournalLine."account type"::Member, LoanApp."Client Code", "Posting date", ObjReceiptTransactions."Interest Amount" * -1,
+                            GenJournalLine."account type"::Customer, LoanApp."Client Code", "Posting date", ObjReceiptTransactions."Interest Amount" * -1,
                             'FOSA', ObjRcptBuffer."No.", Format(GenJournalLine."transaction type"::"Loan Repayment"), ObjReceiptTransactions."Loan No.", GenJournalLine."application source"::" ");
 
                             //-------------PAY Interest----------------------------
@@ -882,7 +882,7 @@ Page 50490 "Salary Processing Header"
                         //-------------RECOVER BOSA NONLoan Transactions-----------------------
                         LineNo := LineNo + 10000;
                         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, ObjReceiptTransactions."Transaction Type",
-                        GenJournalLine."account type"::Member, ObjRcptBuffer."BOSA Account No.", "Posting date", ObjReceiptTransactions.Amount * -1,
+                        GenJournalLine."account type"::Customer, ObjRcptBuffer."BOSA Account No.", "Posting date", ObjReceiptTransactions.Amount * -1,
                         'FOSA', ObjRcptBuffer."No.", Format(ObjReceiptTransactions."Transaction Type"), '', GenJournalLine."application source"::" ");
 
                         //-------------PAY BOSA NONLoan Transaction----------------------------
@@ -1030,7 +1030,7 @@ Page 50490 "Salary Processing Header"
     var
         ObjAccount: Record Vendor;
         VarLoanProductName: Code[30];
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarSMSBody: Text;
     begin
         ObjSalaryProcessingLines.Reset;
