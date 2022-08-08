@@ -104,7 +104,7 @@ Table 50441 "Transactions"
                 end;
 
 
-                //Signature:=Account.Signature;
+                Signature := Account.Signature;
                 if (Account.Balance <> 0) and (Account.Status = Account.Status::Deceased) then begin
                     Account.Status := Account.Status::Active;
                     Account.Modify;
@@ -673,7 +673,7 @@ Table 50441 "Transactions"
         }
         field(78; "BOSA Account No"; Code[20])
         {
-            TableRelation = "Members Register"."No." where("Customer Type" = filter(Member | MicroFinance),
+            TableRelation = Customer."No." where(ISNormalMember = filter(true),
                                                             Status = const(Active));
             ValidateTableRelation = false;
 
@@ -800,11 +800,10 @@ Table 50441 "Transactions"
         field(104; Printed; Boolean)
         {
         }
-        field(105; "Account Type."; Option)
+        field(105; "Account Type."; enum "Gen. Journal Account Type")
         {
             Caption = 'Account Type';
-            OptionCaption = 'G/L Account,Customer,Vendor,Bank Account,Fixed Asset,IC Partner';
-            OptionMembers = "G/L Account",Customer,Vendor,"Bank Account","Fixed Asset","IC Partner";
+
         }
         field(106; "Account No."; Code[20])
         {
@@ -1053,7 +1052,7 @@ Table 50441 "Transactions"
         }
         field(62005; "Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -1847,7 +1846,7 @@ Table 50441 "Transactions"
         PaymentMethod: Record "Payment Method";
         TransactionTypes: Record "Transaction Types";
         Denominations: Record Denominations;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         i: Integer;
         PublicHoliday: Integer;
         weekday: Integer;
@@ -1887,7 +1886,7 @@ Table 50441 "Transactions"
         BChargeAmount: Decimal;
         BChargeAccount: Code[20];
         ObjAccount: Record Vendor;
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         VarMonthlyTurnOver: Decimal;
         SFactory: Codeunit "SURESTEP Factory";
         ObjAuditGeneralSetup: Record "Audit General Setup";

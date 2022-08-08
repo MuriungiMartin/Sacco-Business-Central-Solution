@@ -177,13 +177,12 @@ tableextension 50000 "VendorExtension" extends Vendor
         }
         field(68026; "Uncleared Cheques"; Decimal)
         {
-            //TODO After Cleaning transactions Table
-            //    FieldClass = FlowField;
+            FieldClass = FlowField;
 
-            //     CalcFormula = Sum(Transactions.Amount WHERE("Account No"=FIELD("No."),
-            //                                                  Posted=CONST(Yes),
-            //                                                  "Cheque Processed"=CONST(false),
-            //                                                  "Type _Transactions"=CONST("Cheque Deposit")));
+            CalcFormula = Sum(Transactions.Amount WHERE("Account No" = FIELD("No."),
+                                                             Posted = CONST(true),
+                                                             "Cheque Processed" = CONST(false),
+                                                             "Type _Transactions" = CONST("Cheque Deposit")));
         }
         field(68027; "Expected Maturity Date"; Date)
         {
@@ -192,10 +191,10 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(68028; "ATM Transactions"; Decimal)
         {
             //TODO
-            //             FieldClass = FlowField;
+            FieldClass = FlowField;
 
-            // CalcFormula = Sum("ATM Transactions".Amount WHERE ("Account No"=FIELD("No."),
-            //                                                    Posted=CONST(false)));
+            CalcFormula = Sum("ATM Transactions".Amount WHERE("Account No" = FIELD("No."),
+                                                               Posted = CONST(false)));
             Editable = false;
         }
         field(68029; "Date of Birth"; Date)
@@ -290,17 +289,18 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(68042; "Interest Earned"; Decimal)
         {
             //TODO
-            // CalcFormula = Sum("Interest Buffer"."Interest Amount" WHERE ("Account No"=FIELD("No.")));
-            // Editable = false;
-            // FieldClass = FlowField;
+            CalcFormula = Sum("Interest Buffer"."Interest Amount" WHERE("Account No" = FIELD("No.")));
+            Editable = false;
+            FieldClass = FlowField;
         }
         field(68043; "Untranfered Interest"; Decimal)
         {
             //TODO
-            // CalcFormula = Sum("Interest Buffer"."Interest Amount" WHERE ("Account No"=FIELD("No."),
-            //                                                              Transferred=FILTER(No)));
+            CalcFormula = Sum("Interest Buffer"."Interest Amount" WHERE("Account No" = FIELD("No."),
+                                                                         Transferred = FILTER(false
+                                                                         )));
             Editable = false;
-            // FieldClass = FlowField;
+            FieldClass = FlowField;
         }
         field(68044; "FD Maturity Date"; Date)
         {
@@ -483,10 +483,10 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(68060; "Current Salary"; Decimal)
         {
             //TODO
-            // CalcFormula = Sum("Salary Processing Lines".Amount WHERE ("Account No."=FIELD("No."),
-            //                                                           Date=FIELD("Date Filter"),
-            //                                                           Processed=CONST(false)));
-            // FieldClass = FlowField;
+            CalcFormula = Sum("Salary Processing Lines".Amount WHERE("Account No." = FIELD("No."),
+                                                                      Date = FIELD("Date Filter"),
+                                                                      Processed = CONST(false)));
+            FieldClass = FlowField;
         }
         field(68061; "Defaulted Loans Recovered"; Boolean)
         {
@@ -499,10 +499,10 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(68063; "EFT Transactions"; Decimal)
         {
             //TODO
-            // CalcFormula = Sum("EFT/RTGS Details".Amount WHERE (Account No=FIELD(No.),
-            //                                                    Not Available=CONST(Yes),
-            //                                                    Transferred=CONST(No)));
-            // FieldClass = FlowField;
+            CalcFormula = Sum("EFT/RTGS Details".Amount WHERE("Account No" = FIELD("No."),
+                                                               "Not Available" = CONST(true),
+                                                               Transferred = CONST(false)));
+            FieldClass = FlowField;
         }
         field(68064; "Formation/Province"; Code[15])
         {
@@ -591,7 +591,7 @@ tableextension 50000 "VendorExtension" extends Vendor
                     IF StatusPermissions.FIND('-') = FALSE THEN
                         ERROR('You do not have permissions to do an Atm card approval');
                     "Card No." := "ATM Prov. No";
-                    //TODO "Atm card ready" := FALSE;
+                    "Atm card ready" := FALSE;
                     MODIFY;
                 END;
             end;
@@ -778,17 +778,17 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(69035; "Uncleared Loans"; Decimal)
         {
             //todo
-            // CalcFormula = Sum("Loans Register"."Net Payment to FOSA" WHERE ("Account No"=FIELD("No."),
-            //                                                                 Posted=FILTER(Yes),
-            //                                                                 "Processed Payment"=FILTER(No)));
-            //FieldClass = FlowField;
+            CalcFormula = Sum("Loans Register"."Net Payment to FOSA" WHERE("Account No" = FIELD("No."),
+                                                                            Posted = FILTER(true),
+                                                                            "Processed Payment" = FILTER(false)));
+            FieldClass = FlowField;
         }
         field(69036; NetDis; Decimal)
         {
             //todo
-            //     CalcFormula = Sum("Loans Register"."Net Payment to FOSA" WHERE (Account No=FIELD(No.),
-            //                                                                     "Processed Payment"=FILTER(No)));
-            // FieldClass = FlowField;
+            CalcFormula = Sum("Loans Register"."Net Payment to FOSA" WHERE("Account No" = FIELD("No."),
+                                                                                "Processed Payment" = FILTER(false)));
+            FieldClass = FlowField;
         }
         field(69037; "Transfer Amount to Savings"; Decimal)
         {
@@ -1384,11 +1384,11 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(69182; "Cheque Discounted"; Decimal)
         {
             //todo
-            // CalcFormula = Sum(Transactions."Cheque Discounted Amount" WHERE ("Account No"=FIELD("No."),
-            //                                                                  Posted=CONST(true),
-            //                                                                  "Cheque Processed"=CONST(false),
-            //                                                                  "Type _Transactions"=CONST("Cheque Deposit")));
-            //FieldClass = FlowField;
+            CalcFormula = Sum(Transactions."Cheque Discounted Amount" WHERE("Account No" = FIELD("No."),
+                                                                             Posted = CONST(true),
+                                                                             "Cheque Processed" = CONST(false),
+                                                                             "Type _Transactions" = CONST("Cheque Deposit")));
+            FieldClass = FlowField;
         }
         field(69183; "Mobile Transactions"; Decimal)
         {
@@ -1448,8 +1448,8 @@ tableextension 50000 "VendorExtension" extends Vendor
         field(69196; "Last Interest Earned Date"; Date)
         {
             //todo
-            // CalcFormula = Max("Interest Buffer"."Interest Date" WHERE ("Account No"=FIELD("No.")));
-            // FieldClass = FlowField;
+            CalcFormula = Max("Interest Buffer"."Interest Date" WHERE("Account No" = FIELD("No.")));
+            FieldClass = FlowField;
         }
         field(69197; "Last Salary Earned"; Decimal)
         {
@@ -1512,13 +1512,13 @@ tableextension 50000 "VendorExtension" extends Vendor
         }
         field(69210; "Cheque Discounted Amount"; Decimal)
         {
-            //todo
-            // CalcFormula = Sum(Transactions."Cheque Discounted Amount" WHERE (Account No=FIELD(No.),
-            //                                                                  Posted=CONST(Yes),
-            //                                                                  Type=CONST(Cheque Deposit),
-            //                                                                  Cheque Processed=FILTER(No)));
-            // FieldClass = FlowField;
+            //todo"
+            FieldClass = FlowField;
+            CalcFormula = sum(Transactions."Cheque Discounted Amount" where("Account No." = field("No."), Posted = const(true),
+            Type = const('Cheque Deposit'),
+            "Cheque Processed" = filter(false)));
         }
+
         field(69211; "Bulk Withdrawal Appl Done"; Boolean)
         {
             DataClassification = ToBeClassified;
