@@ -52,6 +52,7 @@ Page 50396 "Loan Disburesment Batch Card"
                 Editable = ModeofDisburementEditable;
                 Visible = true;
 
+
                 trigger OnValidate()
                 begin
                     /*IF "Mode Of Disbursement"="Mode Of Disbursement"::EFT THEN
@@ -333,14 +334,24 @@ Page 50396 "Loan Disburesment Batch Card"
                         LoanApps.SetRange(LoanApps."Batch No.", "Batch No.");
                         LoanApps.SetRange(LoanApps."System Created", false);
                         if LoanApps.Find('-') then begin
-                            Message('found');
                             repeat
-                                Message('loan no %1', LoanApps."Loan  No.");
-                                if LoanApps."Mode of Disbursement" <> LoanApps."mode of disbursement"::"FOSA Account" then begin
-                                    Message('disb mode %1 ', ModeofDisburementEditable);
+                                if (LoanApps."Mode of Disbursement" <> LoanApps."mode of disbursement"::"FOSA Account") then begin
                                     FnDisburseToBankAccount(LoanApps, LoanApps."Loan  No.");
-                                end else
+                                    GenSetUp.Get();
+                                    //Send Loan Disburesment SMS*********************************************
+                                    if GenSetUp."Send Loan Disbursement SMS" = true then begin
+                                        FnSendDisburesmentSMS(LoanApps."Loan  No.", LoanApps."Client Code");
+                                    end;
+                                end else begin
+
                                     FnDisburseToCurrentAccount(LoanApps, LoanApps."Loan  No.");
+                                    GenSetUp.Get();
+                                    //Send Loan Disburesment SMS*********************************************
+                                    if GenSetUp."Send Loan Disbursement SMS" = true then begin
+                                        FnSendDisburesmentSMS(LoanApps."Loan  No.", LoanApps."Client Code");
+                                    end;
+
+                                end;
                             until LoanApps.Next = 0;
                         end;
 
@@ -1776,14 +1787,21 @@ Page 50396 "Loan Disburesment Batch Card"
 
     procedure FnDisburseToCurrentAccount(var LoanApps: Record "Loans Register"; var VarLoanNo: code[30])
     begin
+        BATCH_TEMPLATE := 'PAYMENTS';
+        BATCH_NAME := 'LOANS';
+        DOCUMENT_NO := VarLoanNo;
 
         GenSetUp.GET();
         IF LoanApps.GET(VarLoanNo) THEN BEGIN
+            if LoanApps."Loan  No." = 'FLN00001' then begin
+                LoanApps.Posted := false;
+                LoanApps.modify;
+
+            end;
             LoanApps.CALCFIELDS(LoanApps."Loan Offset Amount", LoanApps."Offset iNTEREST");
             TCharges := 0;
             TopUpComm := 0;
             TotalTopupComm := LoanApps."Loan Offset Amount";
-
             IF (LoanApps."Disburesment Type" = LoanApps."Disburesment Type"::"Full/Single disbursement") OR (LoanApps."Disburesment Type" = LoanApps."Disburesment Type"::" ") THEN BEGIN
                 VarAmounttoDisburse := LoanApps."Approved Amount"
             END ELSE BEGIN
@@ -2031,244 +2049,17 @@ Page 50396 "Loan Disburesment Batch Card"
                 ObjLoans.MODIFY;
             END;
         END;
-
-
-        BATCH_TEMPLATE := 'PAYMENTS';
-        BATCH_NAME := 'LOANS';
-        DOCUMENT_NO := VarLoanNo;
-
-
-        GenSetUp.GET();
-        IF LoanApps.GET(VarLoanNo) THEN BEGIN
-            LoanApps.CALCFIELDS(LoanApps."Loan Offset Amount", LoanApps."Offset iNTEREST");
-            TCharges := 0;
-            TopUpComm := 0;
-            TotalTopupComm := LoanApps."Loan Offset Amount";
-
-            IF (LoanApps."Disburesment Type" = LoanApps."Disburesment Type"::"Full/Single disbursement") OR (LoanApps."Disburesment Type" = LoanApps."Disburesment Type"::" ") THEN BEGIN
-                VarAmounttoDisburse := LoanApps."Approved Amount"
-            END ELSE BEGIN
-                VarAmounttoDisburse := LoanApps."Amount to Disburse on Tranch 1";
-                IF VarAmounttoDisburse <= 0 THEN
-                    ERROR('You have specified Disbursement Mode as Tranche/Multiple Disbursement, Amount to Disburse on Tranche 1 must be greater than zero.')
-            END;
-
-            //------------------------------------1. DEBIT MEMBER LOAN A/C---------------------------------------------------------------------------------------------
-            LineNo := LineNo + 10000;
-            SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::Loan,
-            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", VarAmounttoDisburse, FORMAT(LoanApps.Source),
-            LoanApps."Loan  No.", 'Loan Disbursement - ' + LoanApps."Loan Product Type", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-            //--------------------------------(Debit Member Loan Account)---------------------------------------------
-
-
-            //------------------------------------3. EARN/RECOVER PRODUCT CHARGES FROM FOSA A/C--------------------------------------
-            PCharges.RESET;
-            PCharges.SETRANGE(PCharges."Product Code", LoanApps."Loan Product Type");
-            PCharges.SETFILTER(PCharges."Loan Charge Type", '<>%1', PCharges."Loan Charge Type"::"Loan Insurance");
-            IF PCharges.FIND('-') THEN BEGIN
-                REPEAT
-                    PCharges.TESTFIELD(PCharges."G/L Account");
-                    GenSetUp.TESTFIELD(GenSetUp."Excise Duty Account");
-                    PChargeAmount := PCharges.Amount;
-                    IF PCharges."Use Perc" = TRUE THEN
-                        PChargeAmount := (VarAmounttoDisburse * PCharges.Percentage / 100);//LoanDisbAmount
-                                                                                           //-------------------EARN CHARGE-------------------------------------------
-                    LineNo := LineNo + 10000;
-                    SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                    GenJournalLine."Account Type"::"G/L Account", PCharges."G/L Account", "Posting Date", PChargeAmount * -1, 'BOSA', LoanApps."Loan  No.",
-                    PCharges.Description + ' - ' + LoanApps."Client Code" + ' - ' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-
-
-                    //------------------10% EXCISE DUTY----------------------------------------
-                    IF SFactory.FnChargeExcise(PCharges.Code) THEN BEGIN
-                        //-------------------Earn--------------------------------- 
-                        LineNo := LineNo + 10000;
-                        SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                        GenJournalLine."Account Type"::"G/L Account", GenSetUp."Excise Duty Account", "Posting Date", (PChargeAmount * -1) * 0.1, 'BOSA', LoanApps."Loan  No.",
-                        PCharges.Description + '-' + LoanApps."Client Code" + '-' + LoanApps."Loan Product Type Name" + '-' + LoanApps."Loan  No." + '- Excise(10%)', LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-                    END;
-
-                    TotalPCharges := TotalPCharges + PChargeAmount;
-                //----------------END 10% EXCISE--------------------------------------------
-                UNTIL PCharges.NEXT = 0;
-            END;
-
-
-            //----------------------------------------4. PAY/RECOVER TOP UPS------------------------------------------------------------------------------------------     
-            IF LoanApps."Loan Offset Amount" > 0 THEN BEGIN
-                LoanTopUp.RESET;
-                LoanTopUp.SETRANGE(LoanTopUp."Loan No.", LoanApps."Loan  No.");
-                IF LoanTopUp.FIND('-') THEN BEGIN
-                    //  LoanTopUp.fn_UpdateLoanOffsetDetails();
-                    //LoanTopUp.MODIFY;
-                END;
-
-                LoanTopUp.RESET;
-                LoanTopUp.SETRANGE(LoanTopUp."Loan No.", LoanApps."Loan  No.");
-                IF LoanTopUp.FIND('-') THEN BEGIN
-                    REPEAT
-                        //------------------------------------PAY-----------------------------------------------------------------------------------------------------------
-                        //------------------------------------Principal---------------------
-                        LineNo := LineNo + 10000;
-                        SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Repayment",
-                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
-                        'Off Set By - ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
-                        //------------------------------------Outstanding Interest----------
-                        LineNo := LineNo + 10000;
-                        SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, 'BOSA', LoanTopUp."Loan Top Up",
-                        'Interest Paid- ' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
-                        //-------------------------------------Levy--------------------------
-                        LineNo := LineNo + 10000;
-                        IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
-                            SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                            GenJournalLine."Account Type"::"G/L Account", LoanType."Top Up Commision Account", "Posting Date", LoanTopUp.Commision * -1, 'BOSA', LoanTopUp."Loan Top Up",
-                            'Levy on Bridging -' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
-                        END;
-
-                        //-------------------------------------Loan Insurance--------------------------
-                        LineNo := LineNo + 10000;
-                        IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
-                            SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Paid",
-                            GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Loan Insurance: Current Year" * -1, 'BOSA', LoanTopUp."Loan Top Up",
-                            'Insurance on Loan Clearance -' + LoanApps."Client Code" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."Application Source"::" ");
-                        END;
-
-                        IF ObjLoans.GET(LoanTopUp."Loan Top Up") THEN BEGIN
-                            IF ObjLoanType.GET(ObjLoans."Loan Product Type") THEN BEGIN
-                                VarLoanInsuranceBalAccount := ObjLoanType."Loan Insurance Accounts";
-                            END;
-                        END;
-
-
-                        //------------------------------------DEBIT INSURANCE FOR THE CURRENT YEAR  A/C---------------------------------------------------------------------------------------------
-                        /*
-                          LineNo:=LineNo+10000;     
-                          SFactory.FnCreateGnlJournalLineBalanced(BATCH_TEMPLATE,BATCH_NAME,DOCUMENT_NO,LineNo,GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                          GenJournalLine."Account Type"::Customer,LoanApps."Client Code",WORKDATE,'Loan Insurance:Diff. Calender Year _'+LoanTopUp."Loan Top Up",GenJournalLine."Bal. Account Type"::"G/L Account",
-                          VarLoanInsuranceBalAccount,LoanTopUp."Loan Insurance: Current Year",'FOSA',LoanTopUp."Loan Top Up");
-                          */
-
-                        //------------------------------Credit Excise Duty Account-----------------------------------------------
-                        LineNo := LineNo + 10000;
-                        SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                        GenJournalLine."Account Type"::"G/L Account", GenSetUp."Excise Duty Account", "Posting Date", (LoanTopUp.Commision * (GenSetUp."Excise Duty(%)" / 100)) * -1, 'BOSA', BLoan,
-                        'Excise Duty_Levy on Bridging', BLoan, GenJournalLine."Application Source"::" ");
-
-
-                    UNTIL LoanTopUp.NEXT = 0;
-                END;
-            END;
-
-            //-----------------------------------------Accrue Interest Disburesment--------------------------------------------------------------------------------------------
-            IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
-                IF (LoanType."Charge Interest Upfront" = TRUE) AND (LoanApps."Interest Upfront" > 0) THEN BEGIN
-
-                    //----------------------Debit interest Receivable Account a/c-----------------------------------------------------
-                    LineNo := LineNo + 10000;
-                    SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Due",
-                    GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront", 'BOSA', BLoan,
-                    'Interest Due ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-
-                    LineNo := LineNo + 10000;
-                    SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                    GenJournalLine."Account Type"::"G/L Account", LoanType."Receivable Interest Account", "Posting Date", -LoanApps."Interest Upfront", 'BOSA', BLoan,
-                    'Interest Upfront ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-
-                    //----------------------Credit interest Income Account a/c-----------------------------------------------------
-                    LineNo := LineNo + 10000;
-                    SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Interest Paid",
-                   GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Interest Upfront" * -1, 'BOSA', BLoan,
-                    'Interest Paid ' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-                END;
-            END;
-
-
-            //-----------------------------------------Accrue insurance on Disburesment--------------------------------------------------------------------------------------------
-
-            IF LoanType.GET(LoanApps."Loan Product Type") THEN BEGIN
-                IF LoanType."Accrue Total Insurance&Interes" = TRUE THEN BEGIN
-
-
-                    PCharges.RESET;
-                    PCharges.SETRANGE(PCharges."Product Code", LoanApps."Loan Product Type");
-                    PCharges.SETRANGE(PCharges."Loan Charge Type", PCharges."Loan Charge Type"::"Loan Insurance");
-                    IF PCharges.FIND('-') THEN BEGIN
-                        PCharges.TESTFIELD(PCharges."G/L Account");
-                        GenSetUp.TESTFIELD(GenSetUp."Excise Duty Account");
-                        PChargeAmount := PCharges.Amount;
-                        IF PCharges."Use Perc" = TRUE THEN
-                            PChargeAmount := (LoanApps."Approved Amount" * PCharges.Percentage / 100);
-                        //----------------------Debit insurance Receivable Account a/c-----------------------------------------------------
-                        LineNo := LineNo + 10000;
-                        SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::"Loan Insurance Charged",
-                        GenJournalLine."Account Type"::Customer, LoanApps."Client Code", "Posting Date", PChargeAmount * LoanType."No of Installment", 'BOSA', BLoan,
-                        'Insurance Charged' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-
-                        //----------------------Credit Insurance Payable Account a/c-----------------------------------------------------
-                        LineNo := LineNo + 10000;
-                        SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                        GenJournalLine."Account Type"::"G/L Account", LoanType."Loan Insurance Accounts", "Posting Date", (PChargeAmount * LoanType."No of Installment") * -1, 'BOSA', BLoan,
-                        'Insurance Charged' + '_' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-                    END;
-                END;
-            END;
-
-
-
-            //-----------------------------------------5. BOOST DEPOSITS COMMISSION / RECOVER FROM FOSA A/C--------------------------------------------------------------------------------------------
-            IF LoanApps."Share Boosting Comission" > 0 THEN BEGIN
-
-
-                GenSetUp.GET();
-                //------------------------------Credit Income G/L-----------------------------------------------
-                LineNo := LineNo + 10000;
-                SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                GenJournalLine."Account Type"::"G/L Account", GenSetUp."Boosting Fees Account", "Posting Date", LoanApps."Share Boosting Comission" * -1, 'BOSA', BLoan,
-                'Deposits Boosting Fee', BLoan, GenJournalLine."Application Source"::" ");
-
-
-                GenSetUp.GET();
-                //------------------------------Credit Excise Duty Account-----------------------------------------------
-                LineNo := LineNo + 10000;
-                SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-                GenJournalLine."Account Type"::"G/L Account", GenSetUp."Excise Duty Account", "Posting Date", (LoanApps."Share Boosting Comission" * (GenSetUp."Excise Duty(%)" / 100)) * -1, 'BOSA', BLoan,
-                'Excise Duty_Boosting Fee', BLoan, GenJournalLine."Application Source"::" ");
-
-
-            END;
-
-
-
-            //------------------------------------2. CREDIT MEMBER BANK A/C---------------------------------------------------------------------------------------------
-            LineNo := LineNo + 10000;
-            SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."Transaction Type"::" ",
-            GenJournalLine."Account Type"::"Bank Account", LoanApps."Paying Bank Account No", "Posting Date", LoanApps."Loan Disbursed Amount" * -1, 'BOSA', LoanApps."Cheque No.",
-            'Loan Disbursement - ' + LoanApps."Loan Product Type" + ' - ' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."Application Source"::" ");
-            //----------------------------------(Credit Member Bank Account)------------------------------------------------
-
-            IF ObjLoans.GET(VarLoanNo) THEN BEGIN
-                ObjLoans."Net Payment to FOSA" := ObjLoans."Approved Amount";
-                ObjLoans."Processed Payment" := TRUE;
-                ObjLoans.MODIFY;
-            END;
-        END;
-
-
     end;
 
     procedure FnDisburseToBankAccount(var LoanApps: Record "Loans Register"; LoanNo: Code[30])
     begin
-        Message('Here');
         VarLoanNo := LoanNo;
         BATCH_TEMPLATE := 'PAYMENTS';
         BATCH_NAME := 'LOANS';
         DOCUMENT_NO := VarLoanNo;
 
-        Message('var loan no %1', VarLoanNo);
         GenSetUp.GET();
         IF LoanApps.GET(VarLoanNo) THEN BEGIN
-            Message('Loan no %1', LoanApps."Loan  No.");
             if LoanApps."Loan  No." = 'LN0001' then
                 LoanApps.posted := false;
             LoanApps.CALCFIELDS(LoanApps."Loan Offset Amount", LoanApps."Offset iNTEREST");

@@ -2592,7 +2592,7 @@ Codeunit 50005 "Custom Workflow Responses"
 
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Response Handling", 'OnReleaseDocument', '', true, true)]
-    local procedure OnReleaseDocument(RecRef: RecordRef; var Handled: Boolean)
+    local procedure OnReleaseDocument(RecRef: RecordRef;var Handled: Boolean)
     var
         MemberShipApp: Record "Membership Applications";
         SaccoTransfers: Record "Sacco Transfers";

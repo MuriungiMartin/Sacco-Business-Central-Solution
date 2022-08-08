@@ -734,6 +734,15 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Open New membership products accounts Application.';
 
                 }
+                action("Member FOSA Accounts")
+                {
+                    ApplicationArea = basic, suite;
+                    Caption = 'Member Savings Accounts';
+                    Image = Customer;
+                    RunObject = page "Member Accounts List";
+                    ToolTip = 'Open Members'' FOSA Accounts';
+
+                }
 
             }
             group("Loans Management")
@@ -741,35 +750,83 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 Caption = 'Loan Management';
                 Image = CreditCard;
                 ToolTip = 'Loans'' Management Module';
-                action("BOSA Loan Application")
+                group("BOSA Loans Management")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'BOSA Loan Application';
+                    Caption = 'BOSA Loan Management';
                     Image = CreditCard;
-                    RunObject = Page "Loan Application BOSA(New)";
-                    ToolTip = 'Open BOSA Loan Applications';
+                    ToolTip = 'BOSA Loans'' Management Module';
+                    action("BOSA Loan Application")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'BOSA Loan Application';
+                        Image = CreditCard;
+                        RunObject = Page "Loan Application BOSA(New)";
+                        ToolTip = 'Open BOSA Loan Applications';
+                    }
+                    action("Pending BOSA Loan Application")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending BOSA Loan Applications';
+                        Image = CreditCard;
+                        RunObject = Page "Loans  List- pending approval";
+                        ToolTip = 'Open the list of Pending BOSA Loan Applications.';
+                    }
+                    action("Approved Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Loans Pending Disbursement.';
+                        RunObject = Page "Loans Application List(Approv)";
+                        ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
+                    }
+                    action("Posted Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Loans';
+                        RunObject = Page "Loans Posted List";
+                        ToolTip = 'Open the list of the Loans Posted.';
+                    }
                 }
-                action("Pending BOSA Loan Application")
+                group("FOSA Loans MAnagement")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Pending BOSA Loan Applications';
+                    Caption = 'FOSA Loan Management';
                     Image = CreditCard;
-                    RunObject = Page "Loans  List- pending approval";
-                    ToolTip = 'Open the list of Pending BOSA Loan Applications.';
-                }
-                action("Approved Loans")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Approved Loans Pending Disbursement.';
-                    RunObject = Page "Loans Application List(Approv)";
-                    ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
-                }
-                action("Posted Loans")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Loans';
-                    RunObject = Page "Loans Posted List";
-                    ToolTip = 'Open the list of the Loans Posted.';
+                    ToolTip = 'FOSA Loans'' Management Module';
+
+                    action("New FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'New FOSA Loans.';
+                        RunObject = Page "Loan Application FOSA(New)";
+                        ToolTip = 'Open new FOSA Loan Applications';
+
+                    }
+
+                    action("Pending FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending FOSA Loan Applications';
+                        RunObject = Page "Loan Application FOSA(Pending)";
+                        ToolTip = 'Open Pending FOSA Loan Applications';
+
+                    }
+                    action("Approved FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved FOSA Loan Applications';
+                        RunObject = Page "Loan Application FOSA(Approv)";
+                        ToolTip = 'Approved Pending FOSA Loan Applications';
+
+                    }
+                    action("Posted FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted FOSA Loan Applications';
+                        RunObject = Page "Loan Application FOSA(Posted)";
+                        ToolTip = 'Open Posted FOSA Loan Applications';
+
+                    }
+
+
                 }
 
             }
@@ -1405,6 +1462,18 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     RunObject = Page Navigate;
                     ShortCutKey = 'Shift+Ctrl+I';
                     ToolTip = 'Find entries and documents that exist for the document number and posting date on the selected document. (Formerly this action was named Navigate.)';
+                }
+            }
+            group("Load Disbursement")
+            {
+                Caption = 'Loan disbursement';
+                action("Loan disbursement batch list")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Loan disbursement batch list';
+                    Image = Navigate;
+                    RunObject = Page "Loans Disbursment Batch List";
+
                 }
             }
             group("Sacco Transfer")

@@ -171,10 +171,10 @@ Codeunit 50007 "SURESTEP Factory"
         SMSMessage.Reset;
         SMSMessage.SetCurrentkey(SMSMessage."Entry No");
         if SMSMessage.FindLast then begin
-            iEntryNo := SMSMessage."Entry No" + 10;
+            iEntryNo := SMSMessage."Entry No" + 1;
         end
         else begin
-            iEntryNo := 10;
+            iEntryNo := 1;
         end;
 
 
@@ -188,7 +188,7 @@ Codeunit 50007 "SURESTEP Factory"
         SMSMessage.Source := SMSSource;
         SMSMessage."Entered By" := UserId;
         SMSMessage."Sent To Server" := SMSMessage."sent to server"::No;
-        SMSMessage."SMS Message" := SMSBody + '. Vision Sacco';
+        SMSMessage."SMS Message" := SMSBody + ObjCompInfo.Name;
         SMSMessage."Telephone No" := MobileNumber;
         if ((MobileNumber <> '') and (SMSBody <> '')) then
             SMSMessage.Insert;
@@ -3968,7 +3968,6 @@ Codeunit 50007 "SURESTEP Factory"
             if Exists(SMTPSetup."Path to Save Report" + "Report Name") then
                 SMTP.AddAttachment(SMTPSetup."Path to Save Report" + "Report Name", '');
             SMTP.Send;
-
             ObjEmailLogs.Reset;
             ObjEmailLogs.SetCurrentkey(ObjEmailLogs.No);
             if ObjEmailLogs.FindLast then begin

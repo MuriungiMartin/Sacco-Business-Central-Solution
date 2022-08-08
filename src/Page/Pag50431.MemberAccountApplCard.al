@@ -1134,7 +1134,7 @@ Page 50431 "Member Account Appl. Card"
                         ;
                         ObjAccountTypes.SetRange(ObjAccountTypes.code, "Account Type");
                         if ObjAccountTypes.Find('-') then begin
-                            VarAcctNo := ObjAccountTypes."Account No Prefix" + '-' + "BOSA Account No" + '-'+ IncStr(ObjAccountTypes."Last No Used");
+                            VarAcctNo := ObjAccountTypes."Account No Prefix" + '-' + "BOSA Account No" + '-' + IncStr(ObjAccountTypes."Last No Used");
                         end;
                         Message('Generated account number is %1', VarAcctNo);
                         ObjAccountTypes.Reset;
@@ -1168,7 +1168,7 @@ Page 50431 "Member Account Appl. Card"
                         ObjAccounts."Post Code" := "Post Code";
                         ObjAccounts.County := City;
                         ObjAccounts."BOSA Account No" := "BOSA Account No";
-                        //ObjAccounts.Picture := Picture;
+                        ObjAccounts.Piccture := Picture;
                         ObjAccounts.Signature := Signature;
                         ObjAccounts."Passport No." := "Passport No.";
                         ObjAccounts."Employer Code" := "Employer Code";
@@ -1237,7 +1237,14 @@ Page 50431 "Member Account Appl. Card"
                         //ObjAccounts."Joint Account Name":="First Name"+' &'+"First Name2"+' &'+"First Name3"+'JA';
 
                         //=============================================================End Joint Account Details
-                        ObjAccounts.Insert;
+                        ObjAccounts.Insert(true);
+                        if ObjAccounts.Insert(true) then begin
+                            ObjAccountTypes.Reset();
+                            ObjAccountTypes.SetRange(ObjAccountTypes.code, "Account Type");
+                            if ObjAccountTypes.Find('-') then begin
+                                ObjAccountTypes."Last No Used" := VarAcctNo;
+                            end;
+                        end;
 
 
                         ObjAccounts.Reset;
@@ -1336,7 +1343,10 @@ Page 50431 "Member Account Appl. Card"
                         Message('You have successfully created a %1 Product, A/C No=%2', "Account Type", VarAcctNo);
 
                         //==========================================================================================================End Front Office Accounts
-
+                        if Confirm('Do you want to notify this member through sms?') then begin
+                            SFactory.FnSendSMS('ACCOUNTAPP', 'Dear ' + Name + 'Your ' + "Account Type" + 'has been created. Your account number is ' +
+                            VarAcctNo, "BOSA Account No", "Phone No.");
+                        end;
 
                         //========================================================================================================Update Piggy Bank Details
                         if (ObjNoSeries.Get) and ("Issue Piggy Bank" = true) then begin
@@ -1357,7 +1367,9 @@ Page 50431 "Member Account Appl. Card"
                                 ObjPiggyBank.Insert;
                             end;
                         end;
+                        CurrPage.Close();
                     end;
+
                 }
                 action("Send Approval Request")
                 {
