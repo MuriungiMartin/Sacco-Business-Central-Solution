@@ -133,14 +133,17 @@ Page 50439 "Cashier Transactions Card"
                         if TransactionTypes.Get("Transaction Type") then begin
                             if TransactionTypes.Type = TransactionTypes.Type::"Cheque Deposit" then begin
                                 FChequeVisible := true;
+                                Type := 'Cheque Deposit';
                                 if ("Account No" = '502-00-000300-00') or ("Account No" = '502-00-000303-00') then
                                     BOSAReceiptChequeVisible := true;
                             end;
                             if TransactionTypes.Type = TransactionTypes.Type::"Bankers Cheque" then
                                 BChequeVisible := true;
+                            Type := 'Bankers Cheque';
 
                             if ("Transaction Type" = 'RECEIPT') or ("Transaction Type" = 'FOSALOAN') then
                                 BReceiptVisible := true;
+                            Type := 'BOSA Receipt';
 
                             TellerTill.Reset;
                             TellerTill.SetRange(TellerTill."Account Type", TellerTill."account type"::Cashier);
@@ -151,22 +154,27 @@ Page 50439 "Cashier Transactions Card"
 
                             if TransactionTypes.Type = TransactionTypes.Type::Transfer then begin
                                 ChequeTransfVisible := true;
+                                Type := 'Transfer';
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::"Inhouse Cheque Withdrawal" then begin
                                 ChequeWithdrawalVisible := true;
+                                Type := 'Withdrawal';
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::"Cheque Withdrawal" then begin
                                 ChequeWithOll := true;
+                                Type := 'Cheque Withdrawal';
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::"Deposit Slip" then begin
                                 DepositSlipVisible := true;
+                                Type := 'Deposit Slip';
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::Encashment then
                                 BReceiptVisible := true;
+                            Type := 'Encashment';
 
 
 
@@ -192,6 +200,10 @@ Page 50439 "Cashier Transactions Card"
                             ExcessFOSAAccountVisible := true;
                         end;
                     end;
+                }
+                field(Type; Type)
+                {
+                    Visible = true;
                 }
                 field(Amount; Amount)
                 {
@@ -726,7 +738,7 @@ Page 50439 "Cashier Transactions Card"
                     Vend.Reset;
                     Vend.SetRange(Vend."No.", "Account No");
                     if Vend.Find('-') then
-                        Report.Run(51516890, true, false, Vend)
+                        Report.Run(50890, true, false, Vend)
                 end;
             }
             action("Suggest Payments")
@@ -796,6 +808,7 @@ Page 50439 "Cashier Transactions Card"
                 trigger OnAction()
                 begin
                     //Check if Posted
+                    Message('Checking if posted......');
                     BankLedger.Reset;
                     BankLedger.SetRange(BankLedger."Document No.", No);
                     if BankLedger.Find('-') then begin
@@ -805,6 +818,7 @@ Page 50439 "Cashier Transactions Card"
                         CurrPage.Close;
                         exit;
                     end;
+                    Message('Checking if posted ended.');
 
                     //Auto Update the Excess Amount on Receipt--------------------------------------------
                     CalcFields("Allocated Amount");
@@ -1664,7 +1678,7 @@ Page 50439 "Cashier Transactions Card"
             Trans.Reset;
             Trans.SetRange(Trans.No, No);
             if Trans.Find('-') then begin
-                Report.Run(51516500, false, true, Trans);
+                Report.Run(50500, false, true, Trans);
             end;
         end;
 
@@ -1846,7 +1860,7 @@ Page 50439 "Cashier Transactions Card"
         Trans.Reset;
         Trans.SetRange(Trans.No, No);
         if Trans.Find('-') then
-            Report.Run(51516500, false, true, Trans);
+            Report.Run(50500, false, true, Trans);
 
 
         //END;
@@ -2044,7 +2058,7 @@ Page 50439 "Cashier Transactions Card"
             Trans.Reset;
             Trans.SetRange(Trans.No, No);
             if Trans.Find('-') then
-                Report.Run(51516524, false, true, Trans);
+                Report.Run(50524, false, true, Trans);
 
 
         end;
@@ -2542,11 +2556,13 @@ Page 50439 "Cashier Transactions Card"
             ChequeBook.Modify;
         end;
 
+        Message('Transaction Successful.');
+
         Trans.Reset;
         Trans.SetRange(Trans.No, No);
         if Trans.Find('-') then
             if Type = 'Inhouse Cheque Withdrawal ' then
-                Report.Run(51516527, false, true, Trans);
+                Report.Run(50527, false, true, Trans);
 
         CurrPage.Close;
 
@@ -3281,13 +3297,13 @@ Page 50439 "Cashier Transactions Card"
         Trans.SetRange(Trans.No, No);
         if Trans.Find('-') then begin
             if Type = 'Cash Deposit' then
-                Report.Run(51516498, false, true, Trans)
+                Report.Run(50498, false, true, Trans)
             else
                 if Type = 'BOSA Receipt' then
-                    Report.Run(51516516, false, true, Trans)
+                    Report.Run(50516, false, true, Trans)
                 else
                     if Type = 'Withdrawal' then
-                        Report.Run(51516499, false, true, Trans)
+                        Report.Run(50499, false, true, Trans)
         end;
 
 
@@ -3409,8 +3425,8 @@ Page 50439 "Cashier Transactions Card"
         Trans.Reset;
         Trans.SetRange(Trans.No, No);
         if Trans.Find('-') then begin
-            Report.Run(51516516, false, true, Trans);
-            // REPORT.RUN(51516486,FALSE,TRUE,Trans);
+            Report.Run(50516, false, true, Trans);
+            // REPORT.RUN(50486,FALSE,TRUE,Trans);
         end;
         Modify;
 
