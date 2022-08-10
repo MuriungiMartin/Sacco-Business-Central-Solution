@@ -2414,13 +2414,13 @@ Page 50439 "Cashier Transactions Card"
             if CurrentTellerAmount - Amount <= TellerTill."Min. Balance" then
                 Message('You need to add more money from the treasury since your balance has gone below the teller replenishing level.');
 
-            if (VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
+            if (VarTransactionType = VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
                 if (CurrentTellerAmount - Amount) < 0 then
                     Error('You do not have enough money to carry out this transaction.');
 
             end;
 
-            if (VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
+            if (VarTransactionType = VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
                 if CurrentTellerAmount - Amount >= TellerTill."Maximum Teller Withholding" then
                     Message('You need to transfer money back to the treasury since your balance has gone above the teller maximum withholding.');
 
@@ -2733,7 +2733,7 @@ Page 50439 "Cashier Transactions Card"
 
 
 
-            if Type = VarTransactionType = VarTransactionType::"Cash Deposit" then begin
+            if VarTransactionType = VarTransactionType::"Cash Deposit" then begin
                 if Amount > TellerTill."Max Deposit Limit" then begin
                     if Authorised = Authorised::No then begin
                         "Authorisation Requirement" := 'Deposit above teller Limit';

@@ -2793,9 +2793,9 @@ Page 50674 "Posted Cashier Transactions V1"
                 BChequeVisible := true;
             end;
 
-            if TransactionTypes.Type = TransactionTypes.Type::"Batch Deposit" then begin
-                BReceiptVisible := true;
-            end;
+            // if TransactionTypes.Type = TransactionTypes.Type::"Batch Deposit" then begin
+            //     BReceiptVisible := true;
+            // end;
             TellerTill.Reset;
             TellerTill.SetRange(TellerTill."Account Type", TellerTill."account type"::Cashier);
             TellerTill.SetRange(TellerTill.CashierID, UserId);
