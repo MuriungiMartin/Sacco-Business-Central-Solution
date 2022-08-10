@@ -134,16 +134,21 @@ Page 50439 "Cashier Transactions Card"
                             if TransactionTypes.Type = TransactionTypes.Type::"Cheque Deposit" then begin
                                 FChequeVisible := true;
                                 Type := 'Cheque Deposit';
+                                Modify();
                                 if ("Account No" = '502-00-000300-00') or ("Account No" = '502-00-000303-00') then
                                     BOSAReceiptChequeVisible := true;
                             end;
-                            if TransactionTypes.Type = TransactionTypes.Type::"Bankers Cheque" then
+                            if TransactionTypes.Type = TransactionTypes.Type::"Bankers Cheque" then begin
                                 BChequeVisible := true;
-                            Type := 'Bankers Cheque';
+                                Type := 'Bankers Cheque';
+                                Modify();
+                            end;
 
-                            if ("Transaction Type" = 'RECEIPT') or ("Transaction Type" = 'FOSALOAN') then
+                            if ("Transaction Type" = 'RECEIPT') or ("Transaction Type" = 'FOSALOAN') then begin
                                 BReceiptVisible := true;
-                            Type := 'BOSA Receipt';
+                                Type := 'BOSA Receipt';
+                                Modify();
+                            end;
 
                             TellerTill.Reset;
                             TellerTill.SetRange(TellerTill."Account Type", TellerTill."account type"::Cashier);
@@ -155,26 +160,31 @@ Page 50439 "Cashier Transactions Card"
                             if TransactionTypes.Type = TransactionTypes.Type::Transfer then begin
                                 ChequeTransfVisible := true;
                                 Type := 'Transfer';
+                                Modify();
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::"Inhouse Cheque Withdrawal" then begin
                                 ChequeWithdrawalVisible := true;
                                 Type := 'Withdrawal';
+                                Modify();
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::"Cheque Withdrawal" then begin
                                 ChequeWithOll := true;
                                 Type := 'Cheque Withdrawal';
+                                Modify();
                             end;
 
                             if TransactionTypes.Type = TransactionTypes.Type::"Deposit Slip" then begin
                                 DepositSlipVisible := true;
                                 Type := 'Deposit Slip';
+                                Modify();
                             end;
 
-                            if TransactionTypes.Type = TransactionTypes.Type::Encashment then
+                            if TransactionTypes.Type = TransactionTypes.Type::Encashment then begin
                                 BReceiptVisible := true;
-                            Type := 'Encashment';
+                                Type := 'Encashment';
+                            end;
 
 
 
@@ -851,6 +861,11 @@ Page 50439 "Cashier Transactions Card"
 
                     //Ensure Min Share Capital Is Contributed
                     BosaSetUp.Get();
+                    TransactionTypes.Reset();
+                    TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+                    if TransactionTypes.Find('-') then begin
+                        VarTransactionType := TransactionTypes.Type;
+                    end;
                     if Type = 'BOSA Receipt' then begin
                         if Cust.Get("Member No") then begin
                             Cust.CalcFields(Cust."Registration Fee Paid", Cust."Shares Retained");
@@ -934,7 +949,7 @@ Page 50439 "Cashier Transactions Card"
                     "Post Attempted" := true;
                     Modify;
 
-                    if Type = 'Cheque Deposit' then begin
+                    if VarTransactionType = VarTransactionType::"Cheque Deposit" then begin
                         TestField("Cheque Type");
                         TestField("Cheque No");
                         TestField("Cheque Date");
@@ -945,7 +960,7 @@ Page 50439 "Cashier Transactions Card"
                         exit;
                     end;
 
-                    if Type = 'Transfer' then begin
+                    if VarTransactionType = VarTransactionType::Transfer then begin
                         TestField("Drawers Cheque No.");
                         TestField("Drawer's Account No");
 
@@ -954,19 +969,19 @@ Page 50439 "Cashier Transactions Card"
                         exit;
                     end;
 
-                    if Type = 'Bankers Cheque' then begin
+                    if VarTransactionType = VarTransactionType::"Bankers Cheque" then begin
 
                         PostBankersChequeVer1;
 
                         exit;
                     end;
 
-                    if (Type = 'Encashment') or (Type = 'Inhouse Cheque Withdrawal') then begin
+                    if (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
                         PostEncashment;
 
                         exit;
                     end;
-                    if Type = 'Deposit Slip' then begin
+                    if VarTransactionType = VarTransactionType::"Deposit Slip" then begin
                         PostDepSlipDep;
                     end;
 
@@ -976,16 +991,16 @@ Page 50439 "Cashier Transactions Card"
                         exit;
                     end;
 
-                    if Type = 'Transfer' then begin
+                    if VarTransactionType = VarTransactionType::Transfer then begin
                         PostTransfer;
                     end;
 
-                    if (Type = 'Withdrawal') or (Type = 'Cash Deposit') then begin
+                    if (VarTransactionType = VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::"Cash Deposit") then begin
                         //ADDED
                         PostCashDepWith;
                     end;
 
-                    if Type = 'Cheque Withdrawal' then begin
+                    if VarTransactionType = VarTransactionType::"Cheque Withdrawal" then begin
                         PostChequeWith
                     end;
 
@@ -1045,7 +1060,12 @@ Page 50439 "Cashier Transactions Card"
         BReceiptVisible := false;
         BOSAReceiptChequeVisible := false;
         ChequeTransfVisible := false;
-        if (Type = 'Cheque Deposit') or (Type = 'Cheque Withdrawal') then begin
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
+        if (VarTransactionType = VarTransactionType::"Cash Deposit") or (VarTransactionType = VarTransactionType::"Cheque Withdrawal") then begin
             FChequeVisible := true;
             if ("Account No" = '502-00-000300-00') or ("Account No" = '502-00-000303-00') then
                 BOSAReceiptChequeVisible := true;
@@ -1056,17 +1076,17 @@ Page 50439 "Cashier Transactions Card"
         LRefVisible := false;
 
 
-        if Type = 'Bankers Cheque' then
+        if VarTransactionType = VarTransactionType::"Bankers Cheque" then
             BChequeVisible := true;
 
-        if Type = 'Encashment' then
+        if VarTransactionType = VarTransactionType::Encashment then
             BReceiptVisible := true;
 
 
         if ("Transaction Type" = 'RECEIPT') or ("Transaction Type" = 'FOSALN') then
             BReceiptVisible := true;
 
-        if "Transaction Type" = 'TRANSFER' then
+        if VarTransactionType = VarTransactionType::Transfer then
             ChequeTransfVisible := true;
 
         if "Branch Transaction" = true then begin
@@ -1087,7 +1107,7 @@ Page 50439 "Cashier Transactions Card"
             "Transaction DateEditable" := true;
 
         if ObjAccountType.Get("Account Type") then begin
-            if (Amount >= ObjAccountType."Bulk Withdrawal Amount") and (Type = 'Withdrawal') then begin
+            if (Amount >= ObjAccountType."Bulk Withdrawal Amount") and (VarTransactionType = VarTransactionType::Withdrawal) then begin
                 BulkWithVisible := true;
             end;
         end;
@@ -1176,9 +1196,12 @@ Page 50439 "Cashier Transactions Card"
         ChequeWithdrawalVisible := false;
         DepositSlipVisible := false;
         BulkWithVisible := false;
-
-
-        if (Type = 'Cheque Deposit') or (Type = 'Cheque Withdrawal') then begin
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
+        if (VarTransactionType = VarTransactionType::"Cash Deposit") or (VarTransactionType = VarTransactionType::"Cheque Withdrawal") then begin
             FChequeVisible := true;
             if ("Account No" = '502-00-000300-00') or ("Account No" = '502-00-000303-00') then
                 BOSAReceiptChequeVisible := true;
@@ -1189,24 +1212,24 @@ Page 50439 "Cashier Transactions Card"
         LRefVisible := false;
 
 
-        if Type = 'Bankers Cheque' then
+        if VarTransactionType = VarTransactionType::"Bankers Cheque" then
             BChequeVisible := true;
 
-        if Type = 'Encashment' then
+        if VarTransactionType = VarTransactionType::Encashment then
             BReceiptVisible := true;
 
 
         if ("Transaction Type" = 'RECEIPT') or ("Transaction Type" = 'FOSALN') then
             BReceiptVisible := true;
 
-        if "Transaction Type" = 'TRANSFER' then
+        if VarTransactionType = VarTransactionType::Transfer then
             ChequeTransfVisible := true;
 
-        if TransactionTypes.Type = TransactionTypes.Type::"Inhouse Cheque Withdrawal" then begin
+        if VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal" then begin
             ChequeWithdrawalVisible := true;
         end;
 
-        if TransactionTypes.Type = TransactionTypes.Type::"Deposit Slip" then begin
+        if VarTransactionType = VarTransactionType::"Deposit Slip" then begin
             DepositSlipVisible := true;
         end;
 
@@ -1249,6 +1272,7 @@ Page 50439 "Cashier Transactions Card"
 
     var
         LoanBalance: Decimal;
+        VarTransactionType: Enum FOSATransactionTypesEnum;
         AvailableBalance: Decimal;
         UnClearedBalance: Decimal;
         LoanSecurity: Decimal;
@@ -1394,7 +1418,12 @@ Page 50439 "Cashier Transactions Card"
         MinAccBal := 0;
         TotalUnprocessed := 0;
         IntervalPenalty := 0;
-
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
 
         if Account.Get("Account No") then begin
             Account.CalcFields(Account.Balance, Account."Uncleared Cheques", Account."ATM Transactions");
@@ -1408,7 +1437,7 @@ Page 50439 "Cashier Transactions Card"
 
                 //Check Withdrawal Interval
                 if Account.Status <> Account.Status::Deceased then begin
-                    if Type = 'Withdrawal' then begin
+                    if VarTransactionType = VarTransactionType::Withdrawal then begin
                         AccountTypes.Reset;
                         AccountTypes.SetRange(AccountTypes.Code, "Savings Product");
                         if Account."Last Withdrawal Date" <> 0D then begin
@@ -1490,7 +1519,14 @@ Page 50439 "Cashier Transactions Card"
             TillNo := TellerTill."No.";
             TellerTill.CalcFields(TellerTill.Balance);
 
-            if Type = 'Cheque Deposit' then begin
+            //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+            TransactionTypes.Reset();
+            TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+            if TransactionTypes.Find('-') then begin
+                VarTransactionType := TransactionTypes.Type;
+            end;
+
+            if VarTransactionType = VarTransactionType::"Cheque Deposit" then begin
                 if Amount > TellerTill."Max Cheque Deposit Limit" then begin
                     if Authorised = Authorised::No then begin
                         "Authorisation Requirement" := 'Cheque Receipt Above teller Limit';
@@ -1688,7 +1724,13 @@ Page 50439 "Cashier Transactions Card"
 
     procedure PostDepSlipDep()
     begin
-        if Type = 'Deposit Slip' then
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
+        if VarTransactionType = VarTransactionType::"Deposit Slip" then
             DValue.Reset;
         DValue.SetRange(DValue."Global Dimension No.", 2);
         //DValue.SETRANGE(DValue.Code,DBranch);`
@@ -2074,6 +2116,12 @@ Page 50439 "Cashier Transactions Card"
             if Acc.Blocked = Acc.Blocked::Payment then
                 Error('This account has been blocked from receiving payments.');
         end;
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
 
 
         DValue.Reset;
@@ -2089,7 +2137,7 @@ Page 50439 "Cashier Transactions Card"
         CalcAvailableBal;
 
         //Check withdrawal limits
-        if Type = 'Bankers Cheque' then begin
+        if VarTransactionType = VarTransactionType::"Bankers Cheque" then begin
             if AvailableBalance < Amount then begin
                 if Authorised = Authorised::Yes then begin
                     Overdraft := true;
@@ -2306,12 +2354,17 @@ Page 50439 "Cashier Transactions Card"
             if Acc.Blocked = Acc.Blocked::Payment then
                 Error('This account has been blocked from receiving payments.');
         end;
-
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
 
         CalcAvailableBal;
 
         //Check withdrawal limits
-        if (Type = 'Encashment') or (Type = 'Inhouse Cheque Withdrawal') then begin
+        if (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
             if AvailableBalance < Amount then begin
                 if Authorised = Authorised::Yes then begin
                     Overdraft := true;
@@ -2361,13 +2414,13 @@ Page 50439 "Cashier Transactions Card"
             if CurrentTellerAmount - Amount <= TellerTill."Min. Balance" then
                 Message('You need to add more money from the treasury since your balance has gone below the teller replenishing level.');
 
-            if ("Transaction Type" = 'Withdrawal') or ("Transaction Type" = 'Encashment') or ("Transaction Type" = 'Inhouse Cheque Withdrawal') then begin
+            if (VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
                 if (CurrentTellerAmount - Amount) < 0 then
                     Error('You do not have enough money to carry out this transaction.');
 
             end;
 
-            if ("Transaction Type" = 'Withdrawal') or ("Transaction Type" = 'Encashment') or ("Transaction Type" = 'INHOUSE CHEQUE WITHDRAWAL') then begin
+            if (VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) or (VarTransactionType = VarTransactionType::"Inhouse Cheque Withdrawal") then begin
                 if CurrentTellerAmount - Amount >= TellerTill."Maximum Teller Withholding" then
                     Message('You need to transfer money back to the treasury since your balance has gone above the teller maximum withholding.');
 
@@ -2572,9 +2625,14 @@ Page 50439 "Cashier Transactions Card"
     procedure PostCashDepWith()
     begin
         CalcAvailableBal;
-
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
         //Check withdrawal limits - Available Bal
-        if Type = 'Withdrawal' then begin
+        if VarTransactionType = VarTransactionType::Withdrawal then begin
             //Block Payments
             if Acc.Get("Account No") then begin
                 if Acc.Blocked = Acc.Blocked::Payment then
@@ -2631,7 +2689,7 @@ Page 50439 "Cashier Transactions Card"
                 exit;
             end;
             //MESSAGE('CurrentTellerAmount %1',CurrentTellerAmount);
-            if (TransactionTypes.Type = TransactionTypes.Type::Withdrawal) or (TransactionTypes.Type = TransactionTypes.Type::Encashment) then begin
+            if (VarTransactionType = VarTransactionType::Withdrawal) or (VarTransactionType = VarTransactionType::Encashment) then begin
                 if CurrentTellerAmount - Amount >= TellerTill."Maximum Teller Withholding" then
                     Message('You need to transfer money back to the treasury since your balance has gone above the teller maximum withholding.');
 
@@ -2641,7 +2699,7 @@ Page 50439 "Cashier Transactions Card"
             end;
 
             //Check teller transaction limits
-            if Type = 'Withdrawal' then begin
+            if VarTransactionType = VarTransactionType::Withdrawal then begin
                 if Amount > TellerTill."Max Withdrawal Limit" then begin
                     if Authorised = Authorised::No then begin
                         "Authorisation Requirement" := 'Withdrawal Above teller Limit';
@@ -2664,7 +2722,7 @@ Page 50439 "Cashier Transactions Card"
 
             //Prevent teller from Overdrawing Till
 
-            if Type = 'Withdrawal' then begin
+            if VarTransactionType = VarTransactionType::Withdrawal then begin
                 TellerTill.CalcFields(TellerTill.Balance);
                 if Amount > TellerTill.Balance then begin
                     Error('you cannot transact below your Till balance.');
@@ -2675,7 +2733,7 @@ Page 50439 "Cashier Transactions Card"
 
 
 
-            if Type = 'Cash Deposit' then begin
+            if Type = VarTransactionType = VarTransactionType::"Cash Deposit" then begin
                 if Amount > TellerTill."Max Deposit Limit" then begin
                     if Authorised = Authorised::No then begin
                         "Authorisation Requirement" := 'Deposit above teller Limit';
@@ -2740,7 +2798,7 @@ Page 50439 "Cashier Transactions Card"
         //Project Accounts
 
         GenJournalLine.Validate(GenJournalLine."Currency Code");
-        if (Type = 'Cash Deposit') or (Type = 'BOSA Receipt') then
+        if (VarTransactionType = VarTransactionType::"Cash Deposit") or (Type = 'BOSA Receipt') then
             GenJournalLine.Amount := -Amount
         else
             GenJournalLine.Amount := Amount;
@@ -2825,7 +2883,7 @@ Page 50439 "Cashier Transactions Card"
 
                         //***Graduated Charge
                         ChargeAmount := 0;
-                        if (Type = 'Withdrawal') and "Use Graduated Charges" = true then begin
+                        if (VarTransactionType = VarTransactionType::Withdrawal) and "Use Graduated Charges" = true then begin
                             GraduatedCharge.Reset;
                             if GraduatedCharge.Find('-') then begin
                                 repeat
@@ -2840,7 +2898,7 @@ Page 50439 "Cashier Transactions Card"
                         end;
                         Message('Normal Withdrawal Charge %1', ChargeAmount);
                         //ChargeAmount:=TransactionCharges."Charge Amount";
-                        if (Type = 'Withdrawal') and "Use Graduated Charges" = true then begin
+                        if (VarTransactionType = VarTransactionType::Withdrawal) and "Use Graduated Charges" = true then begin
                             if Account.Get("Account No") then begin
                                 if Account."Staff Account" = false then begin
                                     Echarge := ChargeAmount;
@@ -2938,7 +2996,7 @@ Page 50439 "Cashier Transactions Card"
                     end;
                 //---------End Get Notice Type------------
 
-                if (Type = 'Withdrawal') and "Use Graduated Charges" = true then begin
+                if (VarTransactionType = VarTransactionType::Withdrawal) and "Use Graduated Charges" = true then begin
                     if ("Bulk Withdrawal Appl Done" = true) then begin
                         GraduatedCharge.Reset;
                         GraduatedCharge.SetRange(GraduatedCharge."Notice Status", VarNoticeType);
@@ -2961,7 +3019,7 @@ Page 50439 "Cashier Transactions Card"
 
 
                 //ChargeAmount:=TransactionCharges."Charge Amount";
-                if (Type = 'Withdrawal') and "Use Graduated Charges" = true then begin
+                if (VarTransactionType = VarTransactionType::Withdrawal) and "Use Graduated Charges" = true then begin
                     if Account.Get("Account No") then begin
                         if Account."Staff Account" = false then begin
                             Echarge := ChargeAmount;
@@ -3098,7 +3156,7 @@ Page 50439 "Cashier Transactions Card"
 
         //ABOVE 20K
         //Charge withdrawal Freq
-        if Type = 'Withdrawal' then begin
+        if VarTransactionType = VarTransactionType::Withdrawal then begin
             if Account.Get("Account No") then begin
                 if AccountTypes.Get(Account."Account Type") then begin
                     if Account."Last Withdrawal Date" = 0D then begin
@@ -3296,13 +3354,13 @@ Page 50439 "Cashier Transactions Card"
         Trans.Reset;
         Trans.SetRange(Trans.No, No);
         if Trans.Find('-') then begin
-            if Type = 'Cash Deposit' then
+            if VarTransactionType = VarTransactionType::"Cash Deposit" then
                 Report.Run(50498, false, true, Trans)
             else
                 if Type = 'BOSA Receipt' then
                     Report.Run(50516, false, true, Trans)
                 else
-                    if Type = 'Withdrawal' then
+                    if VarTransactionType = VarTransactionType::Withdrawal then
                         Report.Run(50499, false, true, Trans)
         end;
 
@@ -3441,7 +3499,12 @@ Page 50439 "Cashier Transactions Card"
             if Acc.Blocked = Acc.Blocked::Payment then
                 Error('This account has been blocked from receiving payments.');
         end;
-
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
 
         /*DValue.RESET;
         DValue.SETRANGE(DValue."Global Dimension No.",2);
@@ -3456,7 +3519,7 @@ Page 50439 "Cashier Transactions Card"
         CalcAvailableBal;
 
         //Check withdrawal limits
-        if Type = 'Cheque Withdrawal' then begin
+        if VarTransactionType = VarTransactionType::"Cheque Deposit" then begin
             if AvailableBalance < Amount then begin
                 if Authorised = Authorised::Yes then begin
                     Overdraft := true;
@@ -3917,7 +3980,12 @@ Page 50439 "Cashier Transactions Card"
                 Error('This account has been blocked from receiving payments.');
         end;
 
-
+        //+++++++++++++++++++++++++++++Get the transaction type++++++++++++++++++++++++++++
+        TransactionTypes.Reset();
+        TransactionTypes.SetRange(TransactionTypes.Code, "Transaction Type");
+        if TransactionTypes.Find('-') then begin
+            VarTransactionType := TransactionTypes.Type;
+        end;
         /*DValue.RESET;
         DValue.SETRANGE(DValue."Global Dimension No.",2);
         DValue.SETRANGE(DValue.Code,'Nairobi');
@@ -3931,7 +3999,7 @@ Page 50439 "Cashier Transactions Card"
         CalcAvailableBal;
 
         //Check withdrawal limits
-        if Type = 'Bankers Cheque' then begin
+        if VarTransactionType = VarTransactionType::"Bankers Cheque" then begin
             if AvailableBalance < Amount then begin
                 if Authorised = Authorised::Yes then begin
                     Overdraft := true;

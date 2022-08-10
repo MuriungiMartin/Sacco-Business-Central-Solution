@@ -13,10 +13,9 @@ Table 50440 "Transaction Types"
         field(2; Description; Text[50])
         {
         }
-        field(3; Type; Option)
+        field(3; Type; enum FOSATransactionTypesEnum)
         {
-            OptionCaption = 'Cash Deposit,Withdrawal,Cheque Deposit,ATM Cash Deposit,ATM Cheque Deposit,ATM Withdrawal,Batch Deposit,BOSA Withdrawal,Bankers Cheque,Encashment,Transfer,Inhouse Cheque Withdrawal,Deposit Slip,Cheque Withdrawal,ABC Deposit';
-            OptionMembers = "Cash Deposit",Withdrawal,"Cheque Deposit","ATM Cash Deposit","ATM Cheque Deposit","ATM Withdrawal","Batch Deposit","BOSA Withdrawal","Bankers Cheque",Encashment,Transfer,"Inhouse Cheque Withdrawal","Deposit Slip","Cheque Withdrawal","ABC Deposit";
+            Caption = 'Transaction Type';
         }
         field(5; "Account Type"; Code[20])
         {
