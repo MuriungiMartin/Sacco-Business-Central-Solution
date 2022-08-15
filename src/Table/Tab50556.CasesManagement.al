@@ -218,7 +218,7 @@ Table 50556 "Cases Management"
         }
         field(3964; "Member No."; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No." where(ISNormalMember = filter(true));
         }
         field(3965; "FOSA Account."; Code[50])
         {
@@ -351,7 +351,7 @@ Table 50556 "Cases Management"
         }
         field(69188; "Referee Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -406,7 +406,7 @@ Table 50556 "Cases Management"
         }
         field(69202; "Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No." where(ISNormalMember = filter(true));
 
             trigger OnValidate()
             begin
@@ -543,7 +543,7 @@ Table 50556 "Cases Management"
         Month: Integer;
         DAY: Integer;
         ObjEmployers: Record "Sacco Employers";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         ObjUsers: Record User;
 }
 

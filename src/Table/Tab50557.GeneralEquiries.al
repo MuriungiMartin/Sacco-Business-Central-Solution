@@ -18,7 +18,7 @@ Table 50557 "General Equiries."
         }
         field(2; "Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -413,7 +413,7 @@ Table 50557 "General Equiries."
         }
         field(69188; "Referee Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -509,13 +509,13 @@ Table 50557 "General Equiries."
         NoSeriesMgt: Codeunit NoSeriesManagement;
         Loans: Record "Loans Register";
         GenSetUp: Record "Sacco General Set-Up";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         PVApp: Record "Member Ledger Entry";
         UserMgt: Codeunit "User Setup Management";
         PRD: Record Customer;
         ObjEmployers: Record "Sacco Employers";
         ObjUser: Record User;
-        ObjCust: Record "Members Register";
+        ObjCust: Record Customer;
         ObjUsers: Record User;
 }
 

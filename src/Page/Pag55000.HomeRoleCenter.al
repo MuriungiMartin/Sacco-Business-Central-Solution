@@ -817,6 +817,45 @@ page 55000 "Home Role Center" // default role center change to comapny name
                         RunObject = Page "Funds Transfer List";
                     }
                 }
+                group("ATM Banking")
+                {
+                    Caption = 'ATM Banking';
+                    action(ATMApplication)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Card Application';
+                        RunObject = page "ATM Cards Application - New";
+
+                    }
+                    action(ATMProcessed)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Processed ATM Cards';
+                        RunObject = page "ATM Cards Appl. - Processed";
+
+                    }
+                    action(ATMTransactionDetails)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Transaction Details';
+                        RunObject = page "Atm Transaction Details";
+
+                    }
+                    action(ATMRequestBatch)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Card Request Batch List';
+                        RunObject = page "ATM Card Request Batch List";
+
+                    }
+                    action(ATMBatchReceiptsBatch)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Card Receipt Batch List';
+                        RunObject = page "ATM Card Receipt Batch List";
+
+                    }
+                }
 
             }
             group("Loans Management")
@@ -1054,6 +1093,62 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     RunObject = page "Receipt and Payment Types List";
                     ToolTip = 'Receipt and Payment Types List';
                 }
+            }
+            group(SaccoCRM)
+            {
+                Caption = 'SACCO CRM';
+                group("Case Management")
+                {
+                    action("Case Registration")
+                    {
+                        Caption = 'Case Enquiry Registration List';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Crm Log List";
+                        ToolTip = 'Book a New Case enquiry';
+
+                    }
+                    action("Assigned Cases")
+                    {
+                        Caption = 'Cases List';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Case Assigned  list";
+                        ToolTip = 'New Cases';
+
+                    }
+                    action("Resolved Case Enquiries")
+                    {
+                        Caption = 'Resolved Cases Enquiries';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        //RunObject = page resolved;
+                        ToolTip = 'Resolved Cases Enquiries';
+
+                    }
+                    action("Resolved Cases")
+                    {
+                        Caption = 'Resolved Cases';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Case Assigned  solved";
+                        ToolTip = 'Resolved Cases';
+
+                    }
+                }
+                group("CRM Gen Setup")
+                {
+                    action("CRM General setup")
+                    {
+                        Caption = 'CRM General Setup';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Crm Nos series Card";
+                        ToolTip = 'CRM Setup';
+
+                    }
+                }
+
             }
 #if not CLEAN18
             group(SetupAndExtensions)
