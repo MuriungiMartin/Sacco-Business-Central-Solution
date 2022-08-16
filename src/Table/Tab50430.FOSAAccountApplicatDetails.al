@@ -1030,7 +1030,7 @@ Table 50430 "FOSA Account Applicat. Details"
         }
         field(68012; "BOSA Account No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -1052,7 +1052,7 @@ Table 50430 "FOSA Account Applicat. Details"
                     "Country/Region Code" := Cust."Country/Region Code";
                     "E-Mail" := Cust."E-Mail";
                     "ID No." := Cust."ID No.";
-                    Picture := Cust.Picture;
+                    Picture := Cust.Piccture;
                     "Marital Status" := Cust."Marital Status";
                     Signature := Cust.Signature;
                     "Formation/Province" := Cust."Formation/Province";
@@ -1469,7 +1469,7 @@ Table 50430 "FOSA Account Applicat. Details"
         }
         field(69184; "Referee Member No"; Code[20])
         {
-            TableRelation = "Members Register"."No.";
+            TableRelation = Customer."No.";
 
             trigger OnValidate()
             begin
@@ -1969,7 +1969,7 @@ Table 50430 "FOSA Account Applicat. Details"
         AccountTypes: Record "Account Types-Saving Products";
         UsersID: Record User;
         FDType: Record "Fixed Deposit Type";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         NOKBOSA: Record "Members Next of Kin";
         NOKApp: Record "FOSA Account App Kin Details";
         GenSetUp: Record "Sacco General Set-Up";

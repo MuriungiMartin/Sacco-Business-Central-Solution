@@ -908,6 +908,26 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Receipt and Payment Types List';
                 }
             }
+            group("Banking Services")
+            {
+                action("Cashier Transactions")
+                {
+                    Caption = 'cashier transactions';
+                    ApplicationArea = basic, suite;
+                    Image = Payment;
+                    RunObject = page "Cashier Transactions - List";
+                    ToolTip = 'cashier transaction list';
+                }
+                action("banking Setup")
+                {
+                    Caption = 'Transaction Type - List';
+                    ApplicationArea = basic, suite;
+                    Image = Setup;
+                    RunObject = page "Transaction Type - List";
+                    ToolTip = 'Transaction Type - List';
+                }
+            }
+
 #if not CLEAN18
             group(SetupAndExtensions)
             {
