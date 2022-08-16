@@ -2,7 +2,7 @@
 Page 50598 "CRM Case Types"
 {
     PageType = List;
-    UsageCategory = Lists;
+    UsageCategory = Administration;
     ApplicationArea = All;
     SourceTable = "CRM Case Types";
 

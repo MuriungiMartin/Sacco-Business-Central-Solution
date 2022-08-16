@@ -173,16 +173,16 @@ Table 50557 "General Equiries."
 
             trigger OnLookup()
             var
-                UserMgt: Codeunit "User Management";
+                UserMgt: Codeunit UserManagementCUExt;
             begin
-                // UserMgt.LookupUserID("Caller Reffered To");
+                UserMgt.LookupUser("Caller Reffered To");
             end;
 
             trigger OnValidate()
             var
                 UserMgt: Codeunit "User Management";
             begin
-                // UserMgt.ValidateUserID("Caller Reffered To");
+                UserMgt.ValidateUserName(ObjUsers, ObjUsers, "Caller Reffered To");
 
                 ObjUsers.Reset;
                 ObjUsers.SetRange(ObjUsers."User Name", UserId);

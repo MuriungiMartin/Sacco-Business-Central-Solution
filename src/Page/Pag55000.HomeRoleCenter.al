@@ -1147,6 +1147,15 @@ page 55000 "Home Role Center" // default role center change to comapny name
                         ToolTip = 'CRM Setup';
 
                     }
+                    action("CRM Case types")
+                    {
+                        Caption = 'CRM Case types';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "CRM Case Types";
+                        ToolTip = 'CRM Case Types';
+
+                    }
                 }
 
             }
