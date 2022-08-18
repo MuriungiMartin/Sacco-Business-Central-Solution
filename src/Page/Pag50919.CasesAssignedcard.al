@@ -5,7 +5,7 @@ Page 50919 "Cases Assigned card"
     Editable = true;
     PageType = Card;
     SourceTable = "Cases Management";
-    SourceTableView = where(Status = filter(Escalated));
+    //SourceTableView = where(Status = filter(Escalated));
 
     layout
     {
@@ -460,7 +460,7 @@ Page 50919 "Cases Assigned card"
 
     trigger OnOpenPage()
     begin
-        SetRange("Resource Assigned", UserId);
+        //SetRange("Resource Assigned", UserId);
     end;
 
     var

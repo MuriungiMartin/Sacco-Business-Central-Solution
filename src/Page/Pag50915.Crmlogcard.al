@@ -507,6 +507,8 @@ Page 50915 "Crm log card"
                                 CASEM."Initiated Enquiry No" := No;
                                 CASEM."Date of Escalation" := Today;
                                 CASEM."Time of Escalation" := Time;
+                                CASEM.Status := CASEM.Status::Escalated;
+                                CASEM."Resource Assigned" := "Caller Reffered To";
                                 if CASEM."Case Number" <> '' then
                                     Send := true;
 
@@ -951,11 +953,14 @@ Page 50915 "Crm log card"
         LoanNoVisible: Boolean;
         ObjCaseDetails: Record "Case Details";
         ObjCaseDetails2: Record "Case Details";
-        CaseNotification: label '<p style="font-family:Verdana,Arial;font-size:10pt">Dear<b> %1,</b></p><p style="font-family:Verdana,Arial;font-size:9pt">Case Resolution Notification</p><p style="font-family:Verdana,Arial;font-size:9pt">You have been assigned a Member case no: %2  belonging to Member No  %3  by %4.Login to the case management module to see full details of the case,</p><p style="font-family:Verdana,Arial;font-size:9pt"> </b></p><br>Regards<p>%5</p><p><b>KINGDOM SACCO LTD</b></p>';
+        CaseNotification: label '<p style="font-family:Verdana,Arial;font-size:10pt">Dear<b> %1,</b></p><p style="font-family:Verdana,Arial;font-size:9pt">Case Resolution Notification</p><p style="font-family:Verdana,Arial;font-size:9pt">You have been assigned a Member case no: %2  belonging to Member No  %3  by %4. Login to the case management module to see full details of the case,</p><p style="font-family:Verdana,Arial;font-size:9pt"> </b></p><br>Regards<p>%5</p></br><br><p><b><i>%6</i></b></p>';
+        CaseNotification12: label '<p style="font-family:Verdana,Arial;font-size:10pt">Dear<b> %1,</b></p><p style="font-family:Verdana,Arial;font-size:9pt">Case Resolution Notification</p><p style="font-family:Verdana,Arial;font-size:9pt">You have been assigned a Member case no: %2  belonging to Member No  %3  by %4. Login to the case management module to see full details of the case,</p><p style="font-family:Verdana,Arial;font-size:9pt"> </b></p><br>Regards<p>%5</p></br><br><p><b><i>%6</i></b></p>';
+
         VarFosaAccountVisible: Boolean;
         ObjUser: Record User;
         VarEscalatedtoEmail: Text[50];
         Recipient: List of [Text];
+        companyinfo: Record "Company Information";
 
     local procedure FnSendEmailNotification()
     var
@@ -975,15 +980,16 @@ Page 50915 "Crm log card"
             VarEscalatedtoEmail := ObjUser."Contact Email";
         end;
 
-        if "Escalated User Email" <> '' then
-            Recipient.Add("Escalated User Email");
+        if VarEscalatedtoEmail <> '' then
+            Recipient.Add(VarEscalatedtoEmail);
+        //Message(format(Recipient));
+        CompanyInfo.get();
         SMTPMail.CreateMessage(SMTPSetup."Email Sender Name", SMTPSetup."Email Sender Address", Recipient, 'Case Resolution Assignment Notification', '', true);
-        SMTPMail.AppendBody(StrSubstNo(CaseNotification, "Caller Reffered To", No, "Member No", UserId, UserId));
-        SMTPMail.AppendBody(SMTPSetup."Email Sender Name");
+        SMTPMail.AppendBody(StrSubstNo(CaseNotification12, "Caller Reffered To", No, "Member No", UserId, UserId, CompanyInfo.Name));
         SMTPMail.AppendBody('<br><br>');
         SMTPMail.AddAttachment(FileName, Attachment);
         SMTPMail.Send;
-        Message('Email Sent');
+        Message('Email Sent sent');
     end;
 }
 

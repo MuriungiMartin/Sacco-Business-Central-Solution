@@ -2,9 +2,11 @@
 Page 50326 "Payroll Periods."
 {
     DeleteAllowed = false;
-    Editable = false;
+    Editable = true;
     PageType = Card;
     SourceTable = "Payroll Calender.";
+    ApplicationArea = all;
+    UsageCategory = Lists;
 
     layout
     {
@@ -105,6 +107,7 @@ Page 50326 "Payroll Periods."
                     Answer := Dialog.Confirm(Question, false);
                     if Answer = true then begin
                         Clear(objOcx);
+                        if dtOpenPeriod = 0D then dtOpenPeriod := 20220701D;
                         objOcx.fnClosePayrollPeriod(dtOpenPeriod, PayrollCode);
                         Message('Process Complete');
                     end else begin

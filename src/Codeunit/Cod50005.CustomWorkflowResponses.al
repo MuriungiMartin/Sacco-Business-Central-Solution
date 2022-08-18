@@ -2592,7 +2592,7 @@ Codeunit 50005 "Custom Workflow Responses"
 
 
     [EventSubscriber(ObjectType::Codeunit, Codeunit::"Workflow Response Handling", 'OnReleaseDocument', '', true, true)]
-    local procedure OnReleaseDocument(RecRef: RecordRef;var Handled: Boolean)
+    local procedure OnReleaseDocument(RecRef: RecordRef; var Handled: Boolean)
     var
         MemberShipApp: Record "Membership Applications";
         SaccoTransfers: Record "Sacco Transfers";
@@ -2611,8 +2611,16 @@ Codeunit 50005 "Custom Workflow Responses"
         GuarantorRecovery: Record "Loan Recovery Header";
         LoanDisbursememnt: Record "Loan Disburesment-Batching";
         FAccount: Record "FOSA Account Applicat. Details";
+        EFTRTGS: record "EFT/RTGS Header";
     begin
         case RecRef.Number of
+            database::"EFT/RTGS Header":
+                begin
+                    RecRef.SetTable(EFTRTGS);
+                    EFTRTGS.Status := EFTRTGS.Status::Approved;
+                    EFTRTGS.Modify(true);
+                    Handled := true;
+                end;
             DATABASE::"Membership Applications":
                 begin
                     RecRef.SetTable(MemberShipApp);

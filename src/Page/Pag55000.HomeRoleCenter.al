@@ -1159,6 +1159,115 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 }
 
             }
+            Group(SaccoPayroll)
+            {
+                Caption = 'Payroll Management';
+                group(payrollEmployees)
+                {
+                    Caption = 'Payroll Employees';
+                    action(payrollemp)
+                    {
+                        Caption = 'Payroll Employees list';
+                        ApplicationArea = basic, suite;
+                        Image = Employee;
+                        RunObject = page "Payroll Employee List.";
+                        tooltip = 'Open Payroll Employees list';
+                    }
+                    action(Exitedpayrollemp)
+                    {
+                        Caption = 'Exited Payroll Employees list';
+                        ApplicationArea = basic, suite;
+                        Image = Employee;
+                        RunObject = page "Exited Payroll Employees";
+                        tooltip = 'Open exited Payroll Employees list';
+                    }
+                }
+                group(PayrollEarnings)
+                {
+                    Caption = 'Earnings&Deductions';
+                    action(Earnings)
+                    {
+                        Caption = 'Payroll Earnings';
+                        ApplicationArea = basic, suite;
+                        Image = Card;
+                        RunObject = page "Payroll Earnings List.";
+
+                    }
+                    action(Deductions)
+                    {
+                        Caption = 'Payroll Deductions';
+                        ApplicationArea = basic, suite;
+                        Image = Card;
+                        RunObject = page "Payroll Deductions List.";
+
+                    }
+                }
+                group(payrollsetup)
+                {
+                    action(payesetup)
+                    {
+                        Caption = 'PAYE SETUP';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll PAYE Setup.";
+                    }
+                    action(NHIF)
+                    {
+                        Caption = 'NHIF SETUP';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll NHIF Setup.";
+                    }
+                    action(NSSF)
+                    {
+                        Caption = 'NHIF SETUP';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll NSSF Setup.";
+                    }
+                    action(Payrolposting)
+                    {
+                        Caption = 'Payroll Posting group';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll Posting Group.";
+                    }
+                    action(payrollpostingsetup)
+                    {
+                        caption = 'Payroll posting setup';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll Posting Setup Ver1";
+                    }
+
+                }
+                group(payrollperiodicactivities)
+                {
+                    Caption = 'Payroll Periodic Activities';
+                    action(payrollperiods)
+                    {
+                        Caption = 'Payroll Periods';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll Periods.";
+                    }
+                    action(Transfertojournal)
+                    {
+                        Caption = 'Payroll journal transfer';
+                        ApplicationArea = basic, suite;
+                        RunObject = report "Payroll JournalTransfer Ver1";
+                    }
+                    action(Payrolnettransfer)
+                    {
+                        Caption = 'Payroll Net Transfer';
+                        ApplicationArea = basic, suite;
+                        RunObject = report "Payroll Net Pay Transfer Ver1";
+                    }
+                    action(SendP9)
+                    {
+                        Caption = 'Send P9 via Mail';
+                        ApplicationArea = basic, suite;
+                        RunObject = report "Send P9 Report Via Mail";
+                    }
+
+                }
+
+
+            }
 #if not CLEAN18
             group(SetupAndExtensions)
             {
