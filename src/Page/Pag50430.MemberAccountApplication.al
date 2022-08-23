@@ -416,7 +416,7 @@ Page 50430 "Member Account Application"
                             Accounts."Registration Date" := "Registration Date";
                             Accounts."Employer Code" := "Employer Code";
                             Accounts."BOSA Account No" := "BOSA Account No";
-                            //  Accounts.Picture:=Picture;
+                            Accounts.Piccture:=Picture;
                             Accounts.Signature := Signature;
                             Accounts."Passport No." := "Passport No.";
                             Accounts.Status := Accounts.Status::Active;
