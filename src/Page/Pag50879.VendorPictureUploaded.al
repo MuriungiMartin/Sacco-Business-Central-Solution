@@ -8,7 +8,7 @@ Page 50879 "Vendor Picture-Uploaded"
     {
         area(content)
         {
-            field(Picture; Image)
+            field(Picture; piccture)
             {
                 ApplicationArea = Basic, Suite;
                 ShowCaption = false;
@@ -68,19 +68,19 @@ Page 50879 "Vendor Picture-Uploaded"
                     ToFile: Text;
                     ExportPath: Text;
                 begin
-                    /*TESTFIELD("No.");
+                    TESTFIELD("No.");
                     //TESTFIELD(Description);
-                    
+
                     NameValueBuffer.DELETEALL;
-                    ExportPath := TEMPORARYPATH + "No." + FORMAT(Picture.MEDIAID);
-                    Picture.EXPORTFILE(ExportPath);
-                    FileManagement.GetServerDirectoryFilesList(TempNameValueBuffer,TEMPORARYPATH);
-                    TempNameValueBuffer.SETFILTER(Name,STRSUBSTNO('%1*',ExportPath));
+                    ExportPath := TEMPORARYPATH + "No." + FORMAT(Piccture.MEDIAID);
+                    Piccture.EXPORTFILE(ExportPath);
+                    FileManagement.GetServerDirectoryFilesList(TempNameValueBuffer, TEMPORARYPATH);
+                    TempNameValueBuffer.SETFILTER(Name, STRSUBSTNO('%1*', ExportPath));
                     TempNameValueBuffer.FINDFIRST;
-                    ToFile := STRSUBSTNO('%1 %2.jpg',"No.",CONVERTSTR("No.",'"/\','___'));
-                    DOWNLOAD(TempNameValueBuffer.Name,DownloadImageTxt,'','',ToFile);
+                    ToFile := STRSUBSTNO('%1 %2.jpg', "No.", CONVERTSTR("No.", '"/\', '___'));
+                    DOWNLOAD(TempNameValueBuffer.Name, DownloadImageTxt, '', '', ToFile);
                     IF FileManagement.DeleteServerFile(TempNameValueBuffer.Name) THEN;
-                    */
+
 
                 end;
             }

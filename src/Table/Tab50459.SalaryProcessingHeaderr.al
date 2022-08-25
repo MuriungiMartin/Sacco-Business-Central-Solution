@@ -237,7 +237,7 @@ Table 50459 "Salary Processing Headerr"
     var
         NoSetup: Record "Sacco No. Series";
         NoSeriesMgt: Codeunit NoSeriesManagement;
-        cust: Record "Members Register";
+        cust: Record Customer;
         "GL Account": Record "G/L Account";
         BANKACC: Record "Bank Account";
         ObjAccount: Record Vendor;

@@ -7,7 +7,7 @@ Page 50876 "Member Signature-Uploaded"
     InsertAllowed = false;
     ModifyAllowed = false;
     PageType = CardPart;
-    SourceTable = "Members Register";
+    SourceTable = Customer;
 
     layout
     {

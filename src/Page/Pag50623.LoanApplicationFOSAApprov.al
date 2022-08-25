@@ -137,8 +137,8 @@ Page 50623 "Loan Application FOSA(Approv)"
                         Error('Loan already posted.');
                     if "Approved Amount" <= 0 then
                         Error('You cannot post this Amount Less or Equal to Zero');
-                    if Confirm('Are you sure you want to post this loan?', true) = false then
-                        exit;
+                    // if not Confirm('Are you sure you want to post this loan?') then
+                    //     exit else
                     RepaySched.Reset;
                     RepaySched.SetRange(RepaySched."Loan No.", "Loan  No.");
                     if not RepaySched.Find('-') then begin
@@ -193,7 +193,8 @@ Page 50623 "Loan Application FOSA(Approv)"
 
                         FnRunSendScheduleViaMail("Loan  No.", "Client Code");
                         Message('Loan Posted successfully. The Member and the attached guarantors will be notified via an SMS.');
-                    end;
+                    end else
+                        error('This is a fosa loan. Mode of disbursement should be to fosa.');
 
                     //Update Share Boosted Deposits
                     FnUpdateShareBoostedTrans();
@@ -718,7 +719,7 @@ Page 50623 "Loan Application FOSA(Approv)"
         //------------------------------------1. DEBIT MEMBER LOAN A/C---------------------------------------------------------------------------------------------
         LineNo := LineNo + 10000;
         SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::Loan,
-        GenJournalLine."account type"::Member, LoanApps."Client Code", "Posting Date", LoanApps."Approved Amount", Format(LoanApps.Source), LoanApps."Loan  No.",
+        GenJournalLine."account type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Approved Amount", Format(LoanApps.Source), LoanApps."Loan  No.",
         'Loan principle- ' + LoanApps."Loan Product Type Name" + '-' + LoanApps."Loan  No.", LoanApps."Loan  No.", GenJournalLine."application source"::" ");
         //--------------------------------(Debit Member Loan Account)---------------------------------------------
 
@@ -778,12 +779,12 @@ Page 50623 "Loan Application FOSA(Approv)"
                     //------------------------------------Principal---------------------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Loan Repayment",
-                    GenJournalLine."account type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, Format(LoanApps.Source), LoanTopUp."Loan Top Up",
+                    GenJournalLine."account type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Principle Top Up" * -1, Format(LoanApps.Source), LoanTopUp."Loan Top Up",
                     'Off Set By - ' + LoanApps."Client Code" + '-' + LoanApps."Loan Product Type Name" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."application source"::" ");
                     //------------------------------------Outstanding Interest----------
                     LineNo := LineNo + 10000;
                     SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Interest Paid",
-                    GenJournalLine."account type"::Member, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, Format(LoanApps.Source), LoanTopUp."Loan Top Up",
+                    GenJournalLine."account type"::Customer, LoanApps."Client Code", "Posting Date", LoanTopUp."Interest Top Up" * -1, Format(LoanApps.Source), LoanTopUp."Loan Top Up",
                     'Interest Due Paid on top up - ' + LoanApps."Client Code" + '-' + LoanApps."Loan Product Type Name" + '-' + LoanApps."Loan  No.", LoanTopUp."Loan Top Up", GenJournalLine."application source"::" ");
                     //-------------------------------------Levy--------------------------
                     LineNo := LineNo + 10000;
@@ -831,7 +832,7 @@ Page 50623 "Loan Application FOSA(Approv)"
                 "Booster Loan No" := BLoan;
             end;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::Loan,
-            GenJournalLine."account type"::Member, LoanApps."Client Code", "Posting Date", LoanApps."Boosted Amount", Format(LoanApps.Source), BLoan,
+            GenJournalLine."account type"::Customer, LoanApps."Client Code", "Posting Date", LoanApps."Boosted Amount", Format(LoanApps.Source), BLoan,
             'Deposits Booster for ' + LoanApps."Loan  No.", BLoan, GenJournalLine."application source"::" ");
 
             //----------------------Credit FOSA a/c-----------------------------------------------------
@@ -844,7 +845,7 @@ Page 50623 "Loan Application FOSA(Approv)"
             //------------------------------Boost Deposits-----------------------------------------------
             LineNo := LineNo + 10000;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Deposit Contribution",
-            GenJournalLine."account type"::Member, "Client Code", "Posting Date", LoanApps."Boosted Amount" * -1, Format(LoanApps.Source), BLoan,
+            GenJournalLine."account type"::Customer, "Client Code", "Posting Date", LoanApps."Boosted Amount" * -1, Format(LoanApps.Source), BLoan,
             'Deposits Booster Loan', BLoan, GenJournalLine."application source"::" ");
 
             //--------------------------------------RECOVER-----------------------------------------------
@@ -879,7 +880,7 @@ Page 50623 "Loan Application FOSA(Approv)"
             //---------------------------------------PAY-----------------------------------------------
             LineNo := LineNo + 10000;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Loan Repayment",
-            GenJournalLine."account type"::Member, "Client Code", "Posting Date", LoanApps."Boosted Amount" * -1, Format(LoanApps.Source), BLoan,
+            GenJournalLine."account type"::Customer, "Client Code", "Posting Date", LoanApps."Boosted Amount" * -1, Format(LoanApps.Source), BLoan,
             'Deposits Booster Repayment-' + LoanApps."Client Code" + LoanApps."Loan Product Type Name", BLoan, GenJournalLine."application source"::" ");
             //--------------------------------------RECOVER-----------------------------------------------
             LineNo := LineNo + 10000;
@@ -893,7 +894,7 @@ Page 50623 "Loan Application FOSA(Approv)"
             //---------------------------------------PAY-----------------------------------------------
             LineNo := LineNo + 10000;
             SFactory.FnCreateGnlJournalLine(BATCH_TEMPLATE, BATCH_NAME, DOCUMENT_NO, LineNo, GenJournalLine."transaction type"::"Interest Paid",
-            GenJournalLine."account type"::Member, "Client Code", "Posting Date", LoanApps."Boosted Amount Interest" * -1, Format(LoanApps.Source), BLoan,
+            GenJournalLine."account type"::Customer, "Client Code", "Posting Date", LoanApps."Boosted Amount Interest" * -1, Format(LoanApps.Source), BLoan,
             'Deposits Booster Int - ' + LoanApps."Client Code" + LoanApps."Loan Product Type Name", BLoan, GenJournalLine."application source"::" ");
             //--------------------------------------RECOVER-----------------------------------------------
             LineNo := LineNo + 10000;

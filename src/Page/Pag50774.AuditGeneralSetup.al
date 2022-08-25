@@ -3,6 +3,8 @@ Page 50774 "Audit General Setup"
 {
     PageType = Card;
     SourceTable = "Audit General Setup";
+    UsageCategory = Administration;
+    ApplicationArea = all;
 
     layout
     {

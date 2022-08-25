@@ -46,7 +46,6 @@ tableextension 50002 "VendorledgerExt" extends "Vendor Ledger Entry"
             CalcFormula = Lookup(Vendor."BOSA Account No" WHERE("No." = FIELD("Vendor No.")));
             FieldClass = FlowField;
         }
-
     }
 
     var

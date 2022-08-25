@@ -134,13 +134,15 @@ Page 50430 "Member Account Application"
                     if "Application Status" = "application status"::Converted then
                         Error('Application has already been converted.');
 
-                    if ("Account Type" = 'SAVINGS') then begin
-                        Nok.Reset;
-                        Nok.SetRange(Nok."Account No", "No.");
-                        /*IF Nok.FIND('-') = FALSE THEN BEGIN
-                        ERROR('Next of Kin have not been specified.');
-                        END;*/
+                    if AccoutTypes.Get(Accountype) then begin
+                        if AccoutTypes."Account Type" = AccoutTypes."Account Type"::"Membership-Fosa" then begin
+                            Nok.Reset;
+                            Nok.SetRange(Nok."Account No", "No.");
+                            /*IF Nok.FIND('-') = FALSE THEN BEGIN
+                            ERROR('Next of Kin have not been specified.');
+                            END;*/
 
+                        end;
                     end;
 
 
@@ -173,56 +175,16 @@ Page 50430 "Member Account Application"
                             //TESTFIELD("Fixed Deposit Type");
                         end;
 
-
-
-                        //Based on BOSA
-                        /*
-                        IF (AccoutTypes.Code = 'CHILDREN') OR (AccoutTypes.Code = 'FIXED') THEN BEGIN
-                        IF  "Kin No" = '' THEN
-                          AcctNo:=AccoutTypes."Account No Prefix" + '-' + BranchC + '-' + PADSTR("BOSA Account No",6,'0') + '-' + AccoutTypes."Ending Series
-                        "
-                        ELSE
-                        AcctNo:=AccoutTypes."Account No Prefix" + '-' + BranchC + '-' + PADSTR("BOSA Account No",6,'0') + '-' + "Kin No";
-                        END ELSE BEGIN
-                          AcctNo:=AccoutTypes."Account No Prefix" + '-' + BranchC + '-' + PADSTR("BOSA Account No",6,'0') + '-' + AccoutTypes."Ending Series
-                        ";
-                        END;
-                        */
-                        //Based on BOSA
-                        ///////
-                        /*
-                        IF "Parent Account No." = '' THEN BEGIN
-                        IF DimensionValue.GET('BRANCH',"Global Dimension 2 Code") THEN BEGIN
-                        //DimensionValue.TESTFIELD(DimensionValue."Account Code");
-                        //AcctNo:=AccoutTypes."Account No Prefix" + '-' + DimensionValue."Account Code" + '-' + DimensionValue."No. Series"
-                        // + '-' + AccoutTypes."Ending Series";
-                        //AcctNo:=AccoutTypes."Account No Prefix" + '-' + INCSTR(DimensionValue."No. Series")
-                         //+ '-' + AccoutTypes."Ending Series";
-
-
-                        IF (AccoutTypes."Use Savings Account Number" = TRUE)  THEN BEGIN
-                        TESTFIELD("Savings Account No.");
-                        AcctNo:=AccoutTypes."Account No Prefix" + COPYSTR("Savings Account No.",4)
-                        END ELSE
-                        //DimensionValue."No. Series":=INCSTR(DimensionValue."No. Series");
-                        //DimensionValue.MODIFY;
-                        END;
-
-                        END ELSE BEGIN
-                        TESTFIELD("Kin No");
-                        AcctNo:=COPYSTR("Parent Account No.",1,14) + "Kin No";
-                        END;
-                        IF AccoutTypes."Fixed Deposit" = TRUE THEN BEGIN
-                        IF "Kin No" <> '' THEN
-                        AcctNo:=COPYSTR(AcctNo,1,14) + "Kin No";
-                        END;
-                        ///////
-
-                        */
+                        //get account 
+                        AccoutTypes.Reset();
+                        ;
+                        AccoutTypes.SetRange(AccoutTypes.code, "Account Type");
+                        if AccoutTypes.Find('-') then begin
+                            AcctNo := AccoutTypes."Account No Prefix" + '-' + "BOSA Account No" + IncStr(AccoutTypes."Last No Used");
+                        end;
+                        Message('Generated account no is %1', AcctNo);
                         Accounts.Init;
-                        //Accounts."No.":=AcctNo;
-                        Accounts."No." := "No.";
-                        AcctNo := "No.";
+                        Accounts."No." := AcctNo;
                         Accounts."Date of Birth" := "Date of Birth";
                         Accounts.Name := Name;
                         Accounts."Creditor Type" := Accounts."creditor type"::"FOSA Account";
@@ -441,7 +403,7 @@ Page 50430 "Member Account Application"
                             //--Assign Account Nos Based On The Product Type-----
                             //FOSA A/C FORMAT =PREFIX-MEMBERNO-PRODUCTCODE
                             if AccoutTypes.Get("Account Type") then
-                                AcctNo := AccoutTypes."Account No Prefix" + '-' + "BOSA Account No" + '-' + AccoutTypes."Product Code";
+                                AcctNo := AccoutTypes."Account No Prefix" + '-' + "BOSA Account No" + '-' + IncStr(AccoutTypes."Last No Used");
 
                             //---Create Account on Vendor Table----
                             Accounts.Init;
@@ -677,6 +639,7 @@ Page 50430 "Member Account Application"
         AccoutTypes: Record "Account Types-Saving Products";
         Accounts: Record Vendor;
         AcctNo: Code[50];
+
         DimensionValue: Record "Dimension Value";
         NextOfKin: Record "FOSA Account NOK Details";
         NextOfKinApp: Record "FOSA Account App Kin Details";
@@ -728,6 +691,7 @@ Page 50430 "Member Account Application"
         iEntryNo: Integer;
         ParentEditable: Boolean;
         SavingsEditable: Boolean;
+        NoSeriesMgmt: Codeunit NoSeriesManagement;
         OpenApprovalEntriesExist: Boolean;
         EnabledApprovalWorkflowsExist: Boolean;
         ApprovalsMgmt: Codeunit "Approvals Mgmt.";

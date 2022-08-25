@@ -3,7 +3,7 @@ Page 51384 "Loan Application BOSA(New)"
 {
     CardPageID = "Loan Application Card(BOSA)";
     DeleteAllowed = false;
-    Editable = false;
+    Editable = true;
     InsertAllowed = false;
     PageType = List;
     UsageCategory = Lists;

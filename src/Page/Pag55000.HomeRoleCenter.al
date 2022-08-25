@@ -720,40 +720,221 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Post recurring fixed asset transactions, such as acquisition and depreciation book without integration to the general ledger.';
                 }
             }
+            group("Saving Products Management")
+            {
+                Caption = 'Saving Products Management';
+                Image = Bank;
+                ToolTip = 'Manage Saving Accounts Eg. FOSA Savings and Fixed Deposits';
+                action("Account Applications")
+                {
+                    ApplicationArea = basic, suite;
+                    Caption = 'Membership Products Application';
+                    Image = Customer;
+                    RunObject = page "Member Account Application";
+                    ToolTip = 'Open New membership products accounts Application.';
+
+                }
+                action("Member FOSA Accounts")
+                {
+                    ApplicationArea = basic, suite;
+                    Caption = 'Member Savings Accounts';
+                    Image = Customer;
+                    RunObject = page "Member Accounts List";
+                    ToolTip = 'Open Members'' FOSA Accounts';
+
+                }
+                group("Fixed Deposits Mgmt ")
+                {
+                    Caption = 'Fixed Deposits Mgmt';
+                    Image = Bank;
+                    ToolTip = 'Open Fixed Deposits Submodule';
+                    action("Fixed Deposits List")
+                    {
+                        ApplicationArea = basic, suite;
+                        Caption = 'Fixed Deposits Savings Accounts';
+                        Image = Account;
+                        RunObject = page "Fixed Deposit Acc. List";
+                        ToolTip = 'Open Fixed Deposits'' FOSA Accounts';
+
+                    }
+                    action("Fixed Deposits Setup")
+                    {
+                        ApplicationArea = basic, suite;
+                        Caption = 'Fixed Deposits Types';
+                        Image = Account;
+                        RunObject = page "Fixed deposit Types list";
+                        ToolTip = 'Open Fixed Deposits'' Types';
+
+                    }
+                    action("Fixed Deposits interest")
+                    {
+                        ApplicationArea = basic, suite;
+                        Caption = 'Fixed Deposits Interest';
+                        Image = Account;
+                        RunObject = page "Fixed Deposit Interest Rates";
+                        ToolTip = 'Open Fixed Deposits'' Interest Rates';
+
+                    }
+                }
+                group("Cashier Banking")
+                {
+                    Caption = 'Cashier-Banking';
+                    Image = FixedAssets;
+
+                    action("Cashier Transactions Authorisation")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Cashier Transactions Authorisation';
+                        RunObject = Page "Cashier Trans Authorisations";
+                    }
+                    action("EFT List")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'EFT List';
+                        RunObject = Page "New EFT/RTGS List";
+                    }
+                    action("Petty Cash")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Petty Cash';
+                        RunObject = Page "New Petty Cash Payments List";
+                    }
+                    action("Posted Petty Cash")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Posted Petty Cash';
+                        RunObject = Page "Posted Petty Cash Payments";
+                    }
+                    action("Funds Transfer")
+                    {
+                        ApplicationArea = Basic;
+                        Caption = 'Funds Transfer';
+                        RunObject = Page "Funds Transfer List";
+                    }
+                }
+                group("ATM Banking")
+                {
+                    Caption = 'ATM Banking';
+                    action(ATMApplication)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Card Application';
+                        RunObject = page "ATM Cards Application - New";
+
+                    }
+                    action(ATMProcessed)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Processed ATM Cards';
+                        RunObject = page "ATM Cards Appl. - Processed";
+
+                    }
+                    action(ATMTransactionDetails)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Transaction Details';
+                        RunObject = page "Atm Transaction Details";
+
+                    }
+                    action(ATMRequestBatch)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Card Request Batch List';
+                        RunObject = page "ATM Card Request Batch List";
+
+                    }
+                    action(ATMBatchReceiptsBatch)
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'ATM Card Receipt Batch List';
+                        RunObject = page "ATM Card Receipt Batch List";
+
+                    }
+                }
+
+            }
             group("Loans Management")
             {
                 Caption = 'Loan Management';
                 Image = CreditCard;
                 ToolTip = 'Loans'' Management Module';
-                action("BOSA Loan Application")
+                group("BOSA Loans Management")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'BOSA Loan Application';
+                    Caption = 'BOSA Loan Management';
                     Image = CreditCard;
-                    RunObject = Page "Loan Application BOSA(New)";
-                    ToolTip = 'Open BOSA Loan Applications';
+                    ToolTip = 'BOSA Loans'' Management Module';
+                    action("BOSA Loan Application")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'BOSA Loan Application';
+                        Image = CreditCard;
+                        RunObject = Page "Loan Application BOSA(New)";
+                        ToolTip = 'Open BOSA Loan Applications';
+                    }
+                    action("Pending BOSA Loan Application")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending BOSA Loan Applications';
+                        Image = CreditCard;
+                        RunObject = Page "Loans  List- pending approval";
+                        ToolTip = 'Open the list of Pending BOSA Loan Applications.';
+                    }
+                    action("Approved Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved Loans Pending Disbursement.';
+                        RunObject = Page "Loans Application List(Approv)";
+                        ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
+                    }
+                    action("Posted Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted Loans';
+                        RunObject = Page "Loans Posted List";
+                        ToolTip = 'Open the list of the Loans Posted.';
+                    }
                 }
-                action("Pending BOSA Loan Application")
+                group("FOSA Loans MAnagement")
                 {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Pending BOSA Loan Applications';
+                    Caption = 'FOSA Loan Management';
                     Image = CreditCard;
-                    RunObject = Page "Loans  List- pending approval";
-                    ToolTip = 'Open the list of Pending BOSA Loan Applications.';
-                }
-                action("Approved Loans")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Approved Loans Pending Disbursement.';
-                    RunObject = Page "Loans Application List(Approv)";
-                    ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
-                }
-                action("Posted Loans")
-                {
-                    ApplicationArea = Basic, Suite;
-                    Caption = 'Posted Loans';
-                    RunObject = Page "Loans Posted List";
-                    ToolTip = 'Open the list of the Loans Posted.';
+                    ToolTip = 'FOSA Loans'' Management Module';
+
+                    action("New FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'New FOSA Loans.';
+                        RunObject = Page "Loan Application FOSA(New)";
+                        ToolTip = 'Open new FOSA Loan Applications';
+
+                    }
+
+                    action("Pending FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Pending FOSA Loan Applications';
+                        RunObject = Page "Loan Application FOSA(Pending)";
+                        ToolTip = 'Open Pending FOSA Loan Applications';
+
+                    }
+                    action("Approved FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Approved FOSA Loan Applications';
+                        RunObject = Page "Loan Application FOSA(Approv)";
+                        ToolTip = 'Approved Pending FOSA Loan Applications';
+
+                    }
+                    action("Posted FOSA Loans")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        Caption = 'Posted FOSA Loan Applications';
+                        RunObject = Page "Loan Application FOSA(Posted)";
+                        ToolTip = 'Open Posted FOSA Loan Applications';
+
+                    }
+
+
                 }
 
             }
@@ -908,6 +1089,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Receipt and Payment Types List';
                 }
             }
+
             group("Banking Services")
             {
                 action("Cashier Transactions")
@@ -926,6 +1108,73 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     RunObject = page "Transaction Type - List";
                     ToolTip = 'Transaction Type - List';
                 }
+            }
+
+
+            group(SaccoCRM)
+            {
+                Caption = 'SACCO CRM';
+                group("Case Management")
+                {
+                    action("Case Registration")
+                    {
+                        Caption = 'Case Enquiry Registration List';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Crm Log List";
+                        ToolTip = 'Book a New Case enquiry';
+
+                    }
+                    action("Assigned Cases")
+                    {
+                        Caption = 'Cases List';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Case Assigned  list";
+                        ToolTip = 'New Cases';
+
+                    }
+                    action("Resolved Case Enquiries")
+                    {
+                        Caption = 'Resolved Cases Enquiries';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        //RunObject = page resolved;
+                        ToolTip = 'Resolved Cases Enquiries';
+
+                    }
+                    action("Resolved Cases")
+                    {
+                        Caption = 'Resolved Cases';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Case Assigned  solved";
+                        ToolTip = 'Resolved Cases';
+
+                    }
+                }
+                group("CRM Gen Setup")
+                {
+                    action("CRM General setup")
+                    {
+                        Caption = 'CRM General Setup';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "Crm Nos series Card";
+                        ToolTip = 'CRM Setup';
+
+                    }
+                    action("CRM Case types")
+                    {
+                        Caption = 'CRM Case types';
+                        ApplicationArea = basic, suite;
+                        Image = Capacity;
+                        RunObject = page "CRM Case Types";
+                        ToolTip = 'CRM Case Types';
+
+                    }
+                }
+
             }
 
 #if not CLEAN18
@@ -1016,13 +1265,13 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 RunPageMode = Create;
                 ToolTip = 'Charge Monthly Loan Interest.';
             }
-            action("G/L Journal Entry")
+            action("Salary Processing")
             {
-                AccessByPermission = TableData "G/L Entry" = IMD;
+                AccessByPermission = TableData "Salary Processing Headerr" = IMD;
                 ApplicationArea = Basic, Suite;
-                Caption = 'G/L Journal Entry';
-                RunObject = Page "General Journal";
-                ToolTip = 'Prepare to post any transaction to the company books.';
+                Caption = 'Salary Processing ';
+                RunObject = Page "Salary Processing List";
+                ToolTip = 'Prepare Salaries.';
             }
             action("Payment Journal Entry")
             {
@@ -1409,6 +1658,18 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     RunObject = Page Navigate;
                     ShortCutKey = 'Shift+Ctrl+I';
                     ToolTip = 'Find entries and documents that exist for the document number and posting date on the selected document. (Formerly this action was named Navigate.)';
+                }
+            }
+            group("Load Disbursement")
+            {
+                Caption = 'Loan disbursement';
+                action("Loan disbursement batch list")
+                {
+                    ApplicationArea = Basic, Suite;
+                    Caption = 'Loan disbursement batch list';
+                    Image = Navigate;
+                    RunObject = Page "Loans Disbursment Batch List";
+
                 }
             }
             group("Sacco Transfer")

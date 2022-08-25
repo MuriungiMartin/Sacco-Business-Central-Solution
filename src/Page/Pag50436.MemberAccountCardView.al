@@ -2571,7 +2571,7 @@ Page 50436 "Member Account Card View"
         else
             CurrPage.Editable := true;
 
-        CalcFields(NetDis);
+        // CalcFields(NetDis);
         UnclearedLoan := NetDis;
 
         Joint2DetailsVisible := false;

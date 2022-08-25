@@ -17,6 +17,7 @@ Table 50432 "Product App Signatories"
                     NoSeriesMgt.TestManual(NoSeries."Signatories Application Doc No");
                     "No. Series" := '';
                 end;
+                DocNo := "Document No";
             end;
         }
         field(2; "Account No"; Code[20])
@@ -89,6 +90,10 @@ Table 50432 "Product App Signatories"
         }
         field(19; "Signature II"; MediaSet)
         {
+        }
+        field(20; DocNo; Code[30])
+        {
+
         }
     }
 

@@ -171,10 +171,10 @@ Codeunit 50007 "SURESTEP Factory"
         SMSMessage.Reset;
         SMSMessage.SetCurrentkey(SMSMessage."Entry No");
         if SMSMessage.FindLast then begin
-            iEntryNo := SMSMessage."Entry No" + 10;
+            iEntryNo := SMSMessage."Entry No" + 1;
         end
         else begin
-            iEntryNo := 10;
+            iEntryNo := 1;
         end;
 
 
@@ -188,7 +188,7 @@ Codeunit 50007 "SURESTEP Factory"
         SMSMessage.Source := SMSSource;
         SMSMessage."Entered By" := UserId;
         SMSMessage."Sent To Server" := SMSMessage."sent to server"::No;
-        SMSMessage."SMS Message" := SMSBody + '. Vision Sacco';
+        SMSMessage."SMS Message" := SMSBody + ObjCompInfo.Name;
         SMSMessage."Telephone No" := MobileNumber;
         if ((MobileNumber <> '') and (SMSBody <> '')) then
             SMSMessage.Insert;
@@ -3968,7 +3968,6 @@ Codeunit 50007 "SURESTEP Factory"
             if Exists(SMTPSetup."Path to Save Report" + "Report Name") then
                 SMTP.AddAttachment(SMTPSetup."Path to Save Report" + "Report Name", '');
             SMTP.Send;
-
             ObjEmailLogs.Reset;
             ObjEmailLogs.SetCurrentkey(ObjEmailLogs.No);
             if ObjEmailLogs.FindLast then begin
@@ -8980,6 +8979,7 @@ Codeunit 50007 "SURESTEP Factory"
         ObjVendors.Reset;
         ObjVendors.SetRange(ObjVendors."No.", VarAccountNo);
         if ObjVendors.Find('-') then begin
+
             ObjVendors.CalcFields(ObjVendors.Balance, ObjVendors."Cheque Discounted", ObjVendors."Uncleared Cheques", ObjVendors."EFT Transactions",
                                   ObjVendors."ATM Transactions", ObjVendors."Mobile Transactions", ObjVendors."Cheque Discounted Amount");
 
@@ -8991,7 +8991,7 @@ Codeunit 50007 "SURESTEP Factory"
             if ObjAccTypes.Find('-') then
                 AvailableBal := AvailableBal - ObjAccTypes."Minimum Balance";
         end;
-
+        //Message('message function%1|%2', ObjVendors.Balance, ObjVendors."Balance (LCY)");
         exit(AvailableBal);
     end;
 
@@ -9599,7 +9599,16 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateGnlJournalLineBalancedChequeNo(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionDescription: Text; BalancingAccountType: enum "Gen. Journal Account Type"; BalancingAccountNo: Code[50]; TransactionAmount: Decimal; DimensionActivity: Code[40]; LoanNo: Code[20]; ExternalDocumentNumber: Code[100]; MemberBranch: Code[100])
+    procedure FnCreateGnlJournalLineBalancedChequeNo(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                                     TransactionDate: Date;
+                                                                                                                                                                                                                                                                                                                                                                                                                     TransactionDescription: Text;
+                                                                                                                                                                                                                                                                                                                                                                                                                     BalancingAccountType: enum "Gen. Journal Account Type";
+                                                                                                                                                                                                                                                                                                                                                                                                                     BalancingAccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                                     TransactionAmount: Decimal;
+                                                                                                                                                                                                                                                                                                                                                                                                                     DimensionActivity: Code[40];
+                                                                                                                                                                                                                                                                                                                                                                                                                     LoanNo: Code[20];
+                                                                                                                                                                                                                                                                                                                                                                                                                     ExternalDocumentNumber: Code[100];
+                                                                                                                                                                                                                                                                                                                                                                                                                     MemberBranch: Code[100])
     var
         GenJournalLine: Record "Gen. Journal Line";
     begin
@@ -10862,7 +10871,15 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateGnlJournalLineBranch(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account"; AccountType: Enum "Gen. Journal Account Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionAmount: Decimal; DimensionActivity: Code[40]; ExternalDocumentNo: Code[50]; TransactionDescription: Text; LoanNumber: Code[50]; AppSource: Option " ",CBS,ATM,Mobile,Internet,MPESA,Equity,"Co-op",Family,"SMS Banking"; BranchCode: Code[30])
+    procedure FnCreateGnlJournalLineBranch(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account"; AccountType: Enum "Gen. Journal Account Type"; AccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                            TransactionDate: Date;
+                                                                                                                                                                                                                                                                                                                                                            TransactionAmount: Decimal;
+                                                                                                                                                                                                                                                                                                                                                            DimensionActivity: Code[40];
+                                                                                                                                                                                                                                                                                                                                                            ExternalDocumentNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                            TransactionDescription: Text;
+                                                                                                                                                                                                                                                                                                                                                            LoanNumber: Code[50];
+                                                                                                                                                                                                                                                                                                                                                            AppSource: Option " ",CBS,ATM,Mobile,Internet,MPESA,Equity,"Co-op",Family,"SMS Banking";
+                                                                                                                                                                                                                                                                                                                                                            BranchCode: Code[30])
     var
         GenJournalLine: Record "Gen. Journal Line";
     begin
@@ -11050,7 +11067,13 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateFADepreciationJournalLines(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; FAPostingType: Enum "Gen. Journal Line FA Posting Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionDescription: Text; TransactionAmount: Decimal; DimensionActivity: Code[40]; DimensionBranch: Code[40]; FAPostingDate: Date)
+    procedure FnCreateFADepreciationJournalLines(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; FAPostingType: Enum "Gen. Journal Line FA Posting Type"; AccountNo: Code[50];
+                                                                                                                                                TransactionDate: Date;
+                                                                                                                                                TransactionDescription: Text;
+                                                                                                                                                TransactionAmount: Decimal;
+                                                                                                                                                DimensionActivity: Code[40];
+                                                                                                                                                DimensionBranch: Code[40];
+                                                                                                                                                FAPostingDate: Date)
     var
         FixedassetJournals: Record "FA Journal Line";
     begin
@@ -12495,7 +12518,15 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateGnlJournalLineBalancedII(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionDescription: Text; BalancingAccountType: Enum "Gen. Journal Account Type"; BalancingAccountNo: Code[50]; TransactionAmount: Decimal; DimensionActivity: Code[40]; LoanNo: Code[20]; External_Doc_No: Code[10])
+    procedure FnCreateGnlJournalLineBalancedII(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                               TransactionDate: Date;
+                                                                                                                                                                                                                                                                                                                                                                                                               TransactionDescription: Text;
+                                                                                                                                                                                                                                                                                                                                                                                                               BalancingAccountType: Enum "Gen. Journal Account Type";
+                                                                                                                                                                                                                                                                                                                                                                                                               BalancingAccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                               TransactionAmount: Decimal;
+                                                                                                                                                                                                                                                                                                                                                                                                               DimensionActivity: Code[40];
+                                                                                                                                                                                                                                                                                                                                                                                                               LoanNo: Code[20];
+                                                                                                                                                                                                                                                                                                                                                                                                               External_Doc_No: Code[10])
     var
         GenJournalLine: Record "Gen. Journal Line";
     begin

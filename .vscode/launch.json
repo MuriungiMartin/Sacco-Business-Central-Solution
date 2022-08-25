@@ -13,6 +13,7 @@
             "startupObjectType": "Page",
             "port": 9049,
             "breakOnError": true,
+            "schemaUpdateMode": "ForceSync",
             "launchBrowser": true,
             "enableLongRunningSqlStatements": true,
             "enableSqlInformationDebugger": true,

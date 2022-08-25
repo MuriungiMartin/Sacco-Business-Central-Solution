@@ -49,7 +49,6 @@ Table 50377 "Loan Disburesment-Batching"
         {
             OptionCaption = 'Individual Cheques,Cheque,Transfer to FOSA,FOSA Loans,EFT,RTGS';
             OptionMembers = "Individual Cheques",Cheque,"Transfer to FOSA","FOSA Loans",EFT,RTGS;
-            ValuesAllowed = Cheque;
 
             trigger OnValidate()
             begin

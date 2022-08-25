@@ -3,7 +3,8 @@ Page 50465 "Front Office Charges"
 {
     PageType = Card;
     SourceTable = Charges;
-
+    UsageCategory = Administration;
+    ApplicationArea = all;
     layout
     {
         area(content)

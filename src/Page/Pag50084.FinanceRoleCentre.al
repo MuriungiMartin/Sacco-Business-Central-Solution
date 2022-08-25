@@ -414,13 +414,7 @@ Page 50084 "Finance Role Centre"
                 Caption = 'History';
                 IsHeader = true;
             }
-            action("Navi&gate")
-            {
-                ApplicationArea = Basic;
-                Caption = 'Navi&gate';
-                Image = Navigate;
-                RunObject = Page Navigate;
-            }
+
         }
     }
 }

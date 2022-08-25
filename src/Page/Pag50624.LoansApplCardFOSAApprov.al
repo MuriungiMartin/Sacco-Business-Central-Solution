@@ -200,8 +200,8 @@ Page 50624 "Loans Appl Card FOSA (Approv)"
                 field("Batch No."; "Batch No.")
                 {
                     ApplicationArea = Basic;
-                    Editable = false;
-                    Visible = false;
+                    Editable = true;
+                    Visible = true;
                 }
                 field("Captured By"; "Captured By")
                 {

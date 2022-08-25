@@ -3,8 +3,9 @@ Table 50430 "FOSA Account Applicat. Details"
 {
     Caption = 'Product Applications Details';
     DataCaptionFields = "No.", Name;
-    //nownPage51516430;
-    //nownPage51516430;
+    DrillDownPageId = "Member Account Application";
+    LookupPageId = "Member Account Application";
+
     Permissions = TableData "Vendor Ledger Entry" = r;
 
     fields
@@ -1152,27 +1153,33 @@ Table 50430 "FOSA Account Applicat. Details"
                         "Issue Piggy Bank" := true;
                 end;
 
-                if "Account Type" = 'JUNIOR' then
-                    "Date of Birth" := 0D;
+                AccountTypes.reset;
+                AccountTypes.SetRange(AccountTypes.Code, "Account Type");
+                if AccountTypes.find('-') then begin
+
+                    if AccountTypes."Account Type" = AccountTypes."Account Type"::"Membership-Junior" then
+                        "Date of Birth" := 0D;
 
 
-                //FIXED/CALL  DEPOSIT
-                if ("Account Type" = 'FIXED') or ("Account Type" = 'CALLDEPOSIT') then begin
-                    VendorFDR.Reset;
-                    VendorFDR.SetRange(VendorFDR."BOSA Account No", "BOSA Account No");
-                    VendorFDR.SetRange(VendorFDR."Account Type", 'CURRENT');
-                    if VendorFDR.Find('-') then begin
-                        "Savings Account No." := VendorFDR."No.";
+                    //FIXED/CALL  DEPOSIT
+                    if AccountTypes."Account Type" = AccountTypes."Account Type"::"Membership-FixedDeposits" then begin
+                        VendorFDR.Reset;
+                        VendorFDR.SetRange(VendorFDR."BOSA Account No", "BOSA Account No");
+                        VendorFDR.SetRange(VendorFDR."Account Type", 'CURRENT');
+                        if VendorFDR.Find('-') then begin
+                            "Savings Account No." := VendorFDR."No.";
+                        end;
                     end;
-                end;
 
-                Account.Reset;
-                Account.SetRange(Account."ID No.", "ID No.");
-                Account.SetRange(Account."Account Type", "Account Type");
-                if Account.Find('-') then begin
-                    //IF (Account."Account Type"<>'FD201') OR (Account."Account Type"<>'FS152') OR (Account."Account Type"<>'FS155')  THEN  BEGIN
-                    //ERROR('The Member has an Existing %1',"Account Type");
-                    //END;
+
+                    Account.Reset;
+                    Account.SetRange(Account."ID No.", "ID No.");
+                    Account.SetRange(Account."Account Type", "Account Type");
+                    if Account.Find('-') then begin
+                        //IF (Account."Account Type"<>'FD201') OR (Account."Account Type"<>'FS152') OR (Account."Account Type"<>'FS155')  THEN  BEGIN
+                        //ERROR('The Member has an Existing %1',"Account Type");
+                        //END;
+                    end;
                 end;
             end;
         }
@@ -1223,17 +1230,6 @@ Table 50430 "FOSA Account Applicat. Details"
                 if "Date of Birth" > Today then
                     Error('Date of birth cannot be greater than today');
 
-                /*
-                IF "Account Type"<>'JUNIOR' THEN BEGIN
-                IF "Date of Birth" <> 0D THEN BEGIN
-                IF GenSetUp.GET() THEN BEGIN
-                IF CALCDATE(GenSetUp."Min. Member Age","Date of Birth") > TODAY THEN
-                ERROR('Applicant bellow the mininmum membership age of %1',GenSetUp."Min. Member Age");
-                END;
-                END;
-                END;
-                */
-
             end;
         }
         field(68030; "Application Status"; Option)
@@ -1268,14 +1264,6 @@ Table 50430 "FOSA Account Applicat. Details"
 
             trigger OnValidate()
             begin
-                /*VendorFDR.RESET;
-                VendorFDR.SETRANGE(VendorFDR."ID No.","ID No.");
-                VendorFDR.SETRANGE(VendorFDR."Creditor Type",VendorFDR."Creditor Type"::"1");
-                VendorFDR.SETRANGE(VendorFDR."Account Type",'SAVINGS');
-                IF VendorFDR.FIND('-') THEN BEGIN
-                ERROR('You Can Only link this FDR Account to the respective Members Savings Account,Please Make sure you are picking the correct Account.');
-                END;
-                 */
 
             end;
         }

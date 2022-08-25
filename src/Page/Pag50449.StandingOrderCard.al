@@ -263,10 +263,14 @@ Page 50449 "Standing Order Card"
                     Importance = Additional;
                 }
             }
+            // part("Receipt Allocation"; "Receipt Allocation-BOSA")
+            // {
+            //     SubPageLink = "Document No" = field("No.");
+            //     Visible = ReceiptAllVisible;
+            // }
             part("Receipt Allocation"; "Receipt Allocation-BOSA")
             {
                 SubPageLink = "Document No" = field("No.");
-                Visible = ReceiptAllVisible;
             }
         }
         area(factboxes)

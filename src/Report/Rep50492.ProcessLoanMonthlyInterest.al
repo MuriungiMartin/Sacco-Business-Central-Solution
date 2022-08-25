@@ -1,5 +1,6 @@
 
 Report 50492 "Process Loan Monthly Interest"
+
 {
     RDLCLayout = 'Layouts/ProcessLoanMonthlyInterest.rdlc';
     DefaultLayout = RDLC;

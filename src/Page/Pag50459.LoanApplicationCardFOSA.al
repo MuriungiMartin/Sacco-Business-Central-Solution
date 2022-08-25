@@ -741,7 +741,7 @@ Page 50459 "Loan Application Card(FOSA)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516921, true, false, LoanApp)
+                            Report.Run(50921, true, false, LoanApp)
                         end;
 
                         FnRunCreateLoanStages;//========================Create Loan Stages
@@ -823,7 +823,7 @@ Page 50459 "Loan Application Card(FOSA)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
                             Commit;
-                        Report.Run(51516477, true, false, LoanApp);
+                        Report.Run(50477, true, false, LoanApp);
                     end;
                 }
                 action("Account Statement Transactions ")
@@ -1143,7 +1143,7 @@ Page 50459 "Loan Application Card(FOSA)"
                     begin
                         ObjMemberCellG.Reset;
                         ObjMemberCellG.SetRange(ObjMemberCellG."Cell Group Code", "Member House Group");
-                        Report.Run(51516920, true, false, ObjMemberCellG);
+                        Report.Run(50920, true, false, ObjMemberCellG);
                     end;
                 }
                 action("Loans Top Up")
@@ -1222,13 +1222,14 @@ Page 50459 "Loan Application Card(FOSA)"
                     trigger OnAction()
                     var
                         ApprovalMgt: Codeunit "Approvals Mgmt.";
+                        Workflowintegration: codeunit WorkflowIntegration;
                     begin
                         // ApprovalMgt.SendLoanApprRequest(Rec);
                         if Confirm('Are you sure you want to cancel the approval request', false) = true then begin
                             "Loan Status" := "loan status"::Application;
-                            "Approval Status" := "approval status"::Open;
-                            //ApprovalsMgmt.OnCancelLoanApplicationApprovalRequest(Rec);
-                            Modify;
+                            //"Approval Status" := "approval status"::Open;
+                            Workflowintegration.OnCancelLoanApplicationApprovalRequest(Rec);
+                            // Modify;
                         end;
                     end;
                 }

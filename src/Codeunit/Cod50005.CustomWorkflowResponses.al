@@ -33,7 +33,6 @@ Codeunit 50005 "Custom Workflow Responses"
                                                  SurestepWFEvents.RunWorkflowOnCancelPaymentApprovalRequestCode);
 
         //Membership Application
-        //Message('naweka response predecessors');
         WFResponseHandler.AddResponsePredecessor(WFResponseHandler.SetStatusToPendingApprovalCode,
                                                  SurestepWFEvents.RunWorkflowOnSendMembershipApplicationForApprovalCode);
         WFResponseHandler.AddResponsePredecessor(WFResponseHandler.CreateApprovalRequestsCode,
@@ -570,7 +569,7 @@ Codeunit 50005 "Custom Workflow Responses"
             //Membership Application
             Database::"Membership Applications":
                 begin
-                    Message('we here');
+                    //  Message('we here');
                     RecRef.SetTable(MembershipApplication);
                     MembershipApplication.Validate(Status, MembershipApplication.Status::"Pending Approval");
                     MembershipApplication.Modify(true);
@@ -2300,6 +2299,7 @@ Codeunit 50005 "Custom Workflow Responses"
                     Variant := ATMCard;
                 end;
 
+
             //Guarantor Recovery
             Database::"Loan Recovery Header":
                 begin
@@ -2611,7 +2611,10 @@ Codeunit 50005 "Custom Workflow Responses"
         LoanPayOff: Record "Loan PayOff";
         GuarantorRecovery: Record "Loan Recovery Header";
         LoanDisbursememnt: Record "Loan Disburesment-Batching";
-        FosaAccountOpenning: Record "FOSA Account Applicat. Details";
+        SalaryProcessingHeader: Record "Salary Processing Headerr";
+        //FosaAccountOpenning: Record "FOSA Account Applicat. Details";
+        FAccount: Record "FOSA Account Applicat. Details";
+
     begin
         case RecRef.Number of
             DATABASE::"Membership Applications":
@@ -2621,11 +2624,25 @@ Codeunit 50005 "Custom Workflow Responses"
                     MemberShipApp.Modify(true);
                     Handled := true;
                 end;
+            Database::"FOSA Account Applicat. Details":
+                begin
+                    RecRef.SetTable(FAccount);
+                    FAccount.Status := FAccount.status::Approved;
+                    FAccount.Modify();
+                    Handled := true;
+                end;
             Database::"Sacco Transfers":
                 begin
                     RecRef.SetTable(SaccoTransfers);
                     SaccoTransfers.Status := SaccoTransfers.Status::Approved;
                     SaccoTransfers.Modify(true);
+                    Handled := true;
+                end;
+            Database::"Salary Processing Headerr":
+                begin
+                    RecRef.SetTable(SalaryProcessingHeader);
+                    SalaryProcessingHeader.Status := SalaryProcessingHeader.Status::Approved;
+                    SalaryProcessingHeader.Modify(true);
                     Handled := true;
                 end;
             Database::"Member Agent/Next Of Kin Chang":
@@ -2732,13 +2749,7 @@ Codeunit 50005 "Custom Workflow Responses"
                     GuarantorRecovery.Modify(true);
                     Handled := true;
                 end;
-            Database::"FOSA Account Applicat. Details":
-                begin
-                    RecRef.SetTable(FosaAccountOpenning);
-                    FosaAccountOpenning.Status := FosaAccountOpenning.Status::Approved;
-                    FosaAccountOpenning.Modify(true);
-                    Handled := true;
-                end;
+
         end
 
     end;

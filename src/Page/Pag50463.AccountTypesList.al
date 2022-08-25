@@ -62,6 +62,11 @@ Page 50463 "Account Types List"
                 {
                     ApplicationArea = Basic;
                 }
+                field("Account Type"; "Account Type")
+                {
+                    ApplicationArea = all;
+
+                }
             }
         }
     }
