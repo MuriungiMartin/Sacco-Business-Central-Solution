@@ -814,12 +814,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 {
                     Caption = 'Cashier-Banking';
                     Image = FixedAssets;
-                    action("Cashier Transactions")
-                    {
-                        ApplicationArea = Basic;
-                        Caption = 'Cashier Transactions';
-                        RunObject = Page "Cashier Transactions - List";
-                    }
+
                     action("Cashier Transactions Authorisation")
                     {
                         ApplicationArea = Basic;
@@ -924,6 +919,12 @@ page 55000 "Home Role Center" // default role center change to comapny name
                         Caption = 'Approved Loans Pending Disbursement.';
                         RunObject = Page "Loans Application List(Approv)";
                         ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
+                    }
+                    action("Batch List")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        RunObject = page "Loans Disbursment Batch List";
+                        Caption = 'Loan Batch List';
                     }
                     action("Posted Loans")
                     {
@@ -1243,6 +1244,28 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     ToolTip = 'Receipt and Payment Types List';
                 }
             }
+
+            group("Banking Services")
+            {
+                action("Cashier Transactions")
+                {
+                    Caption = 'cashier transactions';
+                    ApplicationArea = basic, suite;
+                    Image = Payment;
+                    RunObject = page "Cashier Transactions - List";
+                    ToolTip = 'cashier transaction list';
+                }
+                action("banking Setup")
+                {
+                    Caption = 'Transaction Type - List';
+                    ApplicationArea = basic, suite;
+                    Image = Setup;
+                    RunObject = page "Transaction Type - List";
+                    ToolTip = 'Transaction Type - List';
+                }
+            }
+
+
             group(SaccoCRM)
             {
                 Caption = 'SACCO CRM';
@@ -1308,6 +1331,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
                 }
 
             }
+
             Group(SaccoPayroll)
             {
                 Caption = 'Payroll Management';
@@ -1418,6 +1442,7 @@ page 55000 "Home Role Center" // default role center change to comapny name
 
 
             }
+
 #if not CLEAN18
             group(SetupAndExtensions)
             {

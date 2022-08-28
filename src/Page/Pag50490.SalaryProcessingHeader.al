@@ -161,6 +161,7 @@ Page 50490 "Salary Processing Header"
 
                         BATCH_TEMPLATE := 'GENERAL';
                         BATCH_NAME := 'SALARIES';
+
                         DOCUMENT_NO := Remarks;
                         GenJournalLine.Reset;
                         GenJournalLine.SetRange("Journal Template Name", BATCH_TEMPLATE);
@@ -230,9 +231,11 @@ Page 50490 "Salary Processing Header"
                             exit;
 
                         CalcFields("Scheduled Amount");
+                        //Message('%1', "Account No");
                         VarAvailableBal := SFactory.FnRunGetAccountAvailableBalance("Account No");
-                        if ("Scheduled Amount" > VarAvailableBal) and ("Account Type" <> "account type"::"G/L Account") then
-                            Error('Scheduled Salary is more than the available balance');
+
+                        // if ("Scheduled Amount" > VarAvailableBal) and ("Account Type" <> "account type"::"G/L Account") then
+                        //     Error('Scheduled Salary is more than the available balance');
 
                         TestField("Document No");
                         TestField(Amount);

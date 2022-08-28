@@ -5,6 +5,7 @@ Page 50430 "Member Account Application"
     Editable = false;
     PageType = List;
     UsageCategory = Lists;
+    Caption = 'Fosa Account opennig List';
     ApplicationArea = All;
     PromotedActionCategories = 'New,Process,Reports,Approval,Budgetary Control,Cancellation,Category7_caption,Category8_caption,Category9_caption,Category10_caption';
     SourceTable = "FOSA Account Applicat. Details";

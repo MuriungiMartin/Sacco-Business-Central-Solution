@@ -6126,16 +6126,6 @@ Codeunit 50007 "SURESTEP Factory"
                     VarInstalNo := 0;
                     Evaluate(VarRepayInterval, '1W');
 
-                    //=================================================================================Repayment Frequency
-                    /*IF ObjLoans."Repayment Frequency"=ObjLoans."Repayment Frequency"::Daily THEN
-                    VarRunDate:=CALCDATE('-1D',VarRunDate)
-                    ELSE IF ObjLoans."Repayment Frequency"=ObjLoans."Repayment Frequency"::Weekly THEN
-                    VarRunDate:=CALCDATE('-1W',VarRunDate)
-                    ELSE IF ObjLoans."Repayment Frequency"=ObjLoans."Repayment Frequency"::Monthly THEN
-                    VarRunDate:=CALCDATE('-1M',VarRunDate)
-                    ELSE IF ObjLoans."Repayment Frequency"=ObjLoans."Repayment Frequency"::Quaterly THEN
-                    VarRunDate:=CALCDATE('-1Q',VarRunDate);*/
-
                     repeat
                         VarInstalNo := VarInstalNo + 1;
                         VarScheduleBal := VarLBalance;
@@ -6251,7 +6241,7 @@ Codeunit 50007 "SURESTEP Factory"
                         ObjRepaymentschedule."Monthly Interest" := VarLInterest;
                         ObjRepaymentschedule."Principal Repayment" := VarLPrincipal;
                         ObjRepaymentschedule."Monthly Insurance" := VarLInsurance;
-                        ObjRepaymentschedule."Loan Balance" := VarScheduleBal;
+                        ObjRepaymentschedule."Loan Balance" := VarLBalance;
                         ObjRepaymentschedule.Insert;
                         VarWhichDay := Date2dwy(ObjRepaymentschedule."Repayment Date", 1);
 
@@ -6269,10 +6259,11 @@ Codeunit 50007 "SURESTEP Factory"
                         ObjRepaymentscheduleTemp."Monthly Interest" := VarLInterest;
                         ObjRepaymentscheduleTemp."Principal Repayment" := VarLPrincipal;
                         ObjRepaymentscheduleTemp."Monthly Insurance" := VarLInsurance;
-                        ObjRepaymentscheduleTemp."Loan Balance" := VarScheduleBal;
+                        ObjRepaymentscheduleTemp."Loan Balance" := VarLBalance;
                         ObjRepaymentscheduleTemp.Insert;
                         VarWhichDay := Date2dwy(ObjRepaymentscheduleTemp."Repayment Date", 1);
-
+                        ///Message('balance %1', (VarLBalance));
+                        //Message('Linsurance%1', (VarLInsurance));
                         //=======================================================================Get Next Repayment Date
                         VarMonthIncreament := Format(VarInstalNo) + 'M';
                         if ObjLoans."Repayment Frequency" = ObjLoans."repayment frequency"::Daily then
@@ -6289,128 +6280,10 @@ Codeunit 50007 "SURESTEP Factory"
 
                     until VarLBalance < 1
                 end;
+                Commit();
             end;
         end;
 
-        //======================================================================================OneOff Loan Repayment Schedule
-        /*ObjLoans.RESET;
-        ObjLoans.SETRANGE(ObjLoans."Loan  No.",VarLoanNo);
-        IF (ObjLoans.FINDSET) AND (ObjLoans.Installments+ObjLoans."Grace Period - Principle (M)" = 1) THEN
-          BEGIN
-        
-            VarGrPrinciple:=ObjLoans."Grace Period - Principle (M)";
-            VarGrInterest:=ObjLoans."Grace Period - Interest (M)";
-            VarInitialGraceInt:=ObjLoans."Grace Period - Interest (M)";
-        
-        
-            ObjLoansII.RESET;
-            ObjLoansII.SETRANGE(ObjLoansII."Loan  No.",VarLoanNo);
-            IF ObjLoansII.FIND('-') THEN BEGIN
-              ObjLoansII.CALCFIELDS(ObjLoansII."Outstanding Balance");
-        
-            ObjLoans.TESTFIELD(ObjLoans."Loan Disbursement Date");
-            ObjLoans.TESTFIELD(ObjLoans."Repayment Start Date");
-        
-            //=================================================================Delete From Tables
-            ObjRepaymentschedule.RESET;
-            ObjRepaymentschedule.SETRANGE(ObjRepaymentschedule."Loan No.",VarLoanNo);
-            ObjRepaymentschedule.DELETEALL;
-        
-            ObjRepaymentscheduleTemp.RESET;
-            ObjRepaymentscheduleTemp.SETRANGE(ObjRepaymentscheduleTemp."Loan No.",VarLoanNo);
-            ObjRepaymentscheduleTemp.DELETEALL;
-        
-            ObjRepaymentschedule.RESET;
-            ObjRepaymentschedule.SETCURRENTKEY(ObjRepaymentschedule."Entry No");
-            IF ObjRepaymentschedule.FINDLAST THEN
-              ScheduleEntryNo:=ObjRepaymentschedule."Entry No"+1;
-        
-            ObjRepaymentscheduleTemp.RESET;
-            ObjRepaymentscheduleTemp.SETCURRENTKEY(ObjRepaymentscheduleTemp."Entry No");
-            IF ObjRepaymentscheduleTemp.FINDLAST THEN
-              ScheduleEntryNoTemp:=ObjRepaymentscheduleTemp."Entry No"+1;
-        
-        
-            IF ObjLoansII.GET(VarLoanNo) THEN BEGIN
-            VarLoanAmount:=ObjLoansII."Approved Amount"+ObjLoansII."Capitalized Charges";
-            VarInterestRate:=ObjLoansII.Interest;
-            VarRepayPeriod:=ObjLoansII.Installments;
-            VarInitialInstal:=ObjLoansII.Installments+ObjLoansII."Grace Period - Principle (M)";
-            VarLBalance:=ObjLoansII."Approved Amount"+ObjLoansII."Capitalized Charges";
-            VarLoanAmount:=ObjLoansII."Approved Amount"+ObjLoansII."Capitalized Charges";
-            //VarLNBalance:=ObjLoansII."Outstanding Balance";
-            VarRunDate:=ObjLoansII."Repayment Start Date";
-            VarRepaymentStartDate:=ObjLoansII."Repayment Start Date";
-        
-            VarInstalNo:=0;
-            EVALUATE(VarRepayInterval,'1W');
-        
-        
-        
-        
-            //=======================================================================================Strainght Line
-            IF ObjLoans."Repayment Method"=ObjLoans."Repayment Method"::"Straight Line" THEN
-              BEGIN
-              ObjLoans.TESTFIELD(ObjLoans.Installments);
-              VarLPrincipal:=VarLoanAmount;
-              VarLInterest:=ROUND((VarInterestRate/1200)*VarLoanAmount,1,'>')*ObjLoans.Installments;
-        
-        
-              ObjProductCharge.RESET;
-              ObjProductCharge.SETRANGE(ObjProductCharge."Product Code",ObjLoans."Loan Product Type");
-              ObjProductCharge.SETRANGE(ObjProductCharge."Loan Charge Type",ObjProductCharge."Loan Charge Type"::"Loan Insurance");
-              IF ObjProductCharge.FINDSET THEN BEGIN
-                VarLInsurance:=(ObjLoans."Approved Amount"*(ObjProductCharge.Percentage/100))*ObjLoans.Installments;
-                IF ObjLoans."Corporate Loan"=TRUE THEN
-                  VarLInsurance:=0;
-                END;
-              END;
-        
-              ObjLoans.Repayment:=VarLPrincipal+VarLInterest+VarLInsurance;
-              ObjLoans."Loan Principle Repayment":=VarLPrincipal;
-              ObjLoans."Loan Interest Repayment":=VarLInterest;
-              ObjLoans.MODIFY;
-        
-        
-        
-            //======================================================================================Insert Repayment Schedule Table
-            ObjRepaymentschedule.INIT;
-            ObjRepaymentschedule."Entry No":=ScheduleEntryNo;
-            ObjRepaymentschedule."Repayment Code":='1';
-            ObjRepaymentschedule."Loan No.":=ObjLoans."Loan  No.";
-            ObjRepaymentschedule."Loan Amount":=VarLoanAmount;
-            ObjRepaymentschedule."Instalment No":=VarInstalNo;
-            ObjRepaymentschedule."Repayment Date":=ObjLoans."Repayment Start Date";
-            ObjRepaymentschedule."Member No.":=ObjLoans."Client Code";
-            ObjRepaymentschedule."Loan Category":=ObjLoans."Loan Product Type";
-            ObjRepaymentschedule."Monthly Repayment":=VarLInterest + VarLPrincipal+VarLInsurance;
-            ObjRepaymentschedule."Monthly Interest":=VarLInterest;
-            ObjRepaymentschedule."Principal Repayment":=VarLPrincipal;
-            ObjRepaymentschedule."Monthly Insurance":=VarLInsurance;
-            ObjRepaymentschedule."Loan Balance":=VarLPrincipal+VarLInterest+VarLInsurance;
-            ObjRepaymentschedule.INSERT;
-            VarWhichDay:=DATE2DWY(ObjRepaymentschedule."Repayment Date",1);
-        
-        //======================================================================================Insert Repayment Schedule Temp Table
-            ObjRepaymentscheduleTemp.INIT;
-            ObjRepaymentscheduleTemp."Entry No":=ScheduleEntryNoTemp;
-            ObjRepaymentscheduleTemp."Repayment Code":='1';
-            ObjRepaymentscheduleTemp."Loan No.":=ObjLoans."Loan  No.";
-            ObjRepaymentscheduleTemp."Loan Amount":=VarLoanAmount;
-            ObjRepaymentscheduleTemp."Instalment No":=VarInstalNo;
-            ObjRepaymentscheduleTemp."Repayment Date":=CALCDATE(ObjLoans."Instalment Period",ObjLoans."Loan Disbursement Date");
-            ObjRepaymentscheduleTemp."Member No.":=ObjLoans."Client Code";
-            ObjRepaymentscheduleTemp."Loan Category":=ObjLoans."Loan Product Type";
-            ObjRepaymentscheduleTemp."Monthly Repayment":=VarLInterest + VarLPrincipal+VarLInsurance;
-            ObjRepaymentscheduleTemp."Monthly Interest":=VarLInterest;
-            ObjRepaymentscheduleTemp."Principal Repayment":=VarLPrincipal;
-            ObjRepaymentscheduleTemp."Monthly Insurance":=VarLInsurance;
-            ObjRepaymentscheduleTemp."Loan Balance":=VarLPrincipal+VarLInterest+VarLInsurance;
-            ObjRepaymentscheduleTemp.INSERT;
-            VarWhichDay:=DATE2DWY(ObjRepaymentscheduleTemp."Repayment Date",1);
-            END;
-          END;
-         END;   */
 
     end;
 
@@ -8979,6 +8852,7 @@ Codeunit 50007 "SURESTEP Factory"
         ObjVendors.Reset;
         ObjVendors.SetRange(ObjVendors."No.", VarAccountNo);
         if ObjVendors.Find('-') then begin
+
             ObjVendors.CalcFields(ObjVendors.Balance, ObjVendors."Cheque Discounted", ObjVendors."Uncleared Cheques", ObjVendors."EFT Transactions",
                                   ObjVendors."ATM Transactions", ObjVendors."Mobile Transactions", ObjVendors."Cheque Discounted Amount");
 
@@ -8990,7 +8864,7 @@ Codeunit 50007 "SURESTEP Factory"
             if ObjAccTypes.Find('-') then
                 AvailableBal := AvailableBal - ObjAccTypes."Minimum Balance";
         end;
-
+        //Message('message function%1|%2', ObjVendors.Balance, ObjVendors."Balance (LCY)");
         exit(AvailableBal);
     end;
 
@@ -9598,7 +9472,16 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateGnlJournalLineBalancedChequeNo(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionDescription: Text; BalancingAccountType: enum "Gen. Journal Account Type"; BalancingAccountNo: Code[50]; TransactionAmount: Decimal; DimensionActivity: Code[40]; LoanNo: Code[20]; ExternalDocumentNumber: Code[100]; MemberBranch: Code[100])
+    procedure FnCreateGnlJournalLineBalancedChequeNo(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                                     TransactionDate: Date;
+                                                                                                                                                                                                                                                                                                                                                                                                                     TransactionDescription: Text;
+                                                                                                                                                                                                                                                                                                                                                                                                                     BalancingAccountType: enum "Gen. Journal Account Type";
+                                                                                                                                                                                                                                                                                                                                                                                                                     BalancingAccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                                     TransactionAmount: Decimal;
+                                                                                                                                                                                                                                                                                                                                                                                                                     DimensionActivity: Code[40];
+                                                                                                                                                                                                                                                                                                                                                                                                                     LoanNo: Code[20];
+                                                                                                                                                                                                                                                                                                                                                                                                                     ExternalDocumentNumber: Code[100];
+                                                                                                                                                                                                                                                                                                                                                                                                                     MemberBranch: Code[100])
     var
         GenJournalLine: Record "Gen. Journal Line";
     begin
@@ -10861,7 +10744,15 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateGnlJournalLineBranch(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account"; AccountType: Enum "Gen. Journal Account Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionAmount: Decimal; DimensionActivity: Code[40]; ExternalDocumentNo: Code[50]; TransactionDescription: Text; LoanNumber: Code[50]; AppSource: Option " ",CBS,ATM,Mobile,Internet,MPESA,Equity,"Co-op",Family,"SMS Banking"; BranchCode: Code[30])
+    procedure FnCreateGnlJournalLineBranch(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account"; AccountType: Enum "Gen. Journal Account Type"; AccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                            TransactionDate: Date;
+                                                                                                                                                                                                                                                                                                                                                            TransactionAmount: Decimal;
+                                                                                                                                                                                                                                                                                                                                                            DimensionActivity: Code[40];
+                                                                                                                                                                                                                                                                                                                                                            ExternalDocumentNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                            TransactionDescription: Text;
+                                                                                                                                                                                                                                                                                                                                                            LoanNumber: Code[50];
+                                                                                                                                                                                                                                                                                                                                                            AppSource: Option " ",CBS,ATM,Mobile,Internet,MPESA,Equity,"Co-op",Family,"SMS Banking";
+                                                                                                                                                                                                                                                                                                                                                            BranchCode: Code[30])
     var
         GenJournalLine: Record "Gen. Journal Line";
     begin
@@ -11049,7 +10940,13 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateFADepreciationJournalLines(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; FAPostingType: Enum "Gen. Journal Line FA Posting Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionDescription: Text; TransactionAmount: Decimal; DimensionActivity: Code[40]; DimensionBranch: Code[40]; FAPostingDate: Date)
+    procedure FnCreateFADepreciationJournalLines(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; FAPostingType: Enum "Gen. Journal Line FA Posting Type"; AccountNo: Code[50];
+                                                                                                                                                TransactionDate: Date;
+                                                                                                                                                TransactionDescription: Text;
+                                                                                                                                                TransactionAmount: Decimal;
+                                                                                                                                                DimensionActivity: Code[40];
+                                                                                                                                                DimensionBranch: Code[40];
+                                                                                                                                                FAPostingDate: Date)
     var
         FixedassetJournals: Record "FA Journal Line";
     begin
@@ -12494,7 +12391,15 @@ Codeunit 50007 "SURESTEP Factory"
     end;
 
 
-    procedure FnCreateGnlJournalLineBalancedII(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50]; TransactionDate: Date; TransactionDescription: Text; BalancingAccountType: Enum "Gen. Journal Account Type"; BalancingAccountNo: Code[50]; TransactionAmount: Decimal; DimensionActivity: Code[40]; LoanNo: Code[20]; External_Doc_No: Code[10])
+    procedure FnCreateGnlJournalLineBalancedII(TemplateName: Text; BatchName: Text; DocumentNo: Code[30]; LineNo: Integer; TransactionType: Option " ","Registration Fee","Share Capital","Interest Paid","Loan Repayment","Deposit Contribution","Insurance Contribution","Benevolent Fund",Loan,"Unallocated Funds",Dividend,"FOSA Account","Loan Insurance Charged","Loan Insurance Paid"; AccountType: enum "Gen. Journal Account Type"; AccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                               TransactionDate: Date;
+                                                                                                                                                                                                                                                                                                                                                                                                               TransactionDescription: Text;
+                                                                                                                                                                                                                                                                                                                                                                                                               BalancingAccountType: Enum "Gen. Journal Account Type";
+                                                                                                                                                                                                                                                                                                                                                                                                               BalancingAccountNo: Code[50];
+                                                                                                                                                                                                                                                                                                                                                                                                               TransactionAmount: Decimal;
+                                                                                                                                                                                                                                                                                                                                                                                                               DimensionActivity: Code[40];
+                                                                                                                                                                                                                                                                                                                                                                                                               LoanNo: Code[20];
+                                                                                                                                                                                                                                                                                                                                                                                                               External_Doc_No: Code[10])
     var
         GenJournalLine: Record "Gen. Journal Line";
     begin

@@ -11,7 +11,7 @@ Page 50395 "Loans Disbursment Batch List"
     ApplicationArea = All;
     PromotedActionCategories = 'New,Process,Reports,Approval,Budgetary Control,Cancellation,Category7_caption,Category8_caption,Category9_caption,Category10_caption';
     SourceTable = "Loan Disburesment-Batching";
-    //SourceTableView = where(Posted = filter(false));
+    SourceTableView = where(Posted = filter(false));
 
     layout
     {

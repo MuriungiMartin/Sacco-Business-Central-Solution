@@ -2299,6 +2299,7 @@ Codeunit 50005 "Custom Workflow Responses"
                     Variant := ATMCard;
                 end;
 
+
             //Guarantor Recovery
             Database::"Loan Recovery Header":
                 begin
@@ -2610,6 +2611,8 @@ Codeunit 50005 "Custom Workflow Responses"
         LoanPayOff: Record "Loan PayOff";
         GuarantorRecovery: Record "Loan Recovery Header";
         LoanDisbursememnt: Record "Loan Disburesment-Batching";
+        SalaryProcessingHeader: Record "Salary Processing Headerr";
+        //FosaAccountOpenning: Record "FOSA Account Applicat. Details";
         FAccount: Record "FOSA Account Applicat. Details";
         EFTRTGS: record "EFT/RTGS Header";
         LeaveApp: Record "HR Leave Application";
@@ -2648,6 +2651,13 @@ Codeunit 50005 "Custom Workflow Responses"
                     RecRef.SetTable(SaccoTransfers);
                     SaccoTransfers.Status := SaccoTransfers.Status::Approved;
                     SaccoTransfers.Modify(true);
+                    Handled := true;
+                end;
+            Database::"Salary Processing Headerr":
+                begin
+                    RecRef.SetTable(SalaryProcessingHeader);
+                    SalaryProcessingHeader.Status := SalaryProcessingHeader.Status::Approved;
+                    SalaryProcessingHeader.Modify(true);
                     Handled := true;
                 end;
             Database::"Member Agent/Next Of Kin Chang":
@@ -2754,6 +2764,7 @@ Codeunit 50005 "Custom Workflow Responses"
                     GuarantorRecovery.Modify(true);
                     Handled := true;
                 end;
+
         end
 
     end;

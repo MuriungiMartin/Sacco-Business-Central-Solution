@@ -3,7 +3,7 @@ Page 50083 "Manager Role Centre"
 {
     Caption = 'Role Center';
     PageType = RoleCenter;
-    UsageCategory=Lists;
+    UsageCategory = Lists;
 
     layout
     {

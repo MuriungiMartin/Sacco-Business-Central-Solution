@@ -1672,7 +1672,7 @@ Page 50431 "Member Account Appl. Card"
         Acc: Record Vendor;
         UsersID: Record User;
         Nok: Record "FOSA Account App Kin Details";
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         NOKBOSA: Record "FOSA Account NOK Details";
         BranchC: Code[20];
         DimensionV: Record "Dimension Value";
@@ -1722,7 +1722,7 @@ Page 50431 "Member Account Appl. Card"
         BranchEditable: Boolean;
         Accountype: Boolean;
         Approvalusers: Record "Status Change Permision";
-        Member: Record "Members Register";
+        Member: Record Customer;
         IncrementNoF: Code[20];
         SMSMessage: Record "SMS Messages";
         iEntryNo: Integer;
@@ -1755,7 +1755,7 @@ Page 50431 "Member Account Appl. Card"
         OthersEditable: Boolean;
         MonthlyIncomeEditable: Boolean;
         RefereeEditable: Boolean;
-        ObjMember: Record "Members Register";
+        ObjMember: Record Customer;
         ObjMemberNoseries: Record "Member Accounts No Series";
         VarAcctNo: Code[30];
         VarMaxNoOfAccountsAllowable: Integer;
