@@ -10,7 +10,7 @@ pageextension 50101 customerListExtension extends "Customer List"
     }
     trigger OnOpenPage()
     begin
-        Page.Run(Page::"Members List");
+        SetRange(ISNormalMember, false);
     end;
 
 }

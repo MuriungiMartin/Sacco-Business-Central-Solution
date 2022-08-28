@@ -648,7 +648,7 @@ Page 51385 "Loan Application Card(BOSA)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(50355, true, false, LoanApp)
+                            Report.Run(50384, true, false, LoanApp)
                         end;
 
                         FnRunCreateLoanStages;//========================Create Loan Stages
@@ -716,8 +716,9 @@ Page 51385 "Loan Application Card(BOSA)"
                 action("View Schedule")
                 {
                     ApplicationArea = Basic;
-                    Caption = 'View Schedule';
+                    Caption = 'View Schedule2';
                     Image = "Table";
+                    Visible = false;
                     Promoted = true;
                     PromotedCategory = Category4;
                     PromotedOnly = true;
@@ -725,7 +726,7 @@ Page 51385 "Loan Application Card(BOSA)"
 
                     trigger OnAction()
                     begin
-                        SFactory.FnGenerateLoanRepaymentSchedule("Loan  No.");
+                        // SFactory.FnGenerateLoanRepaymentSchedule("Loan  No.");
 
                     end;
                 }
@@ -741,6 +742,7 @@ Page 51385 "Loan Application Card(BOSA)"
 
                     trigger OnAction()
                     begin
+                        SFactory.FnGenerateLoanRepaymentSchedule("Loan  No.");
                         LoanApp.reset;
                         LoanApp.SetRange(loanapp."Loan  No.", "Loan  No.");
                         if loanapp.Find('-') then begin

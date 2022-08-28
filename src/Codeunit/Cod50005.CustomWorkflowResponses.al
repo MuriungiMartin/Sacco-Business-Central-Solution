@@ -2614,9 +2614,16 @@ Codeunit 50005 "Custom Workflow Responses"
         SalaryProcessingHeader: Record "Salary Processing Headerr";
         //FosaAccountOpenning: Record "FOSA Account Applicat. Details";
         FAccount: Record "FOSA Account Applicat. Details";
-
+        EFTRTGS: record "EFT/RTGS Header";
     begin
         case RecRef.Number of
+            database::"EFT/RTGS Header":
+                begin
+                    RecRef.SetTable(EFTRTGS);
+                    EFTRTGS.Status := EFTRTGS.Status::Approved;
+                    EFTRTGS.Modify(true);
+                    Handled := true;
+                end;
             DATABASE::"Membership Applications":
                 begin
                     RecRef.SetTable(MemberShipApp);

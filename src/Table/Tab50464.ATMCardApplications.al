@@ -330,7 +330,7 @@ Table 50464 "ATM Card Applications"
         field(68034; "Destruction Approval"; Boolean)
         {
         }
-        field(68035; "Product Code"; Code[4])
+        field(68035; "Product Code"; Code[40])
         {
         }
     }

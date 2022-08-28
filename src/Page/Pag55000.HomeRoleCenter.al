@@ -600,17 +600,16 @@ page 55000 "Home Role Center" // default role center change to comapny name
             group(Action84)
             {
                 Caption = 'Membership Management';
-                ToolTip = 'Allocate actual and budgeted costs of operations, departments, products, and projects to analyze the profitability of your company.';
-                action("Cost Types")
+                action(MembershipApp)
                 {
-                    ApplicationArea = CostAccounting;
+                    ApplicationArea = All;
                     Caption = 'Membership Application';
                     Promoted = true;
                     PromotedCategory = Process;
                     RunObject = Page "Membership Application List";
                     ToolTip = 'Apply New Members.';
                 }
-                action("Cost Centers")
+                action(MembersList)
                 {
                     ApplicationArea = CostAccounting;
                     Caption = 'Member Accounts List';
@@ -619,33 +618,68 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     RunObject = Page "Members List";
                     ToolTip = 'Manage Member Accounts';
                 }
-                action("Change Request")
+                group(ChangeRequest)
                 {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'Change Request';
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    RunObject = Page "Change Request List";
-                    ToolTip = 'Change Member Details';
+                    Caption = 'Chenge Request';
+                    action("Change Request")
+                    {
+                        ApplicationArea = All;
+                        Caption = 'Change Request List';
+                        Promoted = true;
+                        PromotedCategory = Process;
+                        RunObject = Page "Change Request List";
+                        ToolTip = 'Change Member Details';
+                    }
+                    action(AgentNOKSignatoriesChange)
+                    {
+                        ApplicationArea = CostAccounting;
+                        Caption = 'Agent/NOK/Signatories Change';
+                        Promoted = true;
+                        PromotedCategory = Process;
+                        RunObject = Page "New Agent/NOK/Sign Change List";
+                    }
+                    group(ReportsChangereq)
+                    {
+                        caption = 'Reports Change Request';
+                        action(ChangeReqMobile)
+                        {
+                            ApplicationArea = All;
+                            Caption = 'Change Req(mobile)';
+                            Promoted = true;
+                            PromotedCategory = Process;
+                            RunObject = report "Change Request Report(Mobile)";
+                        }
+                        action(ChangeReqAcc)
+                        {
+                            ApplicationArea = All;
+                            Caption = 'Change Req(Account)';
+                            Promoted = true;
+                            PromotedCategory = Process;
+                            RunObject = report "Change Request Report(Account)";
+                        }
+                    }
+                    group(EffectedChangeReqs)
+
+                    {
+                        Caption = 'Effected Change Requests';
+                        action(updatedchangereqslist)
+                        {
+                            ApplicationArea = All;
+                            Caption = 'Updated Change requests';
+                            Promoted = true;
+                            PromotedCategory = Process;
+                            RunObject = page "Updated Change Request List";
+                        }
+
+                        action(updatedNOKAgentSign)
+                        {
+                            Caption = 'Updated NOK/Agent & Signatories';
+                            RunObject = page "Agent/NOK Change - Effected";
+                        }
+                    }
+
                 }
-                action("Cost Allocations")
-                {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'Cost Allocations';
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    RunObject = Page "Cost Allocation Sources";
-                    ToolTip = 'Manage allocation rules to allocate costs and revenues between cost types, cost centers, and cost objects. Each allocation consists of an allocation source and one or more allocation targets. For example, all costs for the cost type Electricity and Heating are an allocation source. You want to allocate the costs to the cost centers Workshop, Production, and Sales, which are three allocation targets.';
-                }
-                action("Cost Budgets")
-                {
-                    ApplicationArea = CostAccounting;
-                    Caption = 'Cost Budgets';
-                    Promoted = true;
-                    PromotedCategory = Process;
-                    RunObject = Page "Cost Budget Names";
-                    ToolTip = 'Set up cost accounting budgets that are created based on cost types just as a budget for the general ledger is created based on general ledger accounts. A cost budget is created for a certain period of time, for example, a fiscal year. You can create as many cost budgets as needed. You can create a new cost budget manually, or by importing a cost budget, or by copying an existing cost budget as the budget base.';
-                }
+
             }
             group(Action16)
             {
@@ -886,6 +920,12 @@ page 55000 "Home Role Center" // default role center change to comapny name
                         RunObject = Page "Loans Application List(Approv)";
                         ToolTip = 'Open the list of Approved Loans Pending Disbursement.';
                     }
+                    action("Batch List")
+                    {
+                        ApplicationArea = Basic, Suite;
+                        RunObject = page "Loans Disbursment Batch List";
+                        Caption = 'Loan Batch List';
+                    }
                     action("Posted Loans")
                     {
                         ApplicationArea = Basic, Suite;
@@ -935,6 +975,121 @@ page 55000 "Home Role Center" // default role center change to comapny name
                     }
 
 
+                }
+                group(loanssetup)
+                {
+                    Caption = 'Loans Setup';
+                    action(LoansproductSetup)
+                    {
+                        Caption = 'Loans Product Setup';
+                        Image = Setup;
+                        RunObject = page "Loan Products Setup List";
+                    }
+                    action(LoanStages)
+                    {
+                        Caption = 'Loan Stages';
+                        Image = Setup;
+                        RunObject = page "Loan Stages";
+                    }
+                    action(CreditOfficers)
+                    {
+                        Caption = 'Credit Officers';
+                        Image = Setup;
+                        RunObject = page "Credit/Field Officers";
+                    }
+
+                }
+                group(Collateralmgmt)
+                {
+                    Caption = 'Collateral Management';
+                    action(Collateralreg)
+                    {
+                        Caption = 'Loan Collateral Register';
+                        Image = Register;
+                        RunObject = page "Loan Collateral Register List";
+                    }
+                    action(Collateralmvmt)
+                    {
+                        Caption = 'Loan Collateral Movement';
+                        RunObject = page "Collateral Movement List";
+                    }
+
+                    group(CollateralReports)
+                    {
+                        Caption = 'Collateral Movement';
+                        action(ColateralsReport)
+                        {
+                            Caption = 'Collateral Report';
+                            RunObject = report "Collaterals Report";
+                        }
+
+                    }
+                    group(ArchiveCollateral)
+                    {
+                        Caption = 'Archive';
+                        action(Effectedcollatmvmt)
+                        {
+                            Caption = 'Effective Collateral Movement';
+                            RunObject = page "Effected Collateral Movement";
+                        }
+                    }
+                }
+                group(DefaulterManagememnt)
+                {
+                    group(loanRecovery)
+                    {
+                        Caption = 'Loan Recovery';
+                        action(LoanRecovList)
+                        {
+                            Caption = 'Loan Recovery List';
+                            RunObject = page "Loan Recovery List";
+
+                        }
+                        action(LoanRecoveryApprov)
+                        {
+                            Caption = 'Approved Loan Recovery';
+                            runobject = page "Loan Recovery - Approved";
+                        }
+                        action(LoanRecoveryPosted)
+                        {
+                            Caption = 'Posted Loan Recovery';
+                            RunObject = page "Posted Loan Recovery Header";
+                        }
+                    }
+                    group(demandnotices)
+                    {
+                        caption = 'Demand Notices';
+                        action(LoanDemandnoticeslist)
+                        {
+                            caption = 'Loan Demand Notices List';
+                            RunObject = page "Loan Demand Notices List";
+                        }
+                        group(DemnandTask)
+                        {
+                            Caption = 'Create Demand Notices';
+                            action(CreateDemand)
+                            {
+                                Caption = 'Create Demand';
+                                RunObject = report "Create Demand Notices";
+                                Image = Report2;
+                            }
+                        }
+                        group(DemandReports)
+                        {
+                            action(Ldemandnotice)
+                            {
+                                Caption = 'Loan Demand Notice';
+                                RunObject = report "Loan Demand Notice";
+                                Image = Report;
+                            }
+                            action(LcrbNotice)
+                            {
+                                Caption = 'Loan CRB Notice';
+                                RunObject = report "Loan CRB Notice";
+                                Image = Report;
+                            }
+                        }
+                    }
                 }
 
             }
@@ -1174,6 +1329,117 @@ page 55000 "Home Role Center" // default role center change to comapny name
 
                     }
                 }
+
+            }
+
+            Group(SaccoPayroll)
+            {
+                Caption = 'Payroll Management';
+                group(payrollEmployees)
+                {
+                    Caption = 'Payroll Employees';
+                    action(payrollemp)
+                    {
+                        Caption = 'Payroll Employees list';
+                        ApplicationArea = basic, suite;
+                        Image = Employee;
+                        RunObject = page "Payroll Employee List.";
+                        tooltip = 'Open Payroll Employees list';
+                    }
+                    action(Exitedpayrollemp)
+                    {
+                        Caption = 'Exited Payroll Employees list';
+                        ApplicationArea = basic, suite;
+                        Image = Employee;
+                        RunObject = page "Exited Payroll Employees";
+                        tooltip = 'Open exited Payroll Employees list';
+                    }
+                }
+                group(PayrollEarnings)
+                {
+                    Caption = 'Earnings&Deductions';
+                    action(Earnings)
+                    {
+                        Caption = 'Payroll Earnings';
+                        ApplicationArea = basic, suite;
+                        Image = Card;
+                        RunObject = page "Payroll Earnings List.";
+
+                    }
+                    action(Deductions)
+                    {
+                        Caption = 'Payroll Deductions';
+                        ApplicationArea = basic, suite;
+                        Image = Card;
+                        RunObject = page "Payroll Deductions List.";
+
+                    }
+                }
+                group(payrollsetup)
+                {
+                    action(payesetup)
+                    {
+                        Caption = 'PAYE SETUP';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll PAYE Setup.";
+                    }
+                    action(NHIF)
+                    {
+                        Caption = 'NHIF SETUP';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll NHIF Setup.";
+                    }
+                    action(NSSF)
+                    {
+                        Caption = 'NHIF SETUP';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll NSSF Setup.";
+                    }
+                    action(Payrolposting)
+                    {
+                        Caption = 'Payroll Posting group';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll Posting Group.";
+                    }
+                    action(payrollpostingsetup)
+                    {
+                        caption = 'Payroll posting setup';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll Posting Setup Ver1";
+                    }
+
+                }
+                group(payrollperiodicactivities)
+                {
+                    Caption = 'Payroll Periodic Activities';
+                    action(payrollperiods)
+                    {
+                        Caption = 'Payroll Periods';
+                        ApplicationArea = basic, suite;
+                        RunObject = page "Payroll Periods.";
+                    }
+                    action(Transfertojournal)
+                    {
+                        Caption = 'Payroll journal transfer';
+                        ApplicationArea = basic, suite;
+                        RunObject = report "Payroll JournalTransfer Ver1";
+                        //Better call saul  
+                    }
+                    action(Payrolnettransfer)
+                    {
+                        Caption = 'Payroll Net Transfer';
+                        ApplicationArea = basic, suite;
+                        RunObject = report "Payroll Net Pay Transfer Ver1";
+                    }
+                    action(SendP9)
+                    {
+                        Caption = 'Send P9 via Mail';
+                        ApplicationArea = basic, suite;
+                        RunObject = report "Send P9 Report Via Mail";
+                    }
+
+                }
+
 
             }
 

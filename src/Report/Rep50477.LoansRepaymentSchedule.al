@@ -119,6 +119,14 @@ Report 50477 "Loans Repayment Schedule"
                 column(LoanBalance; LoanBalance)
                 {
                 }
+                column(Loan_Balance; "Loan Balance")
+                {
+
+                }
+                column(Monthly_Repayment2; "Monthly Repayment")
+                {
+
+                }
                 column(Loan_Repayment_Schedule__Repayment_Code_; "Loan Repayment Schedule"."Repayment Code")
                 {
                 }
@@ -170,6 +178,7 @@ Report 50477 "Loans Repayment Schedule"
                 column(LoanBalance_LoanRepaymentSchedule; "Loan Repayment Schedule"."Loan Balance")
                 {
                 }
+                column(Monthly_Repayment; "Monthly Repayment") { }
                 trigger OnPreDataItem();
                 begin
                     LastFieldNo := FieldNo("Member No.");
