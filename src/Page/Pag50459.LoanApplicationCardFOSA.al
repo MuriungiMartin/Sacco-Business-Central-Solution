@@ -673,7 +673,7 @@ Page 50459 "Loan Application Card(FOSA)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516913, true, false, LoanApp);
+                            Report.run(50913, true, false, LoanApp);
                         end;
                     end;
                 }

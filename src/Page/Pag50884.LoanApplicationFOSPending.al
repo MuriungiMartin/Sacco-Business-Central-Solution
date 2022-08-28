@@ -600,7 +600,7 @@ Page 50884 "Loan Application FOS(Pending)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516913, true, false, LoanApp);
+                            Report.run(50913, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -682,7 +682,7 @@ Page 50884 "Loan Application FOS(Pending)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516493, true, false, LoanApp)
+                            Report.run(50493, true, false, LoanApp)
                         end;
                     end;
                 }
@@ -749,7 +749,7 @@ Page 50884 "Loan Application FOS(Pending)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
                             Commit;
-                        Report.Run(51516477, true, false, LoanApp);
+                        Report.Run(50477, true, false, LoanApp);
                     end;
                 }
                 action("Account Statement Transactions ")

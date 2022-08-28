@@ -184,7 +184,7 @@ Page 50647 "Internal PV Card"
                     /*EFTHeader.RESET;
                     EFTHeader.SETRANGE(EFTHeader.No,No);
                     IF EFTHeader.FIND('-') THEN
-                    REPORT.RUN(51516943,TRUE,TRUE,EFTHeader)*/
+                    Report.run(50943,TRUE,TRUE,EFTHeader)*/
 
                 end;
             }
@@ -300,7 +300,7 @@ Page 50647 "Internal PV Card"
                     PVHeader.Reset;
                     PVHeader.SetRange(PVHeader.No, No);
                     if PVHeader.Find('-') then
-                        Report.Run(51516875, false, true, PVHeader)
+                        Report.run(50875, false, true, PVHeader)
 
                     /*
                     //========================================Update Issued Cheque Nos

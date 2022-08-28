@@ -298,7 +298,7 @@ Page 50121 "Released Internal Requisitions"
                         Error('All Lines should be committed');
                     Reset;
                     SetRange("No.", "No.");
-                    Report.Run(51516358, true, true, Rec);
+                    Report.run(50358, true, true, Rec);
                     Reset;
                     //DocPrint.PrintPurchHeader(Rec);
                 end;

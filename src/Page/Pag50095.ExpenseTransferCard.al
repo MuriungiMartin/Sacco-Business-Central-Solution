@@ -147,7 +147,7 @@ Page 50095 "Expense Transfer Card"
                     // FHeader.Reset;
                     // FHeader.SetRange(FHeader."No.","No.");
                     // if FHeader.FindFirst then
-                    //    Report.Run(51516011,true,true,FHeader);
+                    //    Report.run(50011,true,true,FHeader);
 
                 end;
             }

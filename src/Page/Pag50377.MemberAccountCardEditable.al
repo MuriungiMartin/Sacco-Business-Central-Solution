@@ -589,7 +589,7 @@ Page 50377 "Member Account Card - Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516363, true, false, Cust);
+                            Report.run(50363, true, false, Cust);
                     end;
                 }
                 action("Detailed Interest Statement")
@@ -603,7 +603,7 @@ Page 50377 "Member Account Card - Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516151, true, false, Cust);
+                            Report.run(50151, true, false, Cust);
                     end;
                 }
                 action("Account Closure Slip")
@@ -619,7 +619,7 @@ Page 50377 "Member Account Card - Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516390, true, false, Cust);
+                            Report.run(50390, true, false, Cust);
                     end;
                 }
                 action("Recover Loans from Gurantors")

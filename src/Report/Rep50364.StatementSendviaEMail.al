@@ -49,7 +49,7 @@ Report 50364 "Statement Send via E-Mail"
                 CUST.SetRange(CUST."No.", "Members Register"."No.");
                 CUST.SetFilter(CUST."Date Filter", "Members Register".GetFilter("Date Filter"));
                 if CUST.Find('-') then
-                    Report.Run(51516223, false, false, CUST);
+                    Report.run(50223, false, false, CUST);
                 //Create Delay because sometimes the PDF printer could be slow
                 ElapsedTime := 0;
                 Time1 := Time;

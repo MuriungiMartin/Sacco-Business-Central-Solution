@@ -257,7 +257,7 @@ Page 50560 "Loans Approved List"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             Commit;
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }

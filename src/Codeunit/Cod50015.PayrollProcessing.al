@@ -2073,7 +2073,7 @@ Codeunit 50015 "Payroll Processing"
         ObjPRTransactioons.Reset;
         ObjPRTransactioons.SetRange(ObjPRTransactioons."Employee Code", "Payroll Employee Transactions."."No.");
         if ObjPRTransactioons.Find('-') then
-            Report.Run(51516591, false, false, ObjPRTransactioons);
+            Report.run(50591, false, false, ObjPRTransactioons);
     end;
 
     local procedure FnGetInterestRate(LoanProductCode: Code[40]) InterestRate: Decimal

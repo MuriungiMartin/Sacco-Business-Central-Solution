@@ -369,7 +369,7 @@ Page 50071 "Imprest Acct. List"
                 begin
                     Reset;
                     SetFilter(No, No);
-                    Report.Run(51516336, true, true, Rec);
+                    Report.run(50336, true, true, Rec);
                     Reset;
                 end;
             }

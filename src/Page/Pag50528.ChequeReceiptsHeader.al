@@ -105,12 +105,12 @@ Page 50528 "Cheque Receipts Header"
 
                     Commit;
 
-                    Report.Run(51516506, true);
+                    Report.run(50506, true);
 
 
                     Commit;
 
-                    Report.Run(51516505, true);
+                    Report.run(50505, true);
 
                     "Created By" := UserId;
                     Modify;

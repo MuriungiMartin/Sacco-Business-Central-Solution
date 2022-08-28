@@ -157,7 +157,7 @@ Page 50010 "Posted Cash Payment Card"
                     PHeader.Reset;
                     PHeader.SetRange(PHeader."No.", "No.");
                     if PHeader.FindFirst then begin
-                        Report.Run(51516131, true, false, PHeader);
+                        Report.run(50131, true, false, PHeader);
                     end;
                 end;
             }

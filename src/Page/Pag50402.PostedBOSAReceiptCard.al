@@ -424,7 +424,7 @@ Page 50402 "Posted BOSA Receipt Card"
                     BOSARcpt.Reset;
                     BOSARcpt.SetRange(BOSARcpt."Transaction No.", "Transaction No.");
                     if BOSARcpt.Find('-') then
-                        Report.Run(51516387, true, true, BOSARcpt)
+                        Report.run(50387, true, true, BOSARcpt)
                 end;
             }
         }

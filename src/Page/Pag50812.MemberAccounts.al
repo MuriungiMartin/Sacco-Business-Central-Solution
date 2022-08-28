@@ -62,7 +62,7 @@ Page 50812 "Member Accounts"
                         ObjAccount.Reset;
                         ObjAccount.SetRange(ObjAccount."No.", "No.");
                         if ObjAccount.Find('-') then
-                            Report.Run(51516890, true, false, ObjAccount)
+                            Report.run(50890, true, false, ObjAccount)
                     end;
                 }
             }

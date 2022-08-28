@@ -229,7 +229,7 @@ Page 50506 "BOSA Transfer"
                         BTRANS.Reset;
                         BTRANS.SetRange(BTRANS.No, No);
                         if BTRANS.Find('-') then begin
-                            Report.Run(51516442, true, true, BTRANS);
+                            Report.run(50442, true, true, BTRANS);
                         end;
                     end;
                 }

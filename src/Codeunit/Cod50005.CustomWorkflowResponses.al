@@ -2612,8 +2612,16 @@ Codeunit 50005 "Custom Workflow Responses"
         LoanDisbursememnt: Record "Loan Disburesment-Batching";
         FAccount: Record "FOSA Account Applicat. Details";
         EFTRTGS: record "EFT/RTGS Header";
+        LeaveApp: Record "HR Leave Application";
     begin
         case RecRef.Number of
+            database::"HR Leave Application":
+                begin
+                    RecRef.SetTable(LeaveApp);
+                    LeaveApp.Status := LeaveApp.Status::Approved;
+                    LeaveApp.Modify(true);
+                    Handled := true;
+                end;
             database::"EFT/RTGS Header":
                 begin
                     RecRef.SetTable(EFTRTGS);

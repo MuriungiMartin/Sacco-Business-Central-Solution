@@ -90,7 +90,7 @@ Page 50135 "Posted Payment Voucher List"
                 begin
                     Reset;
                     SetFilter("No.", "No.");
-                    Report.Run(51516125, true, true, Rec);
+                    Report.run(50125, true, true, Rec);
                     Reset;
                 end;
             }

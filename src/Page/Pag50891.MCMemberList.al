@@ -263,7 +263,7 @@ Page 50891 "MC Member List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516223, true, false, Cust);
+                            Report.run(50223, true, false, Cust);
                     end;
                 }
                 separator(Action1102755004)
@@ -283,7 +283,7 @@ Page 50891 "MC Member List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516474, true, false, Cust);
+                            Report.run(50474, true, false, Cust);
                     end;
                 }
                 action("Close Account")

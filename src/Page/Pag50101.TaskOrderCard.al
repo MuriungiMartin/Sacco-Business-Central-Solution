@@ -314,7 +314,7 @@ Page 50101 "Task Order Card"
                         Error('All Lines should be committed');
                     Reset;
                     SetRange("No.", "No.");
-                    Report.Run(51516100, true, true, Rec);
+                    Report.run(50100, true, true, Rec);
                     Reset;
                     //DocPrint.PrintPurchHeader(Rec);
                 end;

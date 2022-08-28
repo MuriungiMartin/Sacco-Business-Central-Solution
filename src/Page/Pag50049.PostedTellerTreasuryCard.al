@@ -653,7 +653,7 @@ Page 50049 "Posted Teller & Treasury Card"
                     Trans.SetRange(Trans.No, No);
                     //Trans.SETRANGE(Trans."Date Posted","Date Posted");
                     if Trans.Find('-') then
-                        Report.Run(51516882, true, true, Trans)
+                        Report.run(50882, true, true, Trans)
                 end;
             }
             action(SENDMAIL)

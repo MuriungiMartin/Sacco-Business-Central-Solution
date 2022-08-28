@@ -659,7 +659,7 @@ Page 50823 "E Banking Loan App Card"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516896, true, false, LoanApp);
+                            Report.run(50896, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -755,13 +755,13 @@ Page 50823 "E Banking Loan App Card"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516355, true, false, LoanApp);
+                            Report.run(50355, true, false, LoanApp);
                         end;
                         /*//END ELSE
                         LoanApp.RESET;
                         LoanApp.SETRANGE(LoanApp."Loan  No.","Loan  No.");
                         IF LoanApp.FIND('-') THEN BEGIN
-                        REPORT.RUN(51516384,TRUE,FALSE,LoanApp);
+                        Report.run(50384,TRUE,FALSE,LoanApp);
                         END;
                         */
 
@@ -778,7 +778,7 @@ Page 50823 "E Banking Loan App Card"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("House Group Statement")
@@ -792,7 +792,7 @@ Page 50823 "E Banking Loan App Card"
                     begin
                         ObjMemberCellG.Reset;
                         ObjMemberCellG.SetRange(ObjMemberCellG."Cell Group Code", "Member House Group");
-                        Report.Run(51516920, true, false, ObjMemberCellG);
+                        Report.run(50920, true, false, ObjMemberCellG);
                     end;
                 }
                 action("View Schedule")
@@ -814,7 +814,7 @@ Page 50823 "E Banking Loan App Card"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             Commit;
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -1198,14 +1198,14 @@ Page 50823 "E Banking Loan App Card"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "Account No");
                         if Vend.Find('-') then begin
-                            Report.Run(51516890, true, false, Vend);
+                            Report.run(50890, true, false, Vend);
                         end;
 
 
                         /*Cust.RESET;
                         Cust.SETRANGE(Cust."FOSA Account No.","FOSA Account No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516890,TRUE,FALSE,Cust);
+                        Report.run(50890,TRUE,FALSE,Cust);
                         */
 
                     end;

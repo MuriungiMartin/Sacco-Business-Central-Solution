@@ -491,7 +491,7 @@ Page 50072 "Imprest Surrender"
                 begin
                     Reset;
                     SetFilter(No, No);
-                    Report.Run(51516134, true, true, Rec);
+                    Report.run(50134, true, true, Rec);
                     Reset;
                 end;
             }

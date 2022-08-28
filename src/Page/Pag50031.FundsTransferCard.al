@@ -141,7 +141,7 @@ Page 50031 "Funds Transfer Card"
                     FHeader.RESET;
                     FHeader.SETRANGE(FHeader."No.","No.");
                     IF FHeader.FINDFIRST THEN
-                       REPORT.RUN(51516011,TRUE,TRUE,FHeader);
+                       Report.run(50011,TRUE,TRUE,FHeader);
                     //End Print Here
                     */
 
@@ -167,7 +167,7 @@ Page 50031 "Funds Transfer Card"
                     FHeader.Reset;
                     FHeader.SetRange(FHeader."No.", "No.");
                     if FHeader.FindFirst then
-                        Report.Run(51516011, true, true, FHeader);
+                        Report.run(50011, true, true, FHeader);
 
                 end;
             }

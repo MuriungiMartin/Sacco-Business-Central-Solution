@@ -713,7 +713,8 @@ Page 51385 "Loan Application Card(BOSA)"
                         Modify;
                     end;
                 }
-                action("View Schedule")
+
+                action("View Loan Schedule")
                 {
                     ApplicationArea = Basic;
                     Caption = 'View Schedule';
@@ -727,20 +728,6 @@ Page 51385 "Loan Application Card(BOSA)"
                     begin
                         SFactory.FnGenerateLoanRepaymentSchedule("Loan  No.");
 
-                    end;
-                }
-                action("View Loan Schedule")
-                {
-                    ApplicationArea = Basic;
-                    Caption = 'View Schedule';
-                    Image = "Table";
-                    Promoted = true;
-                    PromotedCategory = Category4;
-                    PromotedOnly = true;
-                    ShortCutKey = 'Ctrl+F7';
-
-                    trigger OnAction()
-                    begin
                         LoanApp.reset;
                         LoanApp.SetRange(loanapp."Loan  No.", "Loan  No.");
                         if loanapp.Find('-') then begin

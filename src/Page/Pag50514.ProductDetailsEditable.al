@@ -205,7 +205,7 @@ Page 50514 "Product Details Editable"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "No.");
                         if Vend.Find('-') then
-                            Report.Run(51516476, true, false, Vend)
+                            Report.run(50476, true, false, Vend)
                     end;
                 }
                 action("Page Vendor Statistics")

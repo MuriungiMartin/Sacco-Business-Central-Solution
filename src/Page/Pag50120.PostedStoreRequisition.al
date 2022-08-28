@@ -261,12 +261,12 @@ Page 50120 "Posted Store Requisition"
                     begin
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516216, true, true, Rec);
+                        Report.run(50216, true, true, Rec);
                         Reset;
                         /*
                        RESET;
                        SETFILTER("No.","No.");
-                       REPORT.RUN(51516222,TRUE,TRUE,Rec);
+                       Report.run(50222,TRUE,TRUE,Rec);
                        RESET;
                          */
 

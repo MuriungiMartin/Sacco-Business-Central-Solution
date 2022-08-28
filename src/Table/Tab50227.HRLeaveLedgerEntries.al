@@ -2,8 +2,8 @@
 Table 50227 "HR Leave Ledger Entries"
 {
     Caption = 'Leave Ledger Entry';
-    //nownPage51516197;
-    //nownPage51516197;
+    DrillDownPageId = "HR Leave Ledger Entries";
+    LookupPageId = "HR Leave Ledger Entries";
 
     fields
     {
@@ -151,6 +151,10 @@ Table 50227 "HR Leave Ledger Entries"
         field(33; "Claim Type"; Option)
         {
             OptionMembers = Inpatient,Outpatient;
+        }
+        field(34; "Leave Transaction Type"; Option)
+        {
+            OptionMembers = " ","Leave Allocation","Leave Recall",OverTime;
         }
     }
 

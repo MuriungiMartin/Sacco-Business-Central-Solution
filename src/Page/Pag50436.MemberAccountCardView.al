@@ -1882,7 +1882,7 @@ Page 50436 "Member Account Card View"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "No.");
                         if Vend.Find('-') then
-                            Report.Run(51516465, true, false, Vend)
+                            Report.run(50465, true, false, Vend)
                     end;
                 }
                 action("Member Statement")
@@ -1907,7 +1907,7 @@ Page 50436 "Member Account Card View"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "BOSA Account No");
                         if Cust.Find('-') then
-                            Report.Run(51516886, true, false, Cust);
+                            Report.run(50886, true, false, Cust);
 
                     end;
                 }
@@ -1930,9 +1930,9 @@ Page 50436 "Member Account Card View"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "No.");
                         if Vend.Find('-') then
-                            Report.Run(51516890, true, false, Vend)
+                            Report.run(50890, true, false, Vend)
 
-                        //REPORT.RUN(51516476,TRUE,FALSE,Vend)
+                        //Report.run(50476,TRUE,FALSE,Vend)
                     end;
                 }
                 action("Page Vendor Statistics")
@@ -1972,7 +1972,7 @@ Page 50436 "Member Account Card View"
                         ObjAccount.Reset;
                         ObjAccount.SetRange(ObjAccount."No.", "No.");
                         if ObjAccount.Find('-') then
-                            Report.Run(51516142, true, false, ObjAccount)
+                            Report.run(50142, true, false, ObjAccount)
                     end;
                 }
                 separator(Action37)
@@ -2491,7 +2491,7 @@ Page 50436 "Member Account Card View"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "BOSA Account No");
                         if Cust.Find('-') then
-                            Report.Run(51516073, true, false, Cust);
+                            Report.run(50073, true, false, Cust);
                     end;
                 }
                 action("Send Account Statement")
@@ -2509,8 +2509,8 @@ Page 50436 "Member Account Card View"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "No.");
                         if Vend.Find('-') then
-                            //REPORT.RUN(51516890,TRUE,FALSE,Vend);
-                            Report.Run(51516072, true, false, Vend);
+                            //Report.run(50890,TRUE,FALSE,Vend);
+                            Report.run(50072, true, false, Vend);
                     end;
                 }
             }

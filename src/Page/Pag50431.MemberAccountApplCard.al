@@ -1242,7 +1242,7 @@ Page 50431 "Member Account Appl. Card"
                             ObjAccountTypes.Reset();
                             ObjAccountTypes.SetRange(ObjAccountTypes.code, "Account Type");
                             if ObjAccountTypes.Find('-') then begin
-                                ObjAccountTypes."Last No Used" := VarAcctNo;
+                                ObjAccountTypes."Last No Used" := IncStr(ObjAccountTypes."Last No Used");
                             end;
                         end;
 

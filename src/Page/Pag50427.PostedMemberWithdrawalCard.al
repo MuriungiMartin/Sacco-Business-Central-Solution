@@ -256,7 +256,7 @@ Page 50427 "Posted Member Withdrawal Card"
                         cust.Reset;
                         cust.SetRange(cust."No.", "Member No.");
                         if cust.Find('-') then
-                            Report.Run(51516474, true, false, cust);
+                            Report.run(50474, true, false, cust);
                     end;
                 }
                 action("Print Cheque")

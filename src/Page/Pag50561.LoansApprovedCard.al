@@ -516,7 +516,7 @@ Page 50561 "Loans Approved Card"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516384, true, false, LoanApp);
+                            Report.run(50384, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -530,7 +530,7 @@ Page 50561 "Loans Approved Card"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516223, true, false, Cust);
+                        Report.run(50223, true, false, Cust);
                     end;
                 }
                 separator(Action1102760046)
@@ -555,7 +555,7 @@ Page 50561 "Loans Approved Card"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             Commit;
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }

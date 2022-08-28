@@ -288,7 +288,7 @@ Page 50610 "Loan Reschedule Card-Effected"
                             LoanRegister.Reset;
                             LoanRegister.SetRange(LoanRegister."Loan  No.", "Loan No");
                             if LoanRegister.Find('-') then begin
-                                Report.Run(51516477, true, false, LoanRegister);
+                                Report.Run(50477, true, false, LoanRegister);
                             end;
 
 
@@ -312,7 +312,7 @@ Page 50610 "Loan Reschedule Card-Effected"
                         LoanRegister.Reset;
                         LoanRegister.SetRange(LoanRegister."Loan  No.", "Loan No");
                         if LoanRegister.Find('-') then begin
-                            Report.Run(51516477, true, false, LoanRegister);
+                            Report.Run(50477, true, false, LoanRegister);
                         end;
                     end;
                 }

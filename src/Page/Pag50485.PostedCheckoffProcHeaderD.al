@@ -190,7 +190,7 @@ Page 50485 "Posted Checkoff Proc. Header-D"
                     ReptProcHeader.Reset;
                     ReptProcHeader.SetRange(ReptProcHeader.No, No);
                     if ReptProcHeader.Find('-') then
-                        Report.Run(51516542, true, false, ReptProcHeader);
+                        Report.run(50542, true, false, ReptProcHeader);
                 end;
             }
             group(ActionGroup1102755019)
@@ -211,7 +211,7 @@ Page 50485 "Posted Checkoff Proc. Header-D"
                     ReceiptLine.Reset;
                     //ReceiptLine.SETRANGE(ReceiptLine."Receipt Header No",No);
                     //IF ReceiptLine.FIND('-') THEN
-                    //REPORT.RUN(51516543,TRUE,FALSE,ReceiptLine);
+                    //Report.run(50543,TRUE,FALSE,ReceiptLine);
                 end;
             }
             action("Process Annual Charge")

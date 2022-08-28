@@ -274,7 +274,7 @@ Page 50366 "Members List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516886, true, false, Cust);
+                            Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("Loan Statement")
@@ -290,7 +290,7 @@ Page 50366 "Members List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("Account Closure Slip")
@@ -308,7 +308,7 @@ Page 50366 "Members List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516390, true, false, Cust);
+                            Report.run(50390, true, false, Cust);
                     end;
                 }
                 action("Group Statement")
@@ -325,7 +325,7 @@ Page 50366 "Members List"
                         ObjCellGroups.Reset;
                         ObjCellGroups.SetRange(ObjCellGroups."Cell Group Code", "Member House Group");
                         if ObjCellGroups.Find('-') then
-                            Report.Run(51516920, true, false, ObjCellGroups);
+                            Report.run(50920, true, false, ObjCellGroups);
                     end;
                 }
                 action(HouseGroupStatement)
@@ -342,7 +342,7 @@ Page 50366 "Members List"
                         ObjCellGroups.Reset;
                         ObjCellGroups.SetRange(ObjCellGroups."Cell Group Code", "Member House Group");
                         if ObjCellGroups.Find('-') then
-                            Report.Run(51516946, true, false, ObjCellGroups);
+                            Report.run(50946, true, false, ObjCellGroups);
                     end;
                 }
                 action("Send Member Statement")
@@ -360,7 +360,7 @@ Page 50366 "Members List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516073, true, false, Cust);
+                            Report.run(50073, true, false, Cust);
                     end;
                 }
             }

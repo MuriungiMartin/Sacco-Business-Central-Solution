@@ -306,7 +306,7 @@ Page 50062 "Voucher Payment Header"
                         PHeader2.Reset;
                         PHeader2.SetRange(PHeader2."No.", "No.");
                         if PHeader2.FindFirst then
-                            Report.Run(51516017, true, true, PHeader2);
+                            Report.run(50017, true, true, PHeader2);
 
                         /*RESET;
                         SETRANGE("No.","No.");
@@ -364,7 +364,7 @@ Page 50062 "Voucher Payment Header"
                         Payments.Reset;
                         Payments.SetRange(Payments."No.", "No.");
                         if Payments.Find('-') then
-                            Report.Run(51516030, false, true, Payments)
+                            Report.run(50030, false, true, Payments)
                     end;
                 }
             }

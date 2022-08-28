@@ -113,7 +113,7 @@ Page 50003 "Posted Payment Vouchers List"
                         //ERROR('You cannot Print until the document is released for approval');
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516334, true, true, Rec);
+                        Report.run(50334, true, true, Rec);
                         Reset;
 
                         CurrPage.Update;

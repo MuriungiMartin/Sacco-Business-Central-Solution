@@ -77,7 +77,7 @@ Page 50412 "Interest Due Periods"
                     //InterestPeriod.RESET;
                     //InterestPeriod.SETRANGE(BOSARcpt."Transaction No.","Transaction No.");
                     //IF InterestPeriod.FIND('-') THEN
-                    Report.Run(51516501)
+                    Report.run(50501)
                 end;
             }
         }

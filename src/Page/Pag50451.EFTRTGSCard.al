@@ -146,7 +146,7 @@ Page 50451 "EFT/RTGS Card"
                     EFTHeader.Reset;
                     EFTHeader.SetRange(EFTHeader.No, No);
                     if EFTHeader.Find('-') then
-                        Report.Run(51516943, true, true, EFTHeader)
+                        Report.run(50943, true, true, EFTHeader)
                 end;
             }
             action("Send Approval Request")

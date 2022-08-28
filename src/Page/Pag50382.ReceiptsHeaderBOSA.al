@@ -698,7 +698,7 @@ Page 50382 "Receipts Header-BOSA"
                             BOSARcpt.Reset;
                             BOSARcpt.SetRange(BOSARcpt."Transaction No.", "Transaction No.");
                             if BOSARcpt.Find('-') then
-                                Report.Run(51516387, false, true, BOSARcpt);
+                                Report.run(50387, false, true, BOSARcpt);
 
                         end;
 
@@ -718,7 +718,7 @@ Page 50382 "Receipts Header-BOSA"
                     BOSARcpt.Reset;
                     BOSARcpt.SetRange(BOSARcpt."Transaction No.", "Transaction No.");
                     if BOSARcpt.Find('-') then
-                        Report.Run(51516387, true, true, BOSARcpt)
+                        Report.run(50387, true, true, BOSARcpt)
                 end;
             }
         }

@@ -409,7 +409,7 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516503, true, false, Cust);
+                            Report.run(50503, true, false, Cust);
                     end;
                 }
                 action("Member is  Guaranteed")
@@ -427,7 +427,7 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.run(50504, true, false, Cust);
                         //51516482
                     end;
                 }
@@ -876,7 +876,7 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516886, true, false, Cust);
+                            Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("Loan Statement BOSA")
@@ -892,7 +892,7 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("Member Deposit Statement")
@@ -907,7 +907,7 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516354, true, false, Cust);
+                            Report.run(50354, true, false, Cust);
                     end;
                 }
                 action("Detailed Interest Statement")
@@ -941,13 +941,13 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516533, true, false, Cust);
+                            Report.run(50533, true, false, Cust);
 
                         /*
                         Cust.RESET;
                         Cust.SETRANGE(Cust."No.","No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516474,TRUE,FALSE,Cust);
+                        Report.run(50474,TRUE,FALSE,Cust);
                         */
 
                     end;
@@ -964,14 +964,14 @@ Page 50640 "Group/Corporate Card-Member"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "FOSA Account No.");
                         if Vend.Find('-') then begin
-                            Report.Run(51516890, true, false, Vend);
+                            Report.run(50890, true, false, Vend);
                         end;
 
 
                         /*Cust.RESET;
                         Cust.SETRANGE(Cust."FOSA Account No.","FOSA Account No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516890,TRUE,FALSE,Cust);
+                        Report.run(50890,TRUE,FALSE,Cust);
                         */
 
                     end;
@@ -989,7 +989,7 @@ Page 50640 "Group/Corporate Card-Member"
                         ObjCellGroups.Reset;
                         ObjCellGroups.SetRange(ObjCellGroups."Cell Group Code", "Member House Group");
                         if ObjCellGroups.Find('-') then
-                            Report.Run(51516920, true, false, ObjCellGroups);
+                            Report.run(50920, true, false, ObjCellGroups);
                     end;
                 }
                 group("Issued Documents")
@@ -1011,7 +1011,7 @@ Page 50640 "Group/Corporate Card-Member"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516474, true, false, Cust);
+                            Report.run(50474, true, false, Cust);
                     end;
                 }
             }

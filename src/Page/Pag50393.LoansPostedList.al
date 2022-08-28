@@ -123,7 +123,7 @@ Page 50393 "Loans Posted List"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516355, true, false, LoanApp);
+                            Report.run(50355, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -154,7 +154,7 @@ Page 50393 "Loans Posted List"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("Member Accounts")
@@ -182,7 +182,7 @@ Page 50393 "Loans Posted List"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.run(50504, true, false, Cust);
                     end;
                 }
                 action("Member Statement")
@@ -196,7 +196,7 @@ Page 50393 "Loans Posted List"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("Members Statistics")
@@ -229,7 +229,7 @@ Page 50393 "Loans Posted List"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516949, true, false, LoanApp);
+                            Report.run(50949, true, false, LoanApp);
                     end;
                 }
                 action("View ScheduleNew1")
@@ -251,7 +251,7 @@ Page 50393 "Loans Posted List"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                     end;
                 }
                 action("Loans to Offset")
@@ -268,7 +268,7 @@ Page 50393 "Loans Posted List"
 
                     trigger OnAction()
                     begin
-                        //51516477
+                        //50477
                     end;
                 }
                 action("Reschedule Repayment Date")
@@ -343,9 +343,9 @@ Page 50393 "Loans Posted List"
                         if LoanApp.Find('-') then
                             SFactory.FnGenerateLoanRepaymentSchedule("Loan  No.");
                         if LoanApp."Loan Product Type" <> 'INST' then begin
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end else begin
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -378,7 +378,7 @@ Page 50393 "Loans Posted List"
                         ObjCust.Reset;
                         ObjCust.SetRange(ObjCust."No.", "Client Code");
                         if ObjCust.Find('-') then
-                            Report.Run(51516963, true, false, ObjCust);
+                            Report.run(50963, true, false, ObjCust);
                     end;
                 }
             }

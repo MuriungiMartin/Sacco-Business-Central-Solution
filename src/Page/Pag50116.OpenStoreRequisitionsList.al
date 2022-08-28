@@ -225,7 +225,7 @@ Page 50116 "Open Store Requisitions List"
 
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516103, true, true, Rec);
+                        Report.run(50103, true, true, Rec);
                         Reset;
                     end;
                 }

@@ -56,7 +56,7 @@ Page 50068 "Imprest List"
                 begin
                     ImprestHeader.Reset;
                     ImprestHeader.SetRange(ImprestHeader."No.", "No.");
-                    Report.Run(51516130, true, false, ImprestHeader);
+                    Report.run(50130, true, false, ImprestHeader);
                 end;
             }
         }

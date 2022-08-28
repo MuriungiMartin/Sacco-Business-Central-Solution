@@ -95,7 +95,7 @@ Page 50118 "Store Requisitions List-App"
 
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516103, true, true, Rec);
+                        Report.run(50103, true, true, Rec);
                         Reset;
                     end;
                 }

@@ -70,7 +70,7 @@ Page 50397 "Posted Loan Batch - List"
                         LoansBatch.Reset;
                         LoansBatch.SetRange(LoansBatch."Batch No.", "Batch No.");
                         if LoansBatch.Find('-') then begin
-                            Report.Run(51516231, true, false, LoansBatch);
+                            Report.run(50231, true, false, LoansBatch);
                         end;
                     end;
                 }
@@ -135,9 +135,9 @@ Page 50397 "Posted Loan Batch - List"
                         //LoanApp.SETRANGE(LoanApp."Loan  No.",CurrPage.LoansSubForm.PAGE.GetLoanNo);
                         if LoanApp.Find('-') then begin
                             if CopyStr(LoanApp."Loan Product Type", 1, 2) = 'PL' then
-                                Report.Run(51516244, true, false, LoanApp)
+                                Report.run(50244, true, false, LoanApp)
                             else
-                                Report.Run(51516244, true, false, LoanApp);
+                                Report.run(50244, true, false, LoanApp);
                         end;
                     end;
                 }

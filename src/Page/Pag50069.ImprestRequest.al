@@ -348,7 +348,7 @@ Page 50069 "Imprest Request"
                         //ERROR('You can only print after the document is Approved and Posted');
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516129, true, true, Rec);
+                        Report.run(50129, true, true, Rec);
                         Reset;
                     end;
                 }

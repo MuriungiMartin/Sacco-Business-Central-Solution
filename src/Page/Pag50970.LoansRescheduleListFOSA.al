@@ -101,7 +101,7 @@ Page 50970 "Loans Reschedule List(FOSA)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516384, true, false, LoanApp);
+                            Report.run(50384, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -132,7 +132,7 @@ Page 50970 "Loans Reschedule List(FOSA)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("Guarantors' Report")
@@ -150,7 +150,7 @@ Page 50970 "Loans Reschedule List(FOSA)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.run(50504, true, false, Cust);
                     end;
                 }
                 action("Member Statement")
@@ -164,7 +164,7 @@ Page 50970 "Loans Reschedule List(FOSA)"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("View Schedule")
@@ -182,7 +182,7 @@ Page 50970 "Loans Reschedule List(FOSA)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                     end;
                 }
                 action("Loans to Offset")

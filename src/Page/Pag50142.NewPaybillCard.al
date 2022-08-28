@@ -251,7 +251,7 @@ Page 50142 "New Paybill Card"
                         BTRANS.Reset;
                         BTRANS.SetRange(BTRANS."No.", "No.");
                         if BTRANS.Find('-') then begin
-                            Report.Run(51516140, true, true, BTRANS);
+                            Report.run(50140, true, true, BTRANS);
                         end;
                     end;
                 }

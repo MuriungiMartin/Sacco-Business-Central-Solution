@@ -759,9 +759,9 @@ Page 50564 "Loans Application Card(Posted)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             if LoanApp.Source = LoanApp.Source::BOSA then
-                                Report.Run(51516355, true, false, LoanApp)
+                                Report.run(50355, true, false, LoanApp)
                             else
-                                Report.Run(51516355, true, false, LoanApp)
+                                Report.run(50355, true, false, LoanApp)
                         end;
                     end;
                 }
@@ -801,7 +801,7 @@ Page 50564 "Loans Application Card(Posted)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.run(50504, true, false, Cust);
                     end;
                 }
                 action("Loan Statement")
@@ -819,7 +819,7 @@ Page 50564 "Loans Application Card(Posted)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("Member Statement")
@@ -833,7 +833,7 @@ Page 50564 "Loans Application Card(Posted)"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("Members Statistics")
@@ -868,7 +868,7 @@ Page 50564 "Loans Application Card(Posted)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             Commit;
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -894,7 +894,7 @@ Page 50564 "Loans Application Card(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516949, true, false, LoanApp);
+                            Report.run(50949, true, false, LoanApp);
 
                     end;
                 }
@@ -1294,7 +1294,7 @@ Page 50564 "Loans Application Card(Posted)"
                         ObjCust.Reset;
                         ObjCust.SetRange(ObjCust."No.", "Client Code");
                         if ObjCust.Find('-') then
-                            Report.Run(51516963, true, false, ObjCust);
+                            Report.run(50963, true, false, ObjCust);
                     end;
                 }
                 action(Approval)
@@ -1795,9 +1795,9 @@ Page 50564 "Loans Application Card(Posted)"
         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
         if LoanApp.Find('-') then
             if LoanApp."Loan Product Type" <> 'INST' then begin
-                Report.Run(51516477, true, false, LoanApp);
+                Report.Run(50477, true, false, LoanApp);
             end else begin
-                Report.Run(51516477, true, false, LoanApp);
+                Report.Run(50477, true, false, LoanApp);
             end;
     end;
 }

@@ -378,7 +378,7 @@ page 51389 "Payment Voucher"
                         PHeader2.SETRANGE(PHeader2."No.", "No.");
                         IF PHeader2.FINDFIRST THEN
                             Message('done');
-                        //REPORT.RUN(51516125, FALSE, TRUE, PHeader2);
+                        //Report.run(50125, FALSE, TRUE, PHeader2);
 
                     end;
                 }
@@ -430,7 +430,7 @@ page 51389 "Payment Voucher"
                         PHeader2.RESET;
                         PHeader2.SETRANGE(PHeader2."No.", "No.");
                         IF PHeader2.FINDFIRST THEN
-                            REPORT.RUN(51516125, TRUE, TRUE, PHeader2);
+                            Report.run(50125, TRUE, TRUE, PHeader2);
                     end;
                 }
 
@@ -527,7 +527,7 @@ page 51389 "Payment Voucher"
                         PHeader2.RESET;
                         PHeader2.SETRANGE(PHeader2."No.", "No.");
                         IF PHeader2.FINDFIRST THEN
-                            REPORT.RUN(51516030, TRUE, TRUE, PHeader2);
+                            Report.run(50030, TRUE, TRUE, PHeader2);
 
                         /*RESET;
                         SETRANGE("No.","No.");
@@ -749,7 +749,7 @@ page 51389 "Payment Voucher"
         //Print Here
         RESET;
         SETFILTER("No.", "No.");
-        REPORT.RUN(51516004, TRUE, TRUE, Rec);
+        Report.run(50004, TRUE, TRUE, Rec);
         RESET;
         //End Print Here
         //}

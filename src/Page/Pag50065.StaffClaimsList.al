@@ -323,7 +323,7 @@ Page 50065 "Staff Claims List"
                             Error('You can only print after the document is Approved');
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516332, true, true, Rec);
+                        Report.run(50332, true, true, Rec);
                         Reset;
                     end;
                 }

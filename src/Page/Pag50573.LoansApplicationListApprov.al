@@ -127,7 +127,7 @@ Page 50573 "Loans Application List(Approv)"
                     LoanApp.Reset;
                     LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                     if LoanApp.Find('-') then
-                        Report.Run(51516477, true, false, LoanApp);
+                        Report.Run(50477, true, false, LoanApp);
                 end;
             }
             action("Post Loans")
@@ -215,7 +215,7 @@ Page 50573 "Loans Application List(Approv)"
                     LoanApp.Reset;
                     LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                     if LoanApp.Find('-') then begin
-                        Report.Run(51516384, true, false, LoanApp)
+                        Report.run(50384, true, false, LoanApp)
                     end;
                 end;
             }
@@ -231,7 +231,7 @@ Page 50573 "Loans Application List(Approv)"
                 begin
                     Cust.Reset;
                     Cust.SetRange(Cust."No.", "Client Code");
-                    Report.Run(51516886, true, false, Cust);
+                    Report.run(50886, true, false, Cust);
                 end;
             }
             action("CRB Check Charge")
