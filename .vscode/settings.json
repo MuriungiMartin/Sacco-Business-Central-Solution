@@ -9,10 +9,7 @@
     
     },
     "al.assemblyProbingPaths": [
-<<<<<<< HEAD
-        "D:/BC Apps/BC180/Surestep Sacco Sln/src/dotnetpackages"
-=======
-        "C:\\Users\\Admin\\Documents\\AL\\Sacco-Business-Central-Solution\\src\\dotnetpackages"
->>>>>>> 9c96b40 (Added)
+        "D:/BC Apps/BC180/Surestep Sacco Sln/src/dotnetpackages",
+        "C:\\Users\\user\\.nuget\\packages\\mpesa.sdk"
     ]
 }
