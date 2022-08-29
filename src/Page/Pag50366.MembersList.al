@@ -98,7 +98,7 @@ Page 50366 "Members List"
     {
         area(creation)
         {
-            group(ActionGroup1102755024)
+            group(Process)
             {
                 action(Dimensions)
                 {
@@ -195,6 +195,11 @@ Page 50366 "Members List"
                         IF Cust.FIND('-') THEN
                         REPORT.RUN(,TRUE,FALSE,Cust);
                         */
+                        LGurantors.Reset;
+                        LGurantors.SetRange(LGurantors."Loan No", "No.");
+                        if LGurantors.Find('-') then begin
+                            Report.Run(50504, true, false, Cust);
+                        end;
 
                     end;
                 }
@@ -243,7 +248,7 @@ Page 50366 "Members List"
                         LGurantors.Reset;
                         LGurantors.SetRange(LGurantors."Loan No", "No.");
                         if LGurantors.Find('-') then begin
-
+                            Report.Run(50504, true, false, Cust);
                         end;
                     end;
                 }
@@ -290,7 +295,8 @@ Page 50366 "Members List"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.run(50531, true, false, Cust);
+                            Report.Run(50531, true, false, Cust);
+
                     end;
                 }
                 action("Account Closure Slip")
@@ -374,7 +380,7 @@ Page 50366 "Members List"
     end;
 
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         GeneralSetup: Record "Sacco General Set-Up";
         Gnljnline: Record "Gen. Journal Line";
         TotalRecovered: Decimal;
@@ -404,7 +410,7 @@ Page 50366 "Members List"
 
     procedure GetSelectionFilter(): Code[80]
     var
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         FirstCust: Code[30];
         LastCust: Code[30];
         SelectionFilter: Code[250];
@@ -451,7 +457,7 @@ Page 50366 "Members List"
     end;
 
 
-    procedure SetSelection(var Cust: Record "Members Register")
+    procedure SetSelection(var Cust: Record Customer)
     begin
         //CurrPage.SETSELECTIONFILTER(Cust);
     end;
