@@ -96,7 +96,7 @@ Page 50460 "Loan Application FOSA(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516384, true, false, LoanApp);
+                            Report.run(50384, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -136,7 +136,7 @@ Page 50460 "Loan Application FOSA(Posted)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("Guarantors' Report")
@@ -154,7 +154,7 @@ Page 50460 "Loan Application FOSA(Posted)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.run(50504, true, false, Cust);
                     end;
                 }
                 action("Member Statement")
@@ -168,7 +168,7 @@ Page 50460 "Loan Application FOSA(Posted)"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("View Schedule")
@@ -186,7 +186,7 @@ Page 50460 "Loan Application FOSA(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         //51516949
                     end;
                 }
@@ -208,7 +208,7 @@ Page 50460 "Loan Application FOSA(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516949, true, false, LoanApp);
+                            Report.run(50949, true, false, LoanApp);
                     end;
                 }
                 action("Loans to Offset")
@@ -279,14 +279,14 @@ Page 50460 "Loan Application FOSA(Posted)"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "Account No");
                         if Vend.Find('-') then begin
-                            Report.Run(51516890, true, false, Vend);
+                            Report.run(50890, true, false, Vend);
                         end;
 
 
                         /*Cust.RESET;
                         Cust.SETRANGE(Cust."FOSA Account No.","FOSA Account No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516890,TRUE,FALSE,Cust);
+                        Report.run(50890,TRUE,FALSE,Cust);
                         */
 
                     end;
@@ -508,9 +508,9 @@ Page 50460 "Loan Application FOSA(Posted)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
                             if LoanApp."Loan Product Type" <> 'INST' then begin
-                                Report.Run(51516477, true, false, LoanApp);
+                                Report.Run(50477, true, false, LoanApp);
                             end else begin
-                                Report.Run(51516477, true, false, LoanApp);
+                                Report.Run(50477, true, false, LoanApp);
                             end;
                     end;
                 }

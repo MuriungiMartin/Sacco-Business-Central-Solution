@@ -220,7 +220,7 @@ Page 50983 "House Change Request Card"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."No.", "Member No");
                     if ObjCust.Find('-') then
-                        Report.Run(51516503, true, false, ObjCust);
+                        Report.run(50503, true, false, ObjCust);
                 end;
             }
             action("Member is  Guaranteed")
@@ -238,7 +238,7 @@ Page 50983 "House Change Request Card"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."No.", "Member No");
                     if ObjCust.Find('-') then
-                        Report.Run(51516504, true, false, ObjCust);
+                        Report.run(50504, true, false, ObjCust);
                 end;
             }
         }

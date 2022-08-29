@@ -243,7 +243,7 @@ Page 50779 "CRB Charge Card"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."No.", "Member No");
                     if ObjCust.Find('-') then
-                        Report.Run(51516886, true, false, ObjCust);
+                        Report.run(50886, true, false, ObjCust);
                 end;
             }
             action("FOSA Statement")
@@ -261,7 +261,7 @@ Page 50779 "CRB Charge Card"
                     ObjAccount.Reset;
                     ObjAccount.SetRange(ObjAccount."No.", "FOSA Account to Charge");
                     if ObjAccount.Find('-') then
-                        Report.Run(51516890, true, false, ObjAccount);
+                        Report.run(50890, true, false, ObjAccount);
                 end;
             }
             action("General Ledger Entries")

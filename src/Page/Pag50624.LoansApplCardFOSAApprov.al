@@ -480,9 +480,9 @@ Page 50624 "Loans Appl Card FOSA (Approv)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             if LoanApp.Source = LoanApp.Source::BOSA then
-                                Report.Run(51516384, true, false, LoanApp)
+                                Report.run(50384, true, false, LoanApp)
                             else
-                                Report.Run(51516384, true, false, LoanApp)
+                                Report.run(50384, true, false, LoanApp)
                         end;
                     end;
                 }
@@ -545,7 +545,7 @@ Page 50624 "Loans Appl Card FOSA (Approv)"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("Account Statement Transactions ")
@@ -577,7 +577,7 @@ Page 50624 "Loans Appl Card FOSA (Approv)"
                     begin
                         ObjMemberCellG.Reset;
                         ObjMemberCellG.SetRange(ObjMemberCellG."Cell Group Code", "Member House Group");
-                        Report.Run(51516920, true, false, ObjMemberCellG);
+                        Report.run(50920, true, false, ObjMemberCellG);
                     end;
                 }
                 action("View Schedule")
@@ -599,7 +599,7 @@ Page 50624 "Loans Appl Card FOSA (Approv)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             Commit;
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }

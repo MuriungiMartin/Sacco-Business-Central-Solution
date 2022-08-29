@@ -118,7 +118,7 @@ Page 50389 "Loan Offset Detail List"
                         if ObjLoanOffset."FOSA Account" = '' then begin
                             Error('Specify the FOSA Account to be Debited When reducing the Loan');
                         end;
-                        Report.Run(51516934, true, false, ObjLoanOffset);
+                        Report.run(50934, true, false, ObjLoanOffset);
                     end;
                 end;
             }

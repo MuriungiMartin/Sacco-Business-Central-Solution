@@ -99,7 +99,7 @@ Page 50408 "Membership Exit List"
                         cust.Reset;
                         cust.SetRange(cust."No.", "Member No.");
                         if cust.Find('-') then
-                            Report.Run(51516503, true, false, cust);
+                            Report.run(50503, true, false, cust);
                     end;
                 }
                 action(Approvals)

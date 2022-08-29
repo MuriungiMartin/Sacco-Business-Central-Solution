@@ -127,7 +127,7 @@ Page 50396 "Loan Disburesment Batch Card"
                         Loans.Reset;
                         Loans.SetRange(Loans."Batch No.", "Batch No.");
                         if Loans.Find('-') then begin
-                            Report.Run(51516953, true, false, Loans)
+                            Report.run(50953, true, false, Loans)
                         end;
                     end;
                 }
@@ -414,7 +414,7 @@ Page 50396 "Loan Disburesment Batch Card"
                             // Loans.Reset;
                             // Loans.SetRange(Loans."Batch No.", "Batch No.");
                             // if Loans.Find('-') then begin
-                            //     Report.Run(51516953, false, true, Loans)
+                            //     Report.run(50953, false, true, Loans)
                             // end;
 
                         end;

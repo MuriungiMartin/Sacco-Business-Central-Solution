@@ -111,7 +111,7 @@ Page 50376 "Member List-Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516155, true, false, Cust);
+                            Report.run(50155, true, false, Cust);
                     end;
                 }
                 action("Loans Guarantors")
@@ -128,7 +128,7 @@ Page 50376 "Member List-Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516156, true, false, Cust);
+                            Report.run(50156, true, false, Cust);
                     end;
                 }
             }
@@ -190,7 +190,7 @@ Page 50376 "Member List-Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516363, true, false, Cust);
+                            Report.run(50363, true, false, Cust);
                     end;
                 }
                 action("Account Closure Slip")
@@ -207,7 +207,7 @@ Page 50376 "Member List-Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516390, true, false, Cust);
+                            Report.run(50390, true, false, Cust);
                     end;
                 }
             }

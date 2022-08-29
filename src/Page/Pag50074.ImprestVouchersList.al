@@ -257,7 +257,7 @@ Page 50074 "Imprest Vouchers List"
                             Error('You can only print after the document is Approved');
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516335, true, true, Rec);
+                        Report.run(50335, true, true, Rec);
                         Reset;
                     end;
                 }

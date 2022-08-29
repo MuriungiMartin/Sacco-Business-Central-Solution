@@ -392,7 +392,7 @@ Page 50112 "Purchase Order-Released"
                         PHeader.Reset;
                         PHeader.SetRange(PHeader."No.", "No.");
                         if PHeader.FindFirst then begin
-                            Report.Run(51516360, true, true, PHeader);
+                            Report.run(50360, true, true, PHeader);
                         end;
                     end;
                 }

@@ -135,7 +135,7 @@ Page 50569 "Cheque Receipt Header-Family"
                     end;
 
                     //XMLPORT.RUN(51516038,TRUE);
-                    //REPORT.RUN(51516517,TRUE);
+                    //Report.run(50517,TRUE);
 
 
                     /*

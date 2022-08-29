@@ -121,7 +121,7 @@ Page 50962 "Member House Group Card"
                     ObjCellGroups.Reset;
                     ObjCellGroups.SetRange(ObjCellGroups."Cell Group Code", "Cell Group Code");
                     if ObjCellGroups.Find('-') then
-                        Report.Run(51516920, true, false, ObjCellGroups);
+                        Report.run(50920, true, false, ObjCellGroups);
                 end;
             }
             action("House Group Statement")
@@ -136,7 +136,7 @@ Page 50962 "Member House Group Card"
                     ObjCellGroups.Reset;
                     ObjCellGroups.SetRange(ObjCellGroups."Cell Group Code", "Cell Group Code");
                     if ObjCellGroups.Find('-') then
-                        Report.Run(51516946, true, false, ObjCellGroups);
+                        Report.run(50946, true, false, ObjCellGroups);
                 end;
             }
             action("Member Savings History")
@@ -150,7 +150,7 @@ Page 50962 "Member House Group Card"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."Member House Group", "Cell Group Code");
                     if ObjCust.Find('-') then
-                        Report.Run(51516929, true, false, ObjCust);
+                        Report.run(50929, true, false, ObjCust);
                 end;
             }
             action("Meetings Schedule")

@@ -881,12 +881,16 @@ Table 50183 "HR Leave Application"
         TestField("Approved days");
         HRSetup.Reset;
         if HRSetup.Find('-') then begin
+            HRSetup."Leave Template" := HRSetup."Default Leave Posting Template";
+            HRSetup."Leave Batch" := HRSetup."Positive Leave Posting Batch";
+            HRSetup.Modify();
 
             LeaveGjline.Reset;
             LeaveGjline.SetRange("Journal Template Name", HRSetup."Leave Template");
             LeaveGjline.SetRange("Journal Batch Name", HRSetup."Leave Batch");
             LeaveGjline.DeleteAll;
             //Dave
+
             HRSetup.TestField(HRSetup."Leave Template");
             HRSetup.TestField(HRSetup."Leave Batch");
 

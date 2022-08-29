@@ -774,7 +774,7 @@ Page 50562 "Loan Application Card(Pending)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516896, true, false, LoanApp);
+                            Report.run(50896, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -842,7 +842,7 @@ Page 50562 "Loan Application Card(Pending)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516355, true, false, LoanApp);
+                            Report.run(50355, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -867,7 +867,7 @@ Page 50562 "Loan Application Card(Pending)"
 
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516886, true, false, Cust);
+                        Report.run(50886, true, false, Cust);
                     end;
                 }
                 action("Members Statistics")
@@ -910,7 +910,7 @@ Page 50562 "Loan Application Card(Pending)"
                     begin
                         ObjMemberCellG.Reset;
                         ObjMemberCellG.SetRange(ObjMemberCellG."Cell Group Code", "Member House Group");
-                        Report.Run(51516920, true, false, ObjMemberCellG);
+                        Report.run(50920, true, false, ObjMemberCellG);
                     end;
                 }
                 separator(Action1102760046)
@@ -935,7 +935,7 @@ Page 50562 "Loan Application Card(Pending)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
                             Commit;
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                         end;
                     end;
                 }

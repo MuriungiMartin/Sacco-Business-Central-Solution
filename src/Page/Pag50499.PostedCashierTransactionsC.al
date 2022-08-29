@@ -330,7 +330,7 @@ Page 50499 "Posted Cashier Transactions C"
                     Vend.Reset;
                     Vend.SetRange(Vend."No.", "Account No");
                     if Vend.Find('-') then
-                        Report.Run(51516476, true, false, Vend)
+                        Report.run(50476, true, false, Vend)
                 end;
             }
         }
@@ -352,19 +352,19 @@ Page 50499 "Posted Cashier Transactions C"
                     Trans.SetRange(Trans.No, No);
                     if Trans.Find('-') then begin
                         if "Type _Transactions" = "type _transactions"::"Cash Deposit" then
-                            Report.Run(51516498, true, true, Trans);
+                            Report.run(50498, true, true, Trans);
 
                         if "Type _Transactions" = "type _transactions"::Withdrawal then
-                            Report.Run(51516499, true, true, Trans);
+                            Report.run(50499, true, true, Trans);
 
                         if "Type _Transactions" = "type _transactions"::"Cheque Deposit" then
-                            Report.Run(51516500, true, true, Trans);
+                            Report.run(50500, true, true, Trans);
 
                         if "Type _Transactions" = "type _transactions"::"Batch Deposit" then
-                            Report.Run(51516517, true, true, Trans);
+                            Report.run(50517, true, true, Trans);
 
                         if Type = 'Transfer' then
-                            Report.Run(51516524, true, true, Trans);
+                            Report.run(50524, true, true, Trans);
                     end;
                 end;
             }
@@ -847,7 +847,7 @@ Page 50499 "Posted Cashier Transactions C"
             Trans.Reset;
             Trans.SetRange(Trans.No, No);
             if Trans.Find('-') then
-                Report.Run(51516294, false, true, Trans);
+                Report.run(50294, false, true, Trans);
 
 
         end;
@@ -1826,12 +1826,12 @@ Page 50499 "Posted Cashier Transactions C"
         Trans.SetRange(Trans.No, No);
         if Trans.Find('-') then begin
             if Type = 'Cash Deposit' then
-                Report.Run(51516292, false, true, Trans)
+                Report.run(50292, false, true, Trans)
             /*ELSE IF Type = 'BOSA Receipt' THEN
-            REPORT.RUN(51516292,FALSE,TRUE,Trans)*/
+            Report.run(50292,FALSE,TRUE,Trans)*/
             else
                 if Type = 'Withdrawal' then
-                    Report.Run(51516293, false, true, Trans)
+                    Report.run(50293, false, true, Trans)
         end;
 
     end;

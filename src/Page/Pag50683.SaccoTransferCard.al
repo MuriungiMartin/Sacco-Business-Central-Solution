@@ -464,7 +464,7 @@ Page 50683 "Sacco Transfer Card"
                        BTRANS.RESET;
                         BTRANS.SETRANGE(BTRANS.No,No);
                         IF BTRANS.FIND('-') THEN BEGIN
-                        REPORT.RUN(51516902,TRUE,TRUE,BTRANS);
+                        Report.run(50902,TRUE,TRUE,BTRANS);
                         END;*/
 
                     end;
@@ -483,7 +483,7 @@ Page 50683 "Sacco Transfer Card"
                         BTRANS.Reset;
                         BTRANS.SetRange(BTRANS.No, No);
                         if BTRANS.Find('-') then begin
-                            Report.Run(51516902, true, true, BTRANS);
+                            Report.run(50902, true, true, BTRANS);
                         end;
                     end;
                 }

@@ -93,7 +93,7 @@ Page 50047 "Posted Cheque Rcpt H-Family"
                     ObjInwardHeader.Reset;
                     ObjInwardHeader.SetRange(ObjInwardHeader."No.", "No.");
                     if ObjInwardHeader.FindSet then
-                        Report.Run(51516877, true, true, ObjInwardHeader)
+                        Report.run(50877, true, true, ObjInwardHeader)
                 end;
             }
         }

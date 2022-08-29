@@ -291,7 +291,7 @@ Page 50443 "Teller Till Card"
                         TillNo.Reset;
                         TillNo.SetRange(TillNo."No.", "No.");
                         if TillNo.Find('-') then
-                            Report.Run(51516019, true, false, TillNo)
+                            Report.run(50019, true, false, TillNo)
                     end;
                 }
             }

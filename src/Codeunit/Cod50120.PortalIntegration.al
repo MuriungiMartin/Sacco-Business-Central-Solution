@@ -454,7 +454,7 @@ Codeunit 50120 "PortalIntegration"
         objLoanRegister.SetRange(objLoanRegister."Loan  No.", MemberNo);
         Filename := Path.GetTempPath() + Path.GetRandomFileName();
         if objLoanRegister.Find('-') then begin
-            Report.SaveAsPdf(51516477, Filename, objLoanRegister);
+            Report.SaveAsPdf(50477, Filename, objLoanRegister);
             FileMode := 4;
             //FileAccess:=1;
 
@@ -952,7 +952,7 @@ Codeunit 50120 "PortalIntegration"
         if objLoanRegister.Find('-') then begin
             //  objMember.SETFILTER("Date Filter", filter);
             Filename := Path.GetTempPath() + Path.GetRandomFileName();
-            Report.SaveAsPdf(51516477, Filename, objLoanRegister);
+            Report.SaveAsPdf(50477, Filename, objLoanRegister);
             Message(Filename);
 
             FileMode := 4;

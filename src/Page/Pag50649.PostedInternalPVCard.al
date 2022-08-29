@@ -175,7 +175,7 @@ Page 50649 "Posted Internal PV Card"
                     PVHeader.Reset;
                     PVHeader.SetRange(PVHeader.No, No);
                     if PVHeader.Find('-') then
-                        Report.Run(51516875, true, true, PVHeader)
+                        Report.run(50875, true, true, PVHeader)
                 end;
             }
         }

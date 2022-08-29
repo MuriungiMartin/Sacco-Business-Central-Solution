@@ -362,7 +362,7 @@ Page 50122 "Store Requisition Header"
 
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516103, true, true, Rec);
+                        Report.run(50103, true, true, Rec);
                         Reset;
                     end;
                 }

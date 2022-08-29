@@ -558,7 +558,7 @@ Page 50899 "Micro_Fin_Transactions"
                         MTrans.Reset;
                         MTrans.SetRange(MTrans."No.", "No.");
                         if MTrans.Find('-') then begin
-                            Report.Run(51516850, true, false, MTrans);
+                            Report.run(50850, true, false, MTrans);
                         end;
                     end;
                 }

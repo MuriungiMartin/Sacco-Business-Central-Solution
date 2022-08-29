@@ -161,7 +161,7 @@ Page 50368 "Members Statistics"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."No.", "No.");
                     if ObjCust.Find('-') then
-                        Report.Run(51516951, true, false, ObjCust);
+                        Report.run(50951, true, false, ObjCust);
                 end;
             }
             action("BOSA Account Recovery Report")
@@ -179,7 +179,7 @@ Page 50368 "Members Statistics"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."No.", "No.");
                     if ObjCust.Find('-') then
-                        Report.Run(51516068, true, false, ObjCust);
+                        Report.run(50068, true, false, ObjCust);
                 end;
             }
             action("Loan Recovery Log Report")
@@ -194,7 +194,7 @@ Page 50368 "Members Statistics"
                     ObjCust.Reset;
                     ObjCust.SetRange(ObjCust."No.", "No.");
                     if ObjCust.Find('-') then
-                        Report.Run(51516963, true, false, ObjCust);
+                        Report.run(50963, true, false, ObjCust);
                 end;
             }
         }

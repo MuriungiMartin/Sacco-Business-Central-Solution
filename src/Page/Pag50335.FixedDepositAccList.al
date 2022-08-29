@@ -204,7 +204,7 @@ Page 50335 "Fixed Deposit Acc. List"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "No.");
                         if Vend.Find('-') then
-                            Report.Run(51516476, true, false, Vend)
+                            Report.run(50476, true, false, Vend)
                     end;
                 }
                 action("Page Vendor Statistics")

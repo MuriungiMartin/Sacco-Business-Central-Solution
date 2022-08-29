@@ -850,7 +850,7 @@ Page 50515 "Product Card Editable"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "BOSA Account No");
                         if Cust.Find('-') then
-                            Report.Run(51516360, true, true, Cust);
+                            Report.run(50360, true, true, Cust);
                     end;
                 }
                 action("FOSA Loans")
@@ -1297,7 +1297,7 @@ Page 50515 "Product Card Editable"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "No.");
                         if Vend.Find('-') then
-                            Report.Run(51516476, true, false, Vend)
+                            Report.run(50476, true, false, Vend)
                     end;
                 }
                 action("Page Vendor Statistics")

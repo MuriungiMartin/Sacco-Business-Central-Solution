@@ -143,12 +143,12 @@ Page 50153 "Posted Staff Claims"
                     begin
                         /*RESET;
                         SETFILTER("No.","No.");
-                        REPORT.RUN(51516935,TRUE,TRUE,Rec);
+                        Report.run(50935,TRUE,TRUE,Rec);
                         RESET;*/
 
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516507, true, true, Rec);
+                        Report.run(50507, true, true, Rec);
                         Reset;
 
                     end;

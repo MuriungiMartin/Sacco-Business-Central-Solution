@@ -200,7 +200,7 @@ Page 50254 "HR Training Application Card"
 
                         HRTrainingApplications.SetRange(HRTrainingApplications."Application No", "Application No");
                         if HRTrainingApplications.Find('-') then
-                            Report.Run(51516603, true, true, HRTrainingApplications);
+                            Report.run(50603, true, true, HRTrainingApplications);
                     end;
                 }
                 action("<A ction1102755042>")

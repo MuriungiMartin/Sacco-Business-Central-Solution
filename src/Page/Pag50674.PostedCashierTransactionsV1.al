@@ -749,7 +749,7 @@ Page 50674 "Posted Cashier Transactions V1"
                         Vend.Reset;
                         Vend.SetRange(Vend."No.", "Account No");
                         if Vend.Find('-') then
-                            Report.Run(51516890, true, false, Vend)
+                            Report.run(50890, true, false, Vend)
                     end;
                 }
                 action("Reprint Slip")
@@ -768,19 +768,19 @@ Page 50674 "Posted Cashier Transactions V1"
                         Trans.SetRange(Trans.No, No);
                         if Trans.Find('-') then begin
                             if "Type _Transactions" = "type _transactions"::"Cash Deposit" then
-                                Report.Run(51516498, true, true, Trans);
+                                Report.run(50498, true, true, Trans);
 
                             if "Type _Transactions" = "type _transactions"::Withdrawal then
-                                Report.Run(51516499, true, true, Trans);
+                                Report.run(50499, true, true, Trans);
 
                             if "Type _Transactions" = "type _transactions"::"Cheque Deposit" then
-                                Report.Run(51516500, true, true, Trans);
+                                Report.run(50500, true, true, Trans);
 
                             if "Type _Transactions" = "type _transactions"::"Batch Deposit" then
-                                Report.Run(51516517, true, true, Trans);
+                                Report.run(50517, true, true, Trans);
 
                             if Type = 'Transfer' then
-                                Report.Run(51516524, true, true, Trans);
+                                Report.run(50524, true, true, Trans);
                         end;
                     end;
                 }
@@ -1967,7 +1967,7 @@ Page 50674 "Posted Cashier Transactions V1"
         ObjTrans.Reset;
         ObjTrans.SetRange(ObjTrans.No, No);
         if ObjTrans.Find('-') then begin
-            Report.Run(51516500, false, true, ObjTrans);
+            Report.run(50500, false, true, ObjTrans);
         end;
 
     end;
@@ -2212,7 +2212,7 @@ Page 50674 "Posted Cashier Transactions V1"
             ObjTransactionsII.Reset;
             ObjTransactionsII.SetRange(ObjTransactionsII.No, No);
             if ObjTransactionsII.Find('-') then begin
-                Report.Run(51516498, false, true, ObjTransactionsII);
+                Report.run(50498, false, true, ObjTransactionsII);
             end;
 
 
@@ -2469,7 +2469,7 @@ Page 50674 "Posted Cashier Transactions V1"
             ObjTransactionsII.Reset;
             ObjTransactionsII.SetRange(ObjTransactionsII.No, No);
             if ObjTransactionsII.Find('-') then begin
-                Report.Run(51516499, false, true, ObjTransactionsII);
+                Report.run(50499, false, true, ObjTransactionsII);
             end;
 
         end else
@@ -2672,7 +2672,7 @@ Page 50674 "Posted Cashier Transactions V1"
         ObjTransactionsII.Reset;
         ObjTransactionsII.SetRange(ObjTransactionsII.No, No);
         if ObjTransactionsII.Find('-') then begin
-            Report.Run(51516517, false, true, ObjTransactionsII);
+            Report.run(50517, false, true, ObjTransactionsII);
         end;
 
 

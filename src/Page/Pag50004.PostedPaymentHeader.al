@@ -279,7 +279,7 @@ Page 50004 "Posted Payment Header"
                         //Print Here
                         //RESET;
                         //SETFILTER("No.","No.");
-                        //REPORT.RUN(51516334,TRUE,TRUE,Rec);
+                        //Report.run(50334,TRUE,TRUE,Rec);
                         //RESET;
                         //End Print Here
                     end;
@@ -438,7 +438,7 @@ Page 50004 "Posted Payment Header"
                         //ERROR('You cannot Print until the document is released for approval');
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516334, true, true, Rec);
+                        Report.run(50334, true, true, Rec);
                         Reset;
 
                         CurrPage.Update;
@@ -483,7 +483,7 @@ Page 50004 "Posted Payment Header"
                         */
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516368, true, true, Rec);
+                        Report.run(50368, true, true, Rec);
                         Reset;
 
                     end;

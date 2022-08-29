@@ -166,7 +166,7 @@ Page 50066 "Staff Claims"
 
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516507, true, true, Rec);
+                        Report.run(50507, true, true, Rec);
                         Reset;
 
                         ObjStaffClaimHeader.Reset;
@@ -372,7 +372,7 @@ Page 50066 "Staff Claims"
                             Error('You can only print after the document is Approved');
                         Reset;
                         SetFilter("No.", "No.");
-                        Report.Run(51516507, true, true, Rec);
+                        Report.run(50507, true, true, Rec);
                         Reset;
                     end;
                 }

@@ -118,7 +118,7 @@ Page 50341 "Pension Processing Header"
                         salarybuffer.Reset;
                         salarybuffer.SetRange(salarybuffer."Salary Header No.", No);
                         if salarybuffer.Find('-') then
-                            Report.Run(51516862, true, false, salarybuffer);
+                            Report.run(50862, true, false, salarybuffer);
 
                         "Pre-Post Blocked Status Update" := true;
                         Modify;
@@ -135,7 +135,7 @@ Page 50341 "Pension Processing Header"
                         salarybuffer.Reset;
                         salarybuffer.SetRange(salarybuffer."Salary Header No.", No);
                         if salarybuffer.Find('-') then
-                            Report.Run(51516863, true, false, salarybuffer);
+                            Report.run(50863, true, false, salarybuffer);
 
                         "Post-Post Blocked Statu Update" := true;
                         Modify;
@@ -151,7 +151,7 @@ Page 50341 "Pension Processing Header"
                         salarybuffer.Reset;
                         salarybuffer.SetRange(salarybuffer."Salary Header No.", No);
                         if salarybuffer.Find('-') then
-                            Report.Run(51516353, true, false, salarybuffer);
+                            Report.run(50353, true, false, salarybuffer);
                     end;
                 }
                 action("Generate Pension Batch")
@@ -168,8 +168,8 @@ Page 50341 "Pension Processing Header"
                         salarybuffer.Reset;
                         salarybuffer.SetRange(salarybuffer."Salary Header No.", No);
                         if salarybuffer.Find('-') then
-                            Report.Run(51516532, true, false, salarybuffer);
-                        // REPORT.RUN(51516539,TRUE,FALSE,salarybuffer);
+                            Report.run(50532, true, false, salarybuffer);
+                        // Report.run(50539,TRUE,FALSE,salarybuffer);
                         //Posted:=TRUE;
                         //"Posted By":=USERID;
                         //MODIFY;

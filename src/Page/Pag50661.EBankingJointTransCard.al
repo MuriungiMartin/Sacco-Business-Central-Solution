@@ -125,7 +125,7 @@ Page 50661 "E-Banking Joint Trans Card"
                     Vend.Reset;
                     Vend.SetRange(Vend."No.", "Source Account");
                     if Vend.Find('-') then
-                        Report.Run(51516890, true, false, Vend)
+                        Report.run(50890, true, false, Vend)
                 end;
             }
         }

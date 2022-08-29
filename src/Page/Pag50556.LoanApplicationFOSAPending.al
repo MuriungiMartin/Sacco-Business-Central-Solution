@@ -94,7 +94,7 @@ Page 50556 "Loan Application FOSA(Pending)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516493, true, false, LoanApp)
+                            Report.run(50493, true, false, LoanApp)
                         end;
                     end;
                 }

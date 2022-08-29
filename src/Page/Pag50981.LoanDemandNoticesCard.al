@@ -150,13 +150,13 @@ Page 50981 "Loan Demand Notices Card"
                         /*ObjLoans.RESET;
                         ObjLoans.SETRANGE(ObjLoans."Loan  No.","Loan In Default");
                         IF ObjLoans.FINDSET THEN BEGIN
-                          REPORT.RUN(51516925,TRUE,TRUE,ObjLoans);
+                          Report.run(50925,TRUE,TRUE,ObjLoans);
                           END;*/
 
                         ObjDemandNotice.Reset;
                         ObjDemandNotice.SetRange(ObjDemandNotice."Document No", "Document No");
                         if ObjDemandNotice.FindSet then begin
-                            Report.Run(51516925, true, true, ObjDemandNotice);
+                            Report.run(50925, true, true, ObjDemandNotice);
                         end;
 
 
@@ -176,7 +176,7 @@ Page 50981 "Loan Demand Notices Card"
                         ObjLoans.Reset;
                         ObjLoans.SetRange(ObjLoans."Loan  No.", "Loan In Default");
                         if ObjLoans.FindSet then begin
-                            Report.Run(51516926, true, true, ObjLoans);
+                            Report.run(50926, true, true, ObjLoans);
                         end;
                     end;
                 }
@@ -195,7 +195,7 @@ Page 50981 "Loan Demand Notices Card"
                         ObjDemands.Reset;
                         ObjDemands.SetRange(ObjDemands."Document No", "Document No");
                         if ObjDemands.FindSet then begin
-                            Report.Run(51516928, true, true, ObjDemands);
+                            Report.run(50928, true, true, ObjDemands);
                         end;
                     end;
                 }

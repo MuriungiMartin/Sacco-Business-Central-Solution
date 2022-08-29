@@ -94,7 +94,7 @@ Page 50398 "Posted Loans Batch Card"
                         LoansBatch.Reset;
                         LoansBatch.SetRange(LoansBatch."Batch No.", "Batch No.");
                         if LoansBatch.Find('-') then begin
-                            Report.Run(51516372, true, false, LoansBatch);
+                            Report.run(50372, true, false, LoansBatch);
                         end;
                     end;
                 }
@@ -157,9 +157,9 @@ Page 50398 "Posted Loans Batch Card"
                         //LoanApp.SETRANGE(LoanApp."Loan  No.",CurrPage.LoansSubForm.PAGE.GetLoanNo);
                         IF LoanApp.FIND('-') THEN BEGIN
                         IF COPYSTR(LoanApp."Loan Product Type",1,2) = 'PL' THEN
-                        REPORT.RUN(51516244,TRUE,FALSE,LoanApp)
+                        Report.run(50244,TRUE,FALSE,LoanApp)
                         ELSE
-                        REPORT.RUN(51516244,TRUE,FALSE,LoanApp);
+                        Report.run(50244,TRUE,FALSE,LoanApp);
                         END;
                         
                         */
@@ -184,7 +184,7 @@ Page 50398 "Posted Loans Batch Card"
                         Loans.Reset;
                         Loans.SetRange(Loans."Batch No.", "Batch No.");
                         if Loans.Find('-') then begin
-                            Report.Run(51516953, true, false, Loans)
+                            Report.run(50953, true, false, Loans)
                         end;
 
                     end;

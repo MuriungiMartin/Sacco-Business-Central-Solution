@@ -334,7 +334,7 @@ Page 50524 "Customer Care Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516503, true, false, Cust);
+                            Report.run(50503, true, false, Cust);
                     end;
                 }
                 action("Member is  Guaranteed")
@@ -351,7 +351,7 @@ Page 50524 "Customer Care Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516504, true, false, Cust);
+                            Report.run(50504, true, false, Cust);
                         //51516482
                     end;
                 }
@@ -372,7 +372,7 @@ Page 50524 "Customer Care Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516360, true, false, Cust);
+                            Report.run(50360, true, false, Cust);
                     end;
                 }
                 action("Detailed Interest Statement")
@@ -404,7 +404,7 @@ Page 50524 "Customer Care Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516474, true, false, Cust);
+                            Report.run(50474, true, false, Cust);
                     end;
                 }
                 action("FOSA Statement")
@@ -419,14 +419,14 @@ Page 50524 "Customer Care Card"
                         Vend.Reset;
                         Vend.SetRange(Vend."BOSA Account No", "No.");
                         if Vend.Find('-') then
-                            Report.Run(51516476, true, false, Vend);
+                            Report.run(50476, true, false, Vend);
 
 
                         /*
                         Cust.RESET;
                         Cust.SETRANGE(Cust."No.","No.");
                         IF Cust.FIND('-') THEN
-                        REPORT.RUN(51516476,TRUE,FALSE,Cust);
+                        Report.run(50476,TRUE,FALSE,Cust);
                         */
 
                     end;
@@ -444,7 +444,7 @@ Page 50524 "Customer Care Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516533, true, false, Cust);
+                            Report.run(50533, true, false, Cust);
                     end;
                 }
                 action("Loan Statement")
@@ -459,7 +459,7 @@ Page 50524 "Customer Care Card"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
             }

@@ -605,12 +605,14 @@ Table 50160 "HR Employees"
 
             trigger OnLookup()
             begin
-                // // UserMgt.LookupUserID("User ID");
+                UserMgt.LookupUser("User ID");
             end;
 
             trigger OnValidate()
+            var
+                USerrec: Record USer;
             begin
-                //  // UserMgt.ValidateUserID("User ID");
+                UserMgt.ValidateUserName(USerrec, USerrec, "User ID");
 
                 if "User ID" = '' then exit;
 
@@ -1614,7 +1616,7 @@ Table 50160 "HR Employees"
         EmpTransR: Record "prEmployee Transactions";
         NotchTrans: Record "Salary Step/Notch Transactions";
         SalaryGrades: Record "HR Salary Grades";
-        UserMgt: Codeunit "User Management";
+        UserMgt: Codeunit UserManagementCUExt;
         DimVal: Record "Dimension Value";
         objJobs: Record "HR Jobss";
         HREmp: Record "HR Employees";

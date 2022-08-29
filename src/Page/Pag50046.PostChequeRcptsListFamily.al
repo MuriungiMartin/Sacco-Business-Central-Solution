@@ -76,7 +76,7 @@ Page 50046 "Post Cheque Rcpts List-Family"
                     ObjInwardHeader.Reset;
                     ObjInwardHeader.SetRange(ObjInwardHeader."No.", "No.");
                     if ObjInwardHeader.FindSet then
-                        Report.Run(51516877, true, true, ObjInwardHeader)
+                        Report.run(50877, true, true, ObjInwardHeader)
                 end;
             }
         }

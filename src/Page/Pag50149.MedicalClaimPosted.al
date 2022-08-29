@@ -134,7 +134,7 @@ Page 50149 "Medical Claim Posted"
                         PHeader2.Reset;
                         PHeader2.SetRange(PHeader2."Member No", "Member No");
                         if PHeader2.FindFirst then
-                            Report.Run(51516199, true, true, PHeader2);
+                            Report.run(50199, true, true, PHeader2);
 
                         /*RESET;
                         SETRANGE("No.","No.");

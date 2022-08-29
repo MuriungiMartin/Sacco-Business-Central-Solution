@@ -713,7 +713,6 @@ Page 51385 "Loan Application Card(BOSA)"
                         Modify;
                     end;
                 }
-
                 action("View Loan Schedule")
                 {
                     ApplicationArea = Basic;

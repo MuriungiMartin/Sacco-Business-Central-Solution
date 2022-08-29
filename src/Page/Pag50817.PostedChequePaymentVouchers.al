@@ -100,7 +100,7 @@ Page 50817 "Posted Cheque Payment Vouchers"
                     PHeader2.Reset;
                     PHeader2.SetRange(PHeader2."No.", "No.");
                     if PHeader2.FindFirst then
-                        Report.Run(51516125, true, true, PHeader2);
+                        Report.run(50125, true, true, PHeader2);
 
                     /*RESET;
                     SETRANGE("No.","No.");

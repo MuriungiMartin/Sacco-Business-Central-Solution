@@ -1,7 +1,7 @@
 #pragma warning disable AA0005, AA0008, AA0018, AA0021, AA0072, AA0137, AA0201, AA0206, AA0218, AA0228, AL0424, AW0006 // ForNAV settings
 Page 50394 "Loans Appl FOSA Card(Approv)"
 {
- 
+
     DeleteAllowed = false;
     InsertAllowed = false;
     ModifyAllowed = false;
@@ -254,9 +254,9 @@ Page 50394 "Loans Appl FOSA Card(Approv)"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
                             if LoanApp."Loan Product Type" <> 'INST' then begin
-                                Report.Run(51516231, true, false, LoanApp);
+                                Report.run(50231, true, false, LoanApp);
                             end else begin
-                                Report.Run(51516231, true, false, LoanApp);
+                                Report.run(50231, true, false, LoanApp);
 
                             end;
                     end;
@@ -645,7 +645,7 @@ Page 50394 "Loans Appl FOSA Card(Approv)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516352, true, false, LoanApp);
+                            Report.run(50352, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -660,7 +660,7 @@ Page 50394 "Loans Appl FOSA Card(Approv)"
                     begin
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "Client Code");
-                        Report.Run(51516223, true, false, Cust);
+                        Report.run(50223, true, false, Cust);
                     end;
                 }
                 separator(Action1102760046)
@@ -681,7 +681,7 @@ Page 50394 "Loans Appl FOSA Card(Approv)"
                         Cust.SetFilter("Loan No. Filter", "Loan  No.");
                         Cust.SetFilter("Loan Product Filter", "Loan Product Type");
                         if Cust.Find('-') then
-                            Report.Run(51516531, true, false, Cust);
+                            Report.run(50531, true, false, Cust);
                     end;
                 }
                 action("View Schedule")
@@ -699,7 +699,7 @@ Page 50394 "Loans Appl FOSA Card(Approv)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
                     end;
                 }
                 separator(Action1102755012)

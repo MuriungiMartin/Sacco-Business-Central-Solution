@@ -358,7 +358,7 @@ Page 50253 "HR Job Applications Card"
 
 
                         HRJobApplications.SetFilter(HRJobApplications."Application No", "Application No");
-                        Report.Run(51516639, false, false, HRJobApplications);
+                        Report.run(50639, false, false, HRJobApplications);
                     end;
                 }
                 action("&Upload to Employee Card")

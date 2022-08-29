@@ -225,7 +225,7 @@ Page 50184 "HR Employee Requisition Card"
                         HREmpReq.Reset;
                         HREmpReq.SetRange(HREmpReq."Requisition No.", "Requisition No.");
                         if HREmpReq.Find('-') then
-                            Report.Run(51516169, true, true, HREmpReq);
+                            Report.run(50169, true, true, HREmpReq);
                     end;
                 }
                 action("&Send Mail to HR to add vacant position")

@@ -72,7 +72,7 @@ Page 50634 "Loan Insurance Accrual Periods"
 
                 trigger OnAction()
                 begin
-                    Report.Run(51516917)
+                    Report.run(50917)
                 end;
             }
         }

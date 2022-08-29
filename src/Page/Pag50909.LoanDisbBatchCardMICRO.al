@@ -126,15 +126,15 @@ Page 50909 "Loan Disb Batch Card(MICRO)"
                         LoansBatch.SetRange(LoansBatch."Batch No.", "Batch No.");
                         if LoansBatch.Find('-') then begin
                             if LoansBatch."Batch Type" = LoansBatch."batch type"::"Personal Loans" then
-                                Report.Run(51516485, true, false, LoansBatch)
+                                Report.run(50485, true, false, LoansBatch)
                             else
                                 if LoansBatch."Batch Type" = LoansBatch."batch type"::"Branch Loans" then
-                                    Report.Run(51516485, true, false, LoansBatch)
+                                    Report.run(50485, true, false, LoansBatch)
                                 else
                                     if LoansBatch."Batch Type" = LoansBatch."batch type"::"Appeal Loans" then
-                                        Report.Run(51516485, true, false, LoansBatch)
+                                        Report.run(50485, true, false, LoansBatch)
                                     else
-                                        Report.Run(51516485, true, false, LoansBatch);
+                                        Report.run(50485, true, false, LoansBatch);
                         end;
                     end;
                 }

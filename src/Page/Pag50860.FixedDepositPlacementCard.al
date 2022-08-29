@@ -520,7 +520,7 @@ Page 50860 "Fixed Deposit Placement Card"
                     ObjAccount.Reset;
                     ObjAccount.SetRange(ObjAccount."No.", "Fixed Deposit Account No");
                     if ObjAccount.Find('-') then
-                        Report.Run(51516465, true, false, ObjAccount)
+                        Report.run(50465, true, false, ObjAccount)
                 end;
             }
             action(FixedDepositTypeRates)

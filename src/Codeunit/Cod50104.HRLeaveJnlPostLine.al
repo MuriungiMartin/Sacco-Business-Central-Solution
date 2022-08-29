@@ -7,29 +7,29 @@ Codeunit 50104 "HR Leave Jnl.-Post Line"
 
     trigger OnRun()
     begin
-        // GLSetup.Get;
-        // TempJnlLineDim2.Reset;
-        // TempJnlLineDim2.DeleteAll;
-        // if "Shortcut Dimension 1 Code" <> '' then begin
-        //     TempJnlLineDim2."Table ID" := Database::"Insurance Journal Line";
-        //     TempJnlLineDim2."Journal Template Name" := "Journal Template Name";
-        //     TempJnlLineDim2."Journal Batch Name" := "Journal Batch Name";
-        //     TempJnlLineDim2."Journal Line No." := "Line No.";
-        //     TempJnlLineDim2."Dimension Code" := GLSetup."Global Dimension 1 Code";
-        //     TempJnlLineDim2."Dimension Value Code" := "Shortcut Dimension 1 Code";
-        //     TempJnlLineDim2.Insert;
+        GLSetup.Get;
+        TempJnlLineDim2.Reset;
+        TempJnlLineDim2.DeleteAll;
+        if "Shortcut Dimension 1 Code" <> '' then begin
+            TempJnlLineDim2."Table ID" := Database::"Insurance Journal Line";
+            TempJnlLineDim2."Journal Template Name" := "Journal Template Name";
+            TempJnlLineDim2."Journal Batch Name" := "Journal Batch Name";
+            TempJnlLineDim2."Journal Line No." := "Line No.";
+            TempJnlLineDim2."Dimension Code" := GLSetup."Global Dimension 1 Code";
+            TempJnlLineDim2."Dimension Value Code" := "Shortcut Dimension 1 Code";
+            TempJnlLineDim2.Insert;
+        end;
+        if "Shortcut Dimension 2 Code" <> '' then begin
+            TempJnlLineDim2."Table ID" := Database::"HR Journal Line";
+            TempJnlLineDim2."Journal Template Name" := "Journal Template Name";
+            TempJnlLineDim2."Journal Batch Name" := "Journal Batch Name";
+            TempJnlLineDim2."Journal Line No." := "Line No.";
+            TempJnlLineDim2."Dimension Code" := GLSetup."Global Dimension 2 Code";
+            TempJnlLineDim2."Dimension Value Code" := "Shortcut Dimension 2 Code";
+            TempJnlLineDim2.Insert;
+        end;
+        RunWithCheck(Rec, TempJnlLineDim2);
     end;
-    // if "Shortcut Dimension 2 Code" <> '' then begin
-    //     TempJnlLineDim2."Table ID" := Database::"HR Journal Line";
-    //     TempJnlLineDim2."Journal Template Name" := "Journal Template Name";
-    //     TempJnlLineDim2."Journal Batch Name" := "Journal Batch Name";
-    //     TempJnlLineDim2."Journal Line No." := "Line No.";
-    //     TempJnlLineDim2."Dimension Code" := GLSetup."Global Dimension 2 Code";
-    //     TempJnlLineDim2."Dimension Value Code" := "Shortcut Dimension 2 Code";
-    //     TempJnlLineDim2.Insert;
-    // end;
-    // RunWithCheck(Rec, TempJnlLineDim2);
-    //end;
 
     var
         GLSetup: Record "General Ledger Setup";
@@ -39,36 +39,36 @@ Codeunit 50104 "HR Leave Jnl.-Post Line"
         InsCoverageLedgEntry: Record "HR Leave Ledger Entries";
         InsCoverageLedgEntry2: Record "HR Leave Ledger Entries";
         InsuranceReg: Record "HR Leave Register";
-        //  InsuranceJnlCheckLine: Codeunit "HR Leave Jnl.-Check Line";
-        //  MakeInsCoverageLedgEntry: Codeunit "HR Make Leave Ledg. Entry";
-        //  DimMgt: Codeunit DimensionManagement;
+        InsuranceJnlCheckLine: Codeunit "HR Leave Jnl.-Check Line";
+        MakeInsCoverageLedgEntry: Codeunit "HR Make Leave Ledg. Entry";
+        DimMgt: Codeunit DimensionManagement;
         NextEntryNo: Integer;
-    // TempJnlLineDim: Record "Journal Line Dimension";
-    // TempJnlLineDim2: Record "Journal Line Dimension";
+        TempJnlLineDim: Record "Journal Line Dimension";
+        TempJnlLineDim2: Record "Journal Line Dimension";
 
 
-    // procedure RunWithCheck(var InsuranceJnlLine2: Record "HR Journal Line"; TempJnlLineDim2: Record "Journal Line Dimension")
-    // begin
-    //     InsuranceJnlLine.Copy(InsuranceJnlLine2);
-    //     // TempJnlLineDim.Reset;
-    //     // TempJnlLineDim.DeleteAll;
-    //     //DimMgt.CopyJnlLineDimToJnlLineDim(TempJnlLineDim2,TempJnlLineDim);
-    //     Code(true);
-    //     InsuranceJnlLine2 := InsuranceJnlLine;
-    // end;
+    procedure RunWithCheck(var InsuranceJnlLine2: Record "HR Journal Line"; TempJnlLineDim2: Record "Journal Line Dimension")
+    begin
+        InsuranceJnlLine.Copy(InsuranceJnlLine2);
+        // TempJnlLineDim.Reset;
+        // TempJnlLineDim.DeleteAll;
+        //DimMgt.CopyJnlLineDimToJnlLineDim(TempJnlLineDim2,TempJnlLineDim);
+        Code(true);
+        InsuranceJnlLine2 := InsuranceJnlLine;
+    end;
 
 
-    // procedure RunWithOutCheck(var InsuranceJnlLine2: Record "HR Journal Line"; TempJnlLineDim: Record "Journal Line Dimension")
-    // begin
-    //     InsuranceJnlLine.Copy(InsuranceJnlLine2);
+    procedure RunWithOutCheck(var InsuranceJnlLine2: Record "HR Journal Line"; TempJnlLineDim: Record "Journal Line Dimension")
+    begin
+        InsuranceJnlLine.Copy(InsuranceJnlLine2);
 
-    //     TempJnlLineDim.Reset;
-    //     TempJnlLineDim.DeleteAll;
-    //     //DimMgt.CopyJnlLineDimToJnlLineDim(TempJnlLineDim2,TempJnlLineDim);
+        TempJnlLineDim.Reset;
+        TempJnlLineDim.DeleteAll;
+        //DimMgt.CopyJnlLineDimToJnlLineDim(TempJnlLineDim2,TempJnlLineDim);
 
-    //     Code(false);
-    //     InsuranceJnlLine2 := InsuranceJnlLine;
-    // end;
+        Code(false);
+        InsuranceJnlLine2 := InsuranceJnlLine;
+    end;
 
     local procedure "Code"(CheckLine: Boolean)
     begin
@@ -76,13 +76,12 @@ Codeunit 50104 "HR Leave Jnl.-Post Line"
             if "Document No." = '' then
                 exit;
             if CheckLine then
-                //    InsuranceJnlCheckLine.RunCheck(InsuranceJnlLine,TempJnlLineDim);
-                Insurance.Reset;
-            //Insurance.SETRANGE("Leave Application No.",
+                InsuranceJnlCheckLine.RunCheck(InsuranceJnlLine, TempJnlLineDim);
+            Insurance.Reset;
             // Insurance.GET("Document No.");
             FA.Get("Staff No.");
-            //MakeInsCoverageLedgEntry.CopyFromJnlLine(InsCoverageLedgEntry, InsuranceJnlLine);
-            //MakeInsCoverageLedgEntry.CopyFromInsuranceCard(InsCoverageLedgEntry,Insurance);
+            MakeInsCoverageLedgEntry.CopyFromJnlLine(InsCoverageLedgEntry, InsuranceJnlLine);
+            MakeInsCoverageLedgEntry.CopyFromInsuranceCard(InsCoverageLedgEntry, Insurance);
         end;
         if NextEntryNo = 0 then begin
             InsCoverageLedgEntry.LockTable;

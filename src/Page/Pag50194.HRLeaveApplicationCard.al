@@ -455,7 +455,7 @@ Page 50194 "HR Leave Application Card"
                         HRLeaveApp.Reset;
                         HRLeaveApp.SetRange(HRLeaveApp."Application Code", "Application Code");
                         if HRLeaveApp.Find('-') then
-                            Report.Run(51516610, true, true, HRLeaveApp);
+                            Report.run(50610, true, true, HRLeaveApp);
                     end;
                 }
                 action("&Post Leave Application")
@@ -477,7 +477,7 @@ Page 50194 "HR Leave Application Card"
                         EmailCC: Text;
                         LeavePeriod: Text;
                     begin
-                        if Status <> Status::"HOD Approval" then
+                        if Status <> Status::Approved then
                             Error('The Leave Status must be Approved')
                         else
                             HRLeaveApp.Reset;
@@ -508,7 +508,7 @@ Page 50194 "HR Leave Application Card"
                                 ReleiverEmail := HREmp2."Company E-Mail";
                             end;
 
-                            EmailCC := 'mt@Visionsacco.com';
+                            EmailCC := 'muriungimartinmwiti@outlook.com';
                             if ReleiverEmail <> '' then
                                 EmailCC := EmailCC + ';' + ReleiverEmail;
 

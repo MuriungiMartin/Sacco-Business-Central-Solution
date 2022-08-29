@@ -417,14 +417,14 @@ Page 50606 "Loan Application Card Savers"
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         LoanApp.SetRange(LoanApp."Loan Product Type", 'FL354');
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516527, true, false, LoanApp);
+                            Report.run(50527, true, false, LoanApp);
                         end;
 
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         LoanApp.SetRange(LoanApp."Loan Product Type", 'FL364');
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516527, true, false, LoanApp);
+                            Report.run(50527, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -730,7 +730,7 @@ Page 50606 "Loan Application Card Savers"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516477, true, false, LoanApp);
+                            Report.Run(50477, true, false, LoanApp);
 
                     end;
                 }

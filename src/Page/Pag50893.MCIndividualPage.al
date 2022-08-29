@@ -385,7 +385,7 @@ Page 50893 "MC Individual Page"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516226, true, false, Cust);
+                            Report.run(50226, true, false, Cust);
                     end;
                 }
                 action("Loans Guaranteed")
@@ -399,7 +399,7 @@ Page 50893 "MC Individual Page"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516225, true, false, Cust);
+                            Report.run(50225, true, false, Cust);
                     end;
                 }
                 action("BOSA Account Details")
@@ -425,7 +425,7 @@ Page 50893 "MC Individual Page"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516279, true, false, Cust);
+                            Report.run(50279, true, false, Cust);
                     end;
                 }
                 separator(Action1000000024)
@@ -483,7 +483,7 @@ Page 50893 "MC Individual Page"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516886, true, false, Cust);
+                            Report.run(50886, true, false, Cust);
                     end;
                 }
                 separator(Action1102755011)
@@ -502,7 +502,7 @@ Page 50893 "MC Individual Page"
                         Cust.Reset;
                         Cust.SetRange(Cust."No.", "No.");
                         if Cust.Find('-') then
-                            Report.Run(51516250, true, false, Cust);
+                            Report.run(50250, true, false, Cust);
                     end;
                 }
                 action("Close Account")

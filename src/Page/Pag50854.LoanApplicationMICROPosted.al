@@ -560,7 +560,7 @@ Page 50854 "Loan Application MICRO(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516896, true, false, LoanApp);
+                            Report.run(50896, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -591,7 +591,7 @@ Page 50854 "Loan Application MICRO(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then begin
-                            Report.Run(51516452, true, false, LoanApp);
+                            Report.run(50452, true, false, LoanApp);
                         end;
                     end;
                 }
@@ -779,7 +779,7 @@ Page 50854 "Loan Application MICRO(Posted)"
                         LoanApp.Reset;
                         LoanApp.SetRange(LoanApp."Loan  No.", "Loan  No.");
                         if LoanApp.Find('-') then
-                            Report.Run(51516852, true, false, LoanApp);
+                            Report.run(50852, true, false, LoanApp);
                     end;
                 }
                 separator(Action1102755012)

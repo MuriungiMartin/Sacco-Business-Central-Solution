@@ -163,7 +163,7 @@ Page 50268 "HR Leave Applications List"
                         HRLeaveApp.Reset;
                         HRLeaveApp.SetRange(HRLeaveApp."Application Code", "Application Code");
                         if HRLeaveApp.Find('-') then
-                            Report.Run(51516610, true, true, HRLeaveApp);
+                            Report.run(50610, true, true, HRLeaveApp);
                     end;
                 }
                 action("Create Leave Ledger Entries")
