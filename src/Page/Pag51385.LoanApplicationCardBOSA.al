@@ -713,23 +713,7 @@ Page 51385 "Loan Application Card(BOSA)"
                         Modify;
                     end;
                 }
-                action("View Schedule")
-                {
-                    ApplicationArea = Basic;
-                    Caption = 'View Schedule2';
-                    Image = "Table";
-                    Visible = false;
-                    Promoted = true;
-                    PromotedCategory = Category4;
-                    PromotedOnly = true;
-                    ShortCutKey = 'Ctrl+F7';
 
-                    trigger OnAction()
-                    begin
-                        // SFactory.FnGenerateLoanRepaymentSchedule("Loan  No.");
-
-                    end;
-                }
                 action("View Loan Schedule")
                 {
                     ApplicationArea = Basic;

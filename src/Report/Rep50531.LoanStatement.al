@@ -5,7 +5,7 @@ Report 50531 "Loan Statement"
 
     dataset
     {
-        dataitem("Members Register"; "Members Register")
+        dataitem("Members Register"; Customer)
         {
             RequestFilterFields = "No.", "Date Filter";
 
@@ -324,7 +324,7 @@ Report 50531 "Loan Statement"
         CLosingBalance: Decimal;
         OpenBalanceXmas: Decimal;
         CLosingBalanceXmas: Decimal;
-        Cust: Record "Members Register";
+        Cust: Record Customer;
         OpeningBal: Decimal;
         ClosingBal: Decimal;
         FirstRec: Boolean;
