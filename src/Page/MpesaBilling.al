@@ -36,9 +36,5 @@ page 51401 MpesaBilling
         }
     }
 
-    var
-    [RunOnClient]
-    [WithEvents]
-    Mpesa: DotNet mpe
-        ;
+
 }

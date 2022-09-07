@@ -9,7 +9,6 @@
     
     },
     "al.assemblyProbingPaths": [
-        "D:/BC Apps/BC180/Surestep Sacco Sln/src/dotnetpackages",
-        "C:\\Users\\user\\.nuget\\packages\\mpesa.sdk"
+        "D:/BC Apps/BC180/ViwandaSacco/src/dotnetpackages",
     ]
 }

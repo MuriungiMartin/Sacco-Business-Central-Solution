@@ -3,8 +3,9 @@ Table 50360 "Membership Applications"
 {
     Caption = 'Membership Applications';
     DataCaptionFields = "No.", Name;
-    //nownPage51516360;
-    //nownPage51516360;
+    DrillDownPageId = "Membership Application List";
+    LookupPageId = "Membership Application List";
+
 
     fields
     {
@@ -1436,6 +1437,22 @@ Table 50360 "Membership Applications"
         {
             DataClassification = ToBeClassified;
 
+        }
+        field(69222; "Assigned Member No"; Code[30])
+        {
+            DataClassification = ToBeClassified;
+            trigger OnValidate()
+            var
+                Cust: Record Customer;
+            begin
+
+                Cust.Reset();
+                Cust.SetRange(Cust."No.", "Assigned Member No");
+                if Cust.Find('-') then begin
+                    Error('A member %1 has already been created witha similar number.', Cust.Name);
+                end;
+
+            end;
         }
     }
 
